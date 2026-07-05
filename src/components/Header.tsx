@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/lib/nav";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
@@ -12,9 +13,10 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          className="font-display text-lg font-semibold tracking-tight text-ink"
+          className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-ink"
         >
-          {t("siteName")}
+          <Logo className="h-11 w-auto" />
+          <span className="hidden min-[420px]:block">{t("siteName")}</span>
         </Link>
 
         <nav
