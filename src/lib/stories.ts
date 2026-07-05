@@ -9,8 +9,8 @@ export function isStorySlug(value: string): value is StorySlug {
 }
 
 // Photos per story, in display order: photos[0] is the main photo
-// (used duotoned on the preview card and full-size on the story page; any
-// further photos appear only on the story page, unfiltered).
+// (shown on the preview card and full-size on the story page; any
+// further photos appear only on the story page).
 // Paths point into /public/stories/.
 export const STORY_PHOTOS: Record<StorySlug, string[]> = {
   "story-1": [

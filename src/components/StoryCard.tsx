@@ -3,16 +3,15 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { STORY_PHOTOS, type StorySlug } from "@/lib/stories";
 
-/** Story preview card. Always shows the story's main photo (photos[0]) with
- *  the duotone treatment (pine + sage), however many photos the story has;
- *  the full unfiltered photos appear only on the story page itself. */
+/** Story preview card. Shows the story's main photo (photos[0]) in full
+ *  color; any further photos appear only on the story page itself. */
 export function StoryCard({ slug }: { slug: StorySlug }) {
   const t = useTranslations("StoriesPage");
   const mainPhoto = STORY_PHOTOS[slug][0];
 
   return (
     <article className="reveal overflow-hidden rounded-xl border border-sage bg-paper">
-      <div className="duotone aspect-[4/3]">
+      <div className="relative aspect-[4/3] bg-sage">
         {mainPhoto ? (
           <Image
             src={mainPhoto}
@@ -23,7 +22,7 @@ export function StoryCard({ slug }: { slug: StorySlug }) {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="z-10 rounded-full bg-paper/20 px-3 py-1 text-xs text-sage">
+            <span className="rounded-full bg-paper px-3 py-1 text-xs text-ink-soft">
               {t("photoPending")}
             </span>
           </div>

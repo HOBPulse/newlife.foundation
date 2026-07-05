@@ -80,31 +80,3 @@ body {
   }
 }
 
-/* --- Duotone photo treatment (stories previews only) ------------------
-   Pine + sage color treatment over a real photo; the unfiltered photo
-   appears only on the individual story page. */
-.duotone {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: var(--color-pine-deep);
-}
-
-.duotone img {
-  mix-blend-mode: luminosity;
-  filter: grayscale(100%) contrast(1.05);
-}
-
-.duotone::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    165deg,
-    rgb(46 110 100 / 0.28),
-    rgb(220 231 225 / 0.34)
-  );
-  mix-blend-mode: lighten;
-  pointer-events: none;
-}

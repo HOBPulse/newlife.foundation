@@ -56,9 +56,7 @@ export default async function StoryPage({ params }: Props) {
         {title}
       </h1>
 
-      {/* Unfiltered photos — no duotone here by design (treatment is for
-          previews only). Main photo full-size; any further photos in a
-          simple grid below. */}
+      {/* Main photo full-size; any further photos in a simple grid below. */}
       {mainPhoto ? (
         <>
           <div className="relative mt-10 aspect-[3/2] overflow-hidden rounded-xl bg-sage">
