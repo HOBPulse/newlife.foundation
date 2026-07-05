@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { fixelDisplay, golos } from "@/lib/fonts";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Common");
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      template: `%s — ${t("siteName")}`,
+      default: t("siteName"),
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -29,9 +39,18 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className="h-full antialiased">
-      <body className="min-h-full flex flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+    <html
+      lang={locale}
+      className={`${golos.variable} ${fixelDisplay.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col">
+        <NextIntlClientProvider>
+          <Header />
+          <main id="main" className="flex flex-1 flex-col">
+            {children}
+          </main>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

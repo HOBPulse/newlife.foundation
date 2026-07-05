@@ -1,28 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Direction A — «Ясний маршрут» / The Clear Path
+   Light-only identity (deliberate): calm comes from paper, order and one warm note. */
+@theme {
+  --color-paper: #fafbf9;
+  --color-ink: #1c2b28;
+  --color-ink-soft: #47605a;
+  --color-pine: #2e6e64;
+  --color-pine-deep: #235a51;
+  --color-sage: #dce7e1;
+  --color-sage-soft: #eef4f0;
+  --color-apricot: #dfa679;
+  --color-apricot-soft: #f3e2d2;
+
+  --font-sans:
+    var(--font-golos), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Arial, sans-serif;
+  --font-display: var(--font-fixel), var(--font-golos), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:focus-visible {
+  outline: 2px solid var(--color-pine);
+  outline-offset: 2px;
+}
+
+/* Money and stats are always shown with tabular figures */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Signature: the route line ---------------------------------------
+   SVG paths with pathLength="1" draw themselves as they enter the view.
+   Progressive: without scroll-driven animation support (or with reduced
+   motion) the line is simply fully drawn. */
+@keyframes draw-path {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-/* System font stack until the design-direction step picks fonts
-   (must cover Cyrillic — the default locale is Ukrainian) */
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .draw-path {
+      animation: draw-path linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 65%;
+    }
+
+    .reveal {
+      animation: rise-in 0.6s ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/* --- Duotone photo treatment (stories previews only) ------------------
+   Pine + sage color treatment over a real photo; the unfiltered photo
+   appears only on the individual story page. */
+.duotone {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-pine-deep);
+}
+
+.duotone img {
+  mix-blend-mode: luminosity;
+  filter: grayscale(100%) contrast(1.05);
+}
+
+.duotone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    165deg,
+    rgb(46 110 100 / 0.28),
+    rgb(220 231 225 / 0.34)
+  );
+  mix-blend-mode: lighten;
+  pointer-events: none;
 }

@@ -1,0 +1,54 @@
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { NAV_ITEMS } from "@/lib/nav";
+
+export function Footer() {
+  const t = useTranslations("Common");
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="border-t border-sage bg-sage-soft">
+      <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-xs">
+            <p className="font-display text-lg font-semibold text-ink">
+              {t("siteName")}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+              {t("footer.mission")}
+            </p>
+          </div>
+          <nav
+            aria-label={t("nav.label")}
+            className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm"
+          >
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.key}
+                href={item.href}
+                className="text-ink-soft transition-colors hover:text-pine"
+              >
+                {t(`nav.${item.key}`)}
+              </Link>
+            ))}
+            <Link
+              href="/donate"
+              className="text-ink-soft transition-colors hover:text-pine"
+            >
+              {t("nav.donate")}
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-ink-soft transition-colors hover:text-pine"
+            >
+              {t("nav.privacy")}
+            </Link>
+          </nav>
+        </div>
+        <p className="mt-10 text-xs text-ink-soft">
+          © {year} {t("siteName")}. {t("footer.legalNote")}
+        </p>
+      </div>
+    </footer>
+  );
+}

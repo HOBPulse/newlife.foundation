@@ -1,5 +1,193 @@
 {
+  "Common": {
+    "siteName": "New Life Foundation",
+    "localeSwitcher": "Site language",
+    "menu": "Menu",
+    "nav": {
+      "label": "Navigation",
+      "about": "About us",
+      "howWeWork": "How we work",
+      "stories": "Stories",
+      "howToHelp": "How to help",
+      "donate": "Donate",
+      "contact": "Contact",
+      "privacy": "Privacy policy"
+    },
+    "footer": {
+      "mission": "We help patients find specialised treatment when they are told no options remain.",
+      "legalNote": "The foundation's registration details will be published."
+    }
+  },
   "HomePage": {
-    "title": "Site under development"
+    "metaTitle": "Help finding specialised treatment",
+    "metaDescription": "A charitable foundation that helps patients find specialised treatment and reach it when local options have run out.",
+    "hero": {
+      "title": "When they say there are no options left, we keep searching.",
+      "lead": "The foundation helps patients and their families find specialised treatment and reach it when the options where they live have run out.",
+      "ctaDonate": "Support the foundation",
+      "ctaHelp": "Request help"
+    },
+    "process": {
+      "eyebrow": "Process",
+      "title": "How we work",
+      "lead": "A clear path from first contact to treatment. The description of each step will be published.",
+      "stepLabel": "Step",
+      "stepPending": "Step title and description to be added",
+      "more": "More about the process"
+    },
+    "stories": {
+      "eyebrow": "Stories",
+      "title": "Patient stories",
+      "lead": "Real stories of people who turned to the foundation.",
+      "all": "All stories"
+    },
+    "map": {
+      "eyebrow": "Geography",
+      "title": "Routes of help",
+      "lead": "Aggregated medical transport routes — never linked to a specific patient.",
+      "pending": "Route data to be added",
+      "statsPending": "Aggregate figures will be published"
+    },
+    "donate": {
+      "title": "Support the foundation's work",
+      "lead": "Donations allow the foundation to keep searching for treatment and supporting patients.",
+      "cta": "Donate"
+    }
+  },
+  "AboutPage": {
+    "metaTitle": "About us",
+    "metaDescription": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local options have run out.",
+    "title": "About us",
+    "intro": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local doctors say no options remain.",
+    "mission": {
+      "title": "Our mission",
+      "body": "\"No options left\" should never be the final answer. When treatment options in a region are exhausted, we help find specialised clinics and organise the journey to them."
+    },
+    "work": {
+      "title": "What we do",
+      "body": "The foundation supports patients in finding specialised treatment and organising medical transport. Read more on the How we work page."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "body": "The foundation's registration details and reports will be published in this section.",
+      "pending": "Information to be added"
+    }
+  },
+  "HowWeWorkPage": {
+    "metaTitle": "How we work",
+    "metaDescription": "The foundation's process, step by step: from first contact to organising treatment.",
+    "title": "How we work",
+    "lead": "The foundation's process, step by step. The description of each step will be published soon.",
+    "stepLabel": "Step",
+    "stepPendingTitle": "Step title to be added",
+    "stepPendingBody": "Step description to be added.",
+    "cta": {
+      "title": "Need help?",
+      "body": "Fill in the form on the contact page and we will get back to you.",
+      "button": "Request help"
+    }
+  },
+  "StoriesPage": {
+    "metaTitle": "Stories",
+    "metaDescription": "Real patient stories, published with their consent.",
+    "title": "Patient stories",
+    "lead": "Real stories, published with the patients' consent. The texts are being prepared for publication.",
+    "photoPending": "Photo to be added",
+    "readMore": "Read the story",
+    "backToStories": "All stories",
+    "storyPending": "The full story will be published once prepared.",
+    "items": {
+      "story-1": {
+        "title": "Story 1 — to be added",
+        "excerpt": "The story text will appear once the publication is prepared."
+      },
+      "story-2": {
+        "title": "Story 2 — to be added",
+        "excerpt": "The story text will appear once the publication is prepared."
+      },
+      "story-3": {
+        "title": "Story 3 — to be added",
+        "excerpt": "The story text will appear once the publication is prepared."
+      }
+    }
+  },
+  "HowToHelpPage": {
+    "metaTitle": "How to help",
+    "metaDescription": "Ways to support the foundation's work: donating, spreading the word, partnership.",
+    "title": "How to help",
+    "lead": "There are several ways to support the foundation's work.",
+    "ways": {
+      "donate": {
+        "title": "Donate",
+        "body": "A one-time or regular donation is the fastest way to support the foundation's work.",
+        "cta": "Go to donation"
+      },
+      "share": {
+        "title": "Spread the word",
+        "body": "Share the site with those who might need help — or with those ready to support."
+      },
+      "partner": {
+        "title": "Become a partner",
+        "body": "If you represent a clinic, a transport provider or an organisation ready to help, write to us.",
+        "cta": "Get in touch"
+      }
+    }
+  },
+  "DonatePage": {
+    "metaTitle": "Donate",
+    "metaDescription": "Support the foundation's work: Monobank, LiqPay, PayPal.",
+    "title": "Donate",
+    "lead": "Donations allow the foundation to work: to search for treatment and organise transport.",
+    "campaigns": {
+      "title": "Active campaigns",
+      "pending": "Information about active campaigns will be published."
+    },
+    "methods": {
+      "title": "Ways to donate",
+      "mono": "Monobank jar",
+      "liqpay": "LiqPay",
+      "paypal": "PayPal",
+      "linkPending": "Link to be added",
+      "open": "Open"
+    }
+  },
+  "ContactPage": {
+    "metaTitle": "Contact",
+    "metaDescription": "Request help form for finding specialised treatment.",
+    "title": "Contact",
+    "lead": "If you need help finding treatment, fill in the form and we will get back to you.",
+    "form": {
+      "name": "Full name",
+      "contact": "Phone or Telegram",
+      "location": "Country, city",
+      "message": "Diagnosis and a brief description of the situation",
+      "consent": "I consent to the processing of my personal data in accordance with the <privacy>Privacy policy</privacy>",
+      "requiredNote": "All fields are required.",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "success": "Your request has been sent. We will get back to you soon.",
+      "errorValidation": "Please check the form — all fields are required.",
+      "errorDelivery": "The request could not be sent. Please try again later."
+    }
+  },
+  "PrivacyPage": {
+    "metaTitle": "Privacy policy",
+    "metaDescription": "New Life Foundation personal data processing policy.",
+    "title": "Privacy policy",
+    "intro": "The policy text is being prepared and will be published before the site launches.",
+    "pendingNotice": "This section requires legal review: the contact form collects health data — a special category of personal data.",
+    "sectionPending": "Text to be added.",
+    "sections": {
+      "controller": "Personal data controller",
+      "data": "What data we collect",
+      "purpose": "Purpose of processing",
+      "storage": "Storage and transfer",
+      "rights": "Your rights"
+    }
+  },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "body": "The link may be out of date, or the page may have been moved.",
+    "home": "Back to home"
   }
 }

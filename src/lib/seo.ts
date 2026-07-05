@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { getPathname } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
@@ -26,5 +27,22 @@ export function pageAlternates(
   return {
     canonical: getPathname({ locale, href }),
     languages,
+  };
+}
+
+/**
+ * Standard page metadata: title + description from the namespace's
+ * metaTitle/metaDescription keys, plus hreflang alternates.
+ */
+export async function pageMetadata(
+  locale: Locale,
+  namespace: string,
+  href: string,
+): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: pageAlternates(href, locale),
   };
 }
