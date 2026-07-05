@@ -34,6 +34,9 @@ Many visitors are in crisis, on phones — mobile-first, fast loading is critica
 - v2 (future, not now): interactive map — only after v1 ships and performance allows.
 
 ## Conventions
+- Next.js 16 differs from training data (e.g. proxy.ts replaces middleware.ts).
+  Before writing Next-specific code, read the relevant guide in
+  node_modules/next/dist/docs/ and heed deprecation notices. (See AGENTS.md.)
 - Server Components by default; add 'use client' only when needed
 - TypeScript strict mode; functional components; named exports
 - PascalCase components, camelCase functions/variables
