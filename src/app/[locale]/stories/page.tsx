@@ -24,9 +24,6 @@ export default async function StoriesPage({ params }: Props) {
       <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
         {t("title")}
       </h1>
-      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
-        {t("lead")}
-      </p>
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {STORY_SLUGS.map((slug) => (

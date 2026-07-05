@@ -38,6 +38,11 @@ export default async function StoryPage({ params }: Props) {
   const photos = STORY_PHOTOS[slug];
   const [mainPhoto, ...morePhotos] = photos;
   const title = t(`items.${slug}.title`);
+  // Empty array until the owner provides the story's text (see messages/*.json).
+  const sections = t.raw(`items.${slug}.sections`) as {
+    heading: string;
+    body: string;
+  }[];
 
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
@@ -52,8 +57,8 @@ export default async function StoryPage({ params }: Props) {
       </h1>
 
       {/* Unfiltered photos — no duotone here by design (treatment is for
-          previews only). Main photo full-size; any further photos (up to 2)
-          in a simple grid below. Real photos [TO BE PROVIDED]. */}
+          previews only). Main photo full-size; any further photos in a
+          simple grid below. */}
       {mainPhoto ? (
         <>
           <div className="relative mt-10 aspect-[3/2] overflow-hidden rounded-xl bg-sage">
@@ -67,7 +72,13 @@ export default async function StoryPage({ params }: Props) {
           </div>
           {morePhotos.length > 0 && (
             <div
-              className={`mt-3 grid gap-3 ${morePhotos.length > 1 ? "grid-cols-2" : ""}`}
+              className={`mt-3 grid gap-3 ${
+                morePhotos.length > 2
+                  ? "grid-cols-2 sm:grid-cols-3"
+                  : morePhotos.length > 1
+                    ? "grid-cols-2"
+                    : ""
+              }`}
             >
               {morePhotos.map((src, i) => (
                 <div
@@ -94,7 +105,30 @@ export default async function StoryPage({ params }: Props) {
         </div>
       )}
 
-      <p className="mt-10 leading-relaxed text-ink-soft">{t("storyPending")}</p>
+      {sections.length > 0 ? (
+        <div className="mt-10 space-y-8">
+          {sections.map((section) => (
+            <section key={section.heading}>
+              <h2 className="font-display text-2xl font-medium tracking-tight text-ink">
+                {section.heading}
+              </h2>
+              {/* Bodies may hold several paragraphs, separated by \n\n. */}
+              {section.body.split("\n\n").map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="mt-3 leading-relaxed text-ink-soft"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </section>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-10 leading-relaxed text-ink-soft">
+          {t("storyPending")}
+        </p>
+      )}
     </article>
   );
 }

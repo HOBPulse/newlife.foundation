@@ -91,23 +91,88 @@
     "metaTitle": "Stories",
     "metaDescription": "Real patient stories, published with their consent.",
     "title": "Patient stories",
-    "lead": "Real stories, published with the patients' consent. The texts are being prepared for publication.",
     "photoPending": "Photo to be added",
     "readMore": "Read the story",
     "backToStories": "All stories",
     "storyPending": "The full story will be published once prepared.",
     "items": {
       "story-1": {
-        "title": "Story 1 — to be added",
-        "excerpt": "The story text will appear once the publication is prepared."
+        "title": "Sviatoslav’s Story",
+        "excerpt": "At 1.5 years old, Sviatoslav was diagnosed with a brainstem tumor — a rare and complex condition causing neurological and respiratory complications.",
+        "sections": [
+          {
+            "heading": "Diagnosis in Ukraine 💔",
+            "body": "At 1.5 years old, Sviatoslav was diagnosed with a brainstem tumor — a rare and complex condition causing neurological and respiratory complications. Ukrainian doctors saw no path to treatment: a biopsy was considered too risky due to the likelihood of bleeding and complications, and surgery was deemed impossible."
+          },
+          {
+            "heading": "Searching for a clinic abroad",
+            "body": "The family turned to leading clinics in several countries — Israel, Turkey, Germany, Austria, Greece, and others. Every one declined: the complexity of Sviatoslav’s case exceeded what these clinics were prepared to take on."
+          },
+          {
+            "heading": "A solution found ❤️‍🩹",
+            "body": "The search led the family to Olesia, who specializes in finding treatment options for complex cases. She took on the search, consulting leading doctors and clinics worldwide, and ultimately found a solution: Sant Joan de Déu Hospital in Barcelona — one of Europe’s leading pediatric medical centers — agreed to take on Sviatoslav’s case."
+          },
+          {
+            "heading": "Transport",
+            "body": "Given the risks associated with a brainstem tumor, doctors deemed air travel dangerous. The decision was made to transport Sviatoslav by medical vehicle — from Dnipro to Barcelona, 3,550 km, a two-day journey. The boy, who required continuous oxygen support, was accompanied by his parents, Yevheniia and Oleksandr."
+          },
+          {
+            "heading": "Arrival in Barcelona 💗",
+            "body": "Sviatoslav was admitted to Sant Joan de Déu Hospital. He underwent an MRI, ultrasound, and necessary tests, and his tracheostomy tube was replaced. A medical board determined the next steps — including a biopsy and comprehensive diagnostics — to decide on a course of treatment."
+          },
+          {
+            "heading": "Now",
+            "body": "Sviatoslav remains under the care of doctors in Barcelona, receiving treatment that no other clinic the family approached was able to provide."
+          }
+        ]
       },
       "story-2": {
-        "title": "Story 2 — to be added",
-        "excerpt": "The story text will appear once the publication is prepared."
+        "title": "Mykyta’s Story",
+        "excerpt": "Mykyta is 4 years old. His condition suddenly worsened, and after examinations the family received a diagnosis: a brainstem tumor.",
+        "sections": [
+          {
+            "heading": "Diagnosis 💔",
+            "body": "Mykyta is 4 years old. His condition suddenly worsened, and after examinations the family received a diagnosis: a brainstem tumor.\n\nOn December 3, 2024, doctors diagnosed a benign tumor beneath the cerebellar tentorium, complicated by hydrocephalus and brain swelling.\n\nTwo surgeries followed: on December 10, 2024, a shunt was placed to manage the hydrocephalus; on December 24, 2024, the tumor was partially removed."
+          },
+          {
+            "heading": "Current situation",
+            "body": "The tumor’s complex location made full removal impossible in Ukraine. It continues to grow, with a risk of becoming malignant.\n\nOn December 26, 2024, bulbar and neurological complications — including loss of the cough reflex — required a tracheostomy. Mykyta is oxygen-dependent, relies on a ventilator, and needs an aspirator to clear his airways. Periodic drops in blood oxygen levels (SpO2) pose an ongoing threat to his life."
+          },
+          {
+            "heading": "Seeking help ❤️‍🩹",
+            "body": "Time is critical — each day the tumor presses harder on the brain, worsening the swelling. In Ukraine, doctors can offer only symptomatic care. The family has found a specialized clinic abroad, experienced in complex cases and ready to take on Mykyta’s treatment."
+          },
+          {
+            "heading": "A message from his parents 💗",
+            "body": "Mykyta’s parents hold onto hope for their son’s full recovery and are doing everything they can for his treatment."
+          }
+        ]
       },
       "story-3": {
-        "title": "Story 3 — to be added",
-        "excerpt": "The story text will appear once the publication is prepared."
+        "title": "Lyonichka’s Story",
+        "excerpt": "At 3 years old, Lyonichka’s life changed suddenly. A severe illness, later diagnosed as the rare West Nile virus, struck him without warning.",
+        "sections": [
+          {
+            "heading": "The onset of illness 💔",
+            "body": "At 3 years old, Lyonichka’s life changed suddenly. A severe illness, later diagnosed as the rare West Nile virus, struck him without warning. Within a short time, he lost the ability to move his arms and legs and could no longer breathe on his own — a ventilator became necessary to keep him alive."
+          },
+          {
+            "heading": "The prognosis",
+            "body": "Doctors at several clinics delivered difficult news to Lyonichka’s mother: her son would never breathe or move independently again. Even after thorough examinations in Germany, the prognosis remained unfavorable."
+          },
+          {
+            "heading": "Seeking help ❤️‍🩹",
+            "body": "Lyonichka’s family, supported by Olesia, the lead doctor, did not accept this prognosis. Olesia sent medical records to specialists worldwide, consulted with doctors, and explored treatment options in various countries. Her persistence led to the right choice: the ANAGENNISI clinic in Greece, where the GMTP team provided expert care for this complex case."
+          },
+          {
+            "heading": "The road to recovery",
+            "body": "Through specialized treatment and surgery on his diaphragm, Lyonichka began to overcome the effects of the illness. Gradually, he regained movement in his arms and legs and — remarkably — began breathing without the ventilator."
+          },
+          {
+            "heading": "Dreams for the future 💗",
+            "body": "Today, Lyonichka is learning new languages and dreams of becoming a blogger to inspire and help others. His journey continues, and his family remains committed to helping him thrive."
+          }
+        ]
       }
     }
   },
