@@ -17,12 +17,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(locale, "HomePage", "/");
 }
 
-const PROCESS_STEPS = [1, 2, 3, 4, 5];
+const PROCESS_STEPS = [1, 2, 3, 4] as const;
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("HomePage");
+  // Step titles come from the How We Work page so the teaser never drifts.
+  const tSteps = await getTranslations("HowWeWorkPage.steps");
 
   return (
     <>
@@ -61,17 +63,14 @@ export default async function HomePage({ params }: Props) {
           {t("process.title")}
         </h2>
         <p className="mt-3 max-w-xl text-ink-soft">{t("process.lead")}</p>
-        <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS_STEPS.map((n) => (
             <li key={n} className="reveal rounded-xl border border-sage p-5">
               <span className="tnum font-display text-2xl font-medium text-pine">
                 {String(n).padStart(2, "0")}
               </span>
               <p className="mt-2 text-sm font-medium text-ink">
-                {t("process.stepLabel")} {n}
-              </p>
-              <p className="mt-1 text-sm text-ink-soft">
-                {t("process.stepPending")}
+                {tSteps(`${n}.title`)}
               </p>
             </li>
           ))}

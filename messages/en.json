@@ -30,9 +30,7 @@
     "process": {
       "eyebrow": "Process",
       "title": "How we work",
-      "lead": "A clear path from first contact to treatment. The description of each step will be published.",
-      "stepLabel": "Step",
-      "stepPending": "Step title and description to be added",
+      "lead": "A clear path from first contact to treatment.",
       "more": "More about the process"
     },
     "stories": {
