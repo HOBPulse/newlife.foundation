@@ -91,12 +91,6 @@ body {
   stroke-dashoffset: 0;
 }
 
-/* The sweep dash rests just before the path start — invisible unless animated */
-.map-sweep {
-  stroke-dasharray: 0.14 1;
-  stroke-dashoffset: 0.14;
-}
-
 .map-dot,
 .map-hub-dot,
 .map-pulse {
@@ -148,38 +142,25 @@ body {
   }
 }
 
-/* Plane flies for ~20% of the cycle, then rests — keeps few planes airborne */
+/* Plane flies for ~25% of the cycle, then rests — a couple usually airborne */
 @keyframes map-flight {
   0% {
     offset-distance: 0%;
     opacity: 0;
   }
-  2% {
+  2.5% {
     opacity: 0.9;
   }
-  18% {
+  22.5% {
     opacity: 0.9;
   }
-  20% {
+  25% {
     offset-distance: 100%;
     opacity: 0;
   }
   100% {
     offset-distance: 100%;
     opacity: 0;
-  }
-}
-
-/* A short bright segment travels the line, then the line rests */
-@keyframes map-sweep {
-  0% {
-    stroke-dashoffset: 0.14;
-  }
-  22% {
-    stroke-dashoffset: -1;
-  }
-  100% {
-    stroke-dashoffset: -1;
   }
 }
 
@@ -189,7 +170,6 @@ body {
     stroke-dashoffset: 1;
   }
 
-  .routes-map .map-air,
   .routes-map .map-dot,
   .routes-map .map-hub-dot,
   .routes-map .map-label {
@@ -198,14 +178,6 @@ body {
 
   .routes-map.in-view .map-line {
     animation: draw-path var(--dur, 0.9s) ease-out var(--d, 0s) both;
-  }
-
-  .routes-map.in-view .map-sweep {
-    animation: map-sweep 8s ease-in-out var(--d, 0s) infinite;
-  }
-
-  .routes-map.in-view .map-air {
-    animation: map-fade 0.8s ease-out var(--d, 0s) both;
   }
 
   .routes-map.in-view .map-dot,
@@ -223,7 +195,7 @@ body {
 
   @supports (offset-path: path("M 0 0 L 1 1")) {
     .routes-map.in-view .map-plane {
-      animation: map-flight 26s linear var(--d, 0s) infinite;
+      animation: map-flight 20s linear var(--d, 0s) infinite;
     }
   }
 }

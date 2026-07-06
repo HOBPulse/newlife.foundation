@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { RevealOnView } from "@/components/RevealOnView";
 import {
   COUNTRIES,
+  CROSS_LINKS,
   HUBS,
   NETWORK_LINKS,
   ROUTE_GROUPS,
@@ -49,23 +50,31 @@ function project(p: { lat: number; lng: number }): Pt {
   };
 }
 
-function arcPath(from: Pt, to: Pt, kind: "air" | "ground" | "branch") {
-  const len = Math.hypot(to.x - from.x, to.y - from.y);
-  const lift =
-    kind === "air"
-      ? Math.min(len * 0.22, 110) + 16
-      : kind === "ground"
-        ? len * 0.07 + 6
-        : len * 0.1 + 3;
-  const mx = Math.round(((from.x + to.x) / 2) * 10) / 10;
-  const my = Math.round(((from.y + to.y) / 2 - lift) * 10) / 10;
+/* Unified line language: every route is a smooth quadratic arc. `bow` is the
+   signed curvature as a fraction of chord length — positive bows north
+   (great-circle feel), negative south; per-route values fan hub departures. */
+function arcPath(from: Pt, to: Pt, bow: number) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy) || 1;
+  let px = dy / len;
+  let py = -dx / len;
+  if (py > 0) {
+    px = -px;
+    py = -py;
+  }
+  const mx = Math.round(((from.x + to.x) / 2 + px * bow * len) * 10) / 10;
+  const my = Math.round(((from.y + to.y) / 2 + py * bow * len) * 10) / 10;
   return `M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`;
 }
 
-/* --- Route tree from ROUTE_GROUPS ---------------------------------------- */
+/* --- Route views from ROUTE_GROUPS / CROSS_LINKS / NETWORK_LINKS ---------- */
 
 const cityById = new Map<string, DestinationCity>(DEST_CITIES.map((c) => [c.id, c]));
 const hubById = new Map(HUBS.map((h) => [h.id, h]));
+const countryByCityId = new Map<string, string>(
+  COUNTRIES.flatMap((country) => country.cities.map((city) => [city.id, country.id])),
+);
 
 // Every destination city must be routed exactly once (entry or branch)
 {
@@ -78,15 +87,20 @@ const hubById = new Map(HUBS.map((h) => [h.id, h]));
   for (const id of routed) {
     if (!cityById.has(id)) throw new Error(`Unknown city in ROUTE_GROUPS: ${id}`);
   }
-  for (const g of ROUTE_GROUPS) {
-    if (!hubById.has(g.hub)) throw new Error(`Unknown hub in ROUTE_GROUPS: ${g.hub}`);
+  for (const g of [...ROUTE_GROUPS, ...CROSS_LINKS.map((c) => ({ hub: c.hub }))]) {
+    if (!hubById.has(g.hub)) throw new Error(`Unknown hub: ${g.hub}`);
+  }
+  for (const link of CROSS_LINKS) {
+    if (!cityById.has(link.to)) throw new Error(`Unknown city in CROSS_LINKS: ${link.to}`);
   }
 }
 
 const LINE_BASE_DELAY = 0.2;
-const LINE_STEP = 0.09;
+const LINE_STEP = 0.08;
 const LINE_DURATION = 0.9;
 const BRANCH_DURATION = 0.45;
+const DEFAULT_BOW = 0.14;
+const BRANCH_BOW = 0.1;
 /** When the one-shot entrance sequence has finished and ambient motion starts. */
 const SEQUENCE_END = 3.8;
 
@@ -95,6 +109,8 @@ type LineView = {
   d: string;
   air: boolean;
   delay: number;
+  thick: boolean;
+  country: string;
 };
 
 // Shortest main lines first, so the network grows outward from Ukraine
@@ -111,13 +127,14 @@ const BRANCHES: LineView[] = [];
 const cityDotDelay = new Map<string, number>();
 
 mainsUnordered.forEach((main, rank) => {
-  const air = !!main.entry.air;
   const delay = LINE_BASE_DELAY + rank * LINE_STEP;
   MAINS.push({
     key: `main-${main.entry.id}`,
-    d: arcPath(main.from, main.to, air ? "air" : "ground"),
-    air,
+    d: arcPath(main.from, main.to, main.group.bow ?? DEFAULT_BOW),
+    air: !!main.entry.air,
     delay,
+    thick: !!main.group.thick,
+    country: countryByCityId.get(main.entry.id)!,
   });
   cityDotDelay.set(main.entry.id, delay + LINE_DURATION * 0.85);
 
@@ -126,30 +143,45 @@ mainsUnordered.forEach((main, rank) => {
     const branchDelay = delay + LINE_DURATION + j * 0.15;
     BRANCHES.push({
       key: `branch-${branchId}`,
-      d: arcPath(main.to, project(branchCity), "branch"),
+      d: arcPath(main.to, project(branchCity), BRANCH_BOW),
       air: false,
       delay: branchDelay,
+      thick: false,
+      country: countryByCityId.get(branchId)!,
     });
     cityDotDelay.set(branchId, branchDelay + BRANCH_DURATION * 0.9);
   });
+});
+
+const CROSSES: LineView[] = CROSS_LINKS.map((link, i) => {
+  const city = cityById.get(link.to)!;
+  return {
+    key: `cross-${link.hub}-${link.to}`,
+    d: arcPath(project(hubById.get(link.hub)!), project(city), link.bow),
+    air: !!city.air,
+    delay: LINE_BASE_DELAY + (mainsUnordered.length + i) * LINE_STEP,
+    thick: false,
+    country: countryByCityId.get(link.to)!,
+  };
 });
 
 const NETWORK: LineView[] = NETWORK_LINKS.map(([fromId, toId], i) => {
   const a = cityById.get(fromId);
   const b = cityById.get(toId);
   if (!a || !b) throw new Error(`Unknown network link city: ${fromId}->${toId}`);
-  const air = !!(a.air || b.air);
   return {
     key: `net-${fromId}-${toId}`,
-    d: arcPath(project(a), project(b), air ? "air" : "ground"),
-    air,
-    delay: LINE_BASE_DELAY + (mainsUnordered.length + i) * LINE_STEP,
+    d: arcPath(project(a), project(b), DEFAULT_BOW),
+    air: !!(a.air || b.air),
+    delay: LINE_BASE_DELAY + (mainsUnordered.length + CROSS_LINKS.length + i) * LINE_STEP,
+    thick: false,
+    country: countryByCityId.get(fromId)!,
   };
 });
 
-const AIR_LINES = [...MAINS, ...NETWORK].filter((l) => l.air);
-/** Ground main lines get the periodic light sweep (branches stay quiet). */
-const SWEEP_LINES = [...MAINS, ...NETWORK].filter((l) => !l.air);
+const ALL_LINES = [...BRANCHES, ...MAINS, ...CROSSES, ...NETWORK];
+/** Planes fly every route that reaches an air-marked city. */
+const AIR_LINES = [...MAINS, ...CROSSES, ...NETWORK].filter((l) => l.air);
 
 /* --- Graticule ------------------------------------------------------------ */
 
@@ -162,6 +194,19 @@ function vars(seconds: number, extra?: CSSProperties): CSSProperties {
   return { "--d": `${seconds.toFixed(2)}s`, ...extra } as CSSProperties;
 }
 
+/* Hover/tap highlighting, generated per country id: pure CSS at runtime.
+   Hovering (or focusing) a country's label or dot dims every other country's
+   routes via filter — filter, not opacity, so it composes with the entrance
+   keyframes that already animate opacity with fill-mode: both. */
+const HIGHLIGHT_CSS = [
+  ".routes-svg [data-c] { transition: filter 0.25s ease; }",
+  ".routes-svg circle[data-c], .routes-svg text[data-c] { cursor: pointer; }",
+  ...COUNTRIES.map(({ id }) => {
+    const source = `circle[data-c="${id}"]:hover, text[data-c="${id}"]:hover, text[data-c="${id}"]:focus-within`;
+    return `.routes-svg:has(${source}) [data-c]:not([data-c="${id}"]) { filter: opacity(0.22); }`;
+  }),
+].join("\n");
+
 /* --- Component ------------------------------------------------------------ */
 
 export function RoutesMap() {
@@ -173,10 +218,12 @@ export function RoutesMap() {
       <div className="overflow-x-auto rounded-xl border border-sage bg-sage-soft">
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          className="block h-auto w-full min-w-[44rem]"
+          className="routes-svg block h-auto w-full min-w-[44rem]"
           role="img"
           aria-label={t("title")}
         >
+          <style>{HIGHLIGHT_CSS}</style>
+
           {/* Basemap — simplified Natural Earth country outlines, static */}
           <g>
             {BASEMAP_PATHS.map((d, i) => (
@@ -187,8 +234,8 @@ export function RoutesMap() {
                 fillOpacity="0.55"
                 fillRule="evenodd"
                 stroke="var(--color-pine)"
-                strokeOpacity="0.12"
-                strokeWidth="0.7"
+                strokeOpacity="0.3"
+                strokeWidth="0.8"
                 strokeLinejoin="round"
               />
             ))}
@@ -208,77 +255,37 @@ export function RoutesMap() {
             );
           })}
 
-          {/* Branch lines — thin in-country connections from the entry city */}
-          {BRANCHES.map((line) => (
+          {/* Route lines — one visual language; static once drawn in */}
+          {ALL_LINES.map((line) => (
             <path
               key={line.key}
               d={line.d}
               pathLength={1}
               className="map-line"
-              style={vars(line.delay, { "--dur": `${BRANCH_DURATION}s` } as CSSProperties)}
+              data-c={line.country}
+              style={vars(
+                line.delay,
+                line.key.startsWith("branch-")
+                  ? ({ "--dur": `${BRANCH_DURATION}s` } as CSSProperties)
+                  : undefined,
+              )}
               fill="none"
               stroke="var(--color-pine)"
-              strokeOpacity="0.55"
-              strokeWidth="1.1"
+              strokeOpacity={line.key.startsWith("branch-") ? 0.55 : 0.85}
+              strokeWidth={line.key.startsWith("branch-") ? 1.1 : line.thick ? 2.6 : 1.8}
               strokeLinecap="round"
             />
           ))}
 
-          {/* Main route lines */}
-          {[...MAINS, ...NETWORK].map((line) =>
-            line.air ? (
-              <path
-                key={line.key}
-                d={line.d}
-                className="map-air"
-                style={vars(line.delay)}
-                fill="none"
-                stroke="var(--color-pine)"
-                strokeOpacity="0.5"
-                strokeWidth="1.6"
-                strokeDasharray="5 4"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                key={line.key}
-                d={line.d}
-                pathLength={1}
-                className="map-line"
-                style={vars(line.delay)}
-                fill="none"
-                stroke="var(--color-pine)"
-                strokeOpacity="0.85"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            ),
-          )}
-
-          {/* Light sweep — a glint runs along each ground line, staggered */}
-          {SWEEP_LINES.map((line, i) => (
-            <path
-              key={`sweep-${line.key}`}
-              d={line.d}
-              pathLength={1}
-              className="map-sweep"
-              style={vars(SEQUENCE_END + 0.4 + i * 0.7)}
-              fill="none"
-              stroke="var(--color-paper)"
-              strokeOpacity="0.9"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-            />
-          ))}
-
-          {/* Plane glyphs looping along air arcs */}
+          {/* Plane glyphs — the only traveling elements */}
           {AIR_LINES.map((line, i) => (
             <path
               key={`plane-${line.key}`}
               d="M 7 0 L -5 3 L -2 0 L -5 -3 Z"
               className="map-plane"
+              data-c={line.country}
               fill="var(--color-pine-deep)"
-              style={vars(SEQUENCE_END + i * 2.2, {
+              style={vars(SEQUENCE_END + i * 1.4, {
                 offsetPath: `path("${line.d}")`,
                 offsetRotate: "auto",
               })}
@@ -296,6 +303,7 @@ export function RoutesMap() {
                   cy={pt.y}
                   r="3.2"
                   className="map-dot"
+                  data-c={country.id}
                   fill="var(--color-apricot)"
                   stroke="var(--color-paper)"
                   strokeWidth="0.8"
@@ -307,7 +315,7 @@ export function RoutesMap() {
             }),
           )}
 
-          {/* Country labels only — no city captions, no clutter */}
+          {/* Country labels only — always painted above the lines */}
           {COUNTRIES.map((country) => {
             const pts = country.cities.map(project);
             const [dx, dy] = country.labelOffset ?? [0, 0];
@@ -322,6 +330,8 @@ export function RoutesMap() {
                 y={y}
                 textAnchor={country.labelAnchor ?? "middle"}
                 className="map-label"
+                data-c={country.id}
+                tabIndex={0}
                 fontSize="12.5"
                 fill="var(--color-ink-soft)"
                 style={vars(delay)}
@@ -331,7 +341,7 @@ export function RoutesMap() {
             );
           })}
 
-          {/* Ukrainian hubs — larger dots, radar pulse, labelled */}
+          {/* Ukrainian hubs — larger dots, radar pulse, labelled; never dimmed */}
           {HUBS.map((hub, i) => {
             const pt = project(hub);
             return (

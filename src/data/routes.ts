@@ -38,7 +38,7 @@ export const HUBS: Hub[] = [
     name: { uk: "Київ", ru: "Киев", en: "Kyiv" },
     lat: 50.45,
     lng: 30.52,
-    label: { dx: 11, dy: 4, anchor: "start" },
+    label: { dx: 10, dy: 16, anchor: "start" },
   },
   {
     id: "dnipro",
@@ -66,7 +66,7 @@ export const HUBS: Hub[] = [
     name: { uk: "Одеса", ru: "Одесса", en: "Odesa" },
     lat: 46.48,
     lng: 30.72,
-    label: { dx: 11, dy: 5, anchor: "start" },
+    label: { dx: -11, dy: -8, anchor: "end" },
   },
 ];
 
@@ -161,7 +161,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "austria",
     name: { uk: "Австрія", ru: "Австрия", en: "Austria" },
-    labelOffset: [-18, 23],
+    labelOffset: [-36, 23],
     cities: [
       { id: "vienna", name: { uk: "Відень", ru: "Вена", en: "Vienna" }, lat: 48.21, lng: 16.37 },
     ],
@@ -169,7 +169,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "hungary",
     name: { uk: "Угорщина", ru: "Венгрия", en: "Hungary" },
-    labelOffset: [12, 13],
+    labelOffset: [12, 20],
     labelAnchor: "start",
     cities: [
       { id: "budapest", name: { uk: "Будапешт", ru: "Будапешт", en: "Budapest" }, lat: 47.5, lng: 19.04 },
@@ -188,7 +188,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "slovakia",
     name: { uk: "Словаччина", ru: "Словакия", en: "Slovakia" },
-    labelOffset: [3, 44],
+    labelOffset: [3, 50],
     cities: [
       { id: "bratislava", name: { uk: "Братислава", ru: "Братислава", en: "Bratislava" }, lat: 48.15, lng: 17.11 },
     ],
@@ -196,7 +196,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "slovenia",
     name: { uk: "Словенія", ru: "Словения", en: "Slovenia" },
-    labelOffset: [0, 16],
+    labelOffset: [0, 22],
     cities: [
       { id: "ljubljana", name: { uk: "Любляна", ru: "Любляна", en: "Ljubljana" }, lat: 46.06, lng: 14.51 },
     ],
@@ -285,39 +285,62 @@ export const NETWORK_LINKS: Array<[string, string]> = [
 
 /** Schematic hub assignment (owner-approved): one main line per group from a
  *  hub to the country's entry city, thin branches to the rest. Visual balance
- *  over geographic literalism — every hub carries visible routes. */
+ *  over geographic literalism — every hub carries visible routes.
+ *  `bow` is the signed arc curvature as a fraction of chord length (positive
+ *  bows north, airline-map style) — hand-tuned so routes leaving a hub fan
+ *  out at distinct angles. `thick` marks high-frequency trunks. */
 export type RouteGroup = {
   hub: string;
   entry: string;
   branches?: string[];
+  bow?: number;
+  thick?: boolean;
 };
 
 export const ROUTE_GROUPS: RouteGroup[] = [
-  // Kyiv — northern band
-  { hub: "kyiv", entry: "berlin", branches: ["hamburg"] },
-  { hub: "kyiv", entry: "warsaw", branches: ["gdansk", "lublin"] },
-  { hub: "kyiv", entry: "amsterdam", branches: ["utrecht"] },
-  { hub: "kyiv", entry: "vilnius", branches: ["kaunas", "klaipeda"] },
-  { hub: "kyiv", entry: "london" },
-  // Lviv — central and western Europe
-  { hub: "lviv", entry: "krakow", branches: ["przemysl", "bielsko-biala", "wroclaw"] },
-  { hub: "lviv", entry: "frankfurt", branches: ["marburg", "cologne", "bonn", "essen", "dusseldorf"] },
-  { hub: "lviv", entry: "prague", branches: ["brno", "olomouc"] },
-  { hub: "lviv", entry: "vienna" },
-  { hub: "lviv", entry: "bratislava" },
-  { hub: "lviv", entry: "budapest" },
-  { hub: "lviv", entry: "ljubljana" },
-  { hub: "lviv", entry: "zurich", branches: ["bern"] },
-  { hub: "lviv", entry: "rome", branches: ["milan", "palermo"] },
-  { hub: "lviv", entry: "paris", branches: ["lyon", "toulouse"] },
-  { hub: "lviv", entry: "barcelona", branches: ["madrid", "malaga"] },
-  { hub: "lviv", entry: "lisbon", branches: ["porto"] },
+  // Kyiv — northern band (nested westward fan: warsaw lowest, amsterdam highest)
+  { hub: "kyiv", entry: "berlin", branches: ["hamburg"], bow: 0.16, thick: true },
+  { hub: "kyiv", entry: "warsaw", branches: ["gdansk", "lublin"], bow: 0.1, thick: true },
+  { hub: "kyiv", entry: "amsterdam", branches: ["utrecht"], bow: 0.24 },
+  { hub: "kyiv", entry: "vilnius", branches: ["kaunas", "klaipeda"], bow: 0.08 },
+  { hub: "kyiv", entry: "london", bow: 0.32 },
+  // Lviv — central and western Europe (short spokes flat, long air arcs high)
+  { hub: "lviv", entry: "krakow", branches: ["przemysl", "bielsko-biala", "wroclaw"], bow: 0.1, thick: true },
+  { hub: "lviv", entry: "frankfurt", branches: ["marburg", "cologne", "bonn", "essen", "dusseldorf"], bow: 0.18, thick: true },
+  { hub: "lviv", entry: "prague", branches: ["brno", "olomouc"], bow: 0.14 },
+  { hub: "lviv", entry: "vienna", bow: 0.12 },
+  { hub: "lviv", entry: "bratislava", bow: 0.1 },
+  { hub: "lviv", entry: "budapest", bow: 0.08 },
+  { hub: "lviv", entry: "ljubljana", bow: 0.12 },
+  { hub: "lviv", entry: "zurich", branches: ["bern"], bow: 0.16 },
+  { hub: "lviv", entry: "rome", branches: ["milan", "palermo"], bow: 0.22 },
+  { hub: "lviv", entry: "paris", branches: ["lyon", "toulouse"], bow: 0.26 },
+  { hub: "lviv", entry: "barcelona", branches: ["madrid", "malaga"], bow: 0.3 },
+  { hub: "lviv", entry: "lisbon", branches: ["porto"], bow: 0.28 },
   // Odesa — the southern corridor
-  { hub: "odesa", entry: "istanbul", branches: ["bursa", "antalya", "alanya"] },
-  { hub: "odesa", entry: "thessaloniki" },
-  { hub: "odesa", entry: "tel-aviv" },
+  { hub: "odesa", entry: "istanbul", branches: ["bursa", "antalya", "alanya"], bow: 0.12 },
+  { hub: "odesa", entry: "thessaloniki", bow: 0.14 },
+  { hub: "odesa", entry: "tel-aviv", bow: 0.1 },
   // Dnipro / Kharkiv — the Caucasus and Central Asia
-  { hub: "dnipro", entry: "tbilisi" },
-  { hub: "dnipro", entry: "baku" },
-  { hub: "kharkiv", entry: "almaty" },
+  { hub: "dnipro", entry: "tbilisi", bow: 0.14 },
+  { hub: "dnipro", entry: "baku", bow: 0.18 },
+  { hub: "kharkiv", entry: "almaty", bow: 0.16 },
+];
+
+/** Cross-sector routes (owner-requested + trunk joins): extra hub→city links
+ *  so every hub radiates in several directions. They join the country trunks
+ *  at the entry cities. Southern bows (negative) thread the congested center. */
+export type CrossLink = {
+  hub: string;
+  to: string;
+  bow: number;
+};
+
+export const CROSS_LINKS: CrossLink[] = [
+  { hub: "kharkiv", to: "berlin", bow: 0.14 },
+  { hub: "kharkiv", to: "istanbul", bow: -0.14 },
+  { hub: "dnipro", to: "warsaw", bow: -0.12 },
+  { hub: "dnipro", to: "prague", bow: -0.12 },
+  { hub: "kyiv", to: "milan", bow: -0.14 },
+  { hub: "odesa", to: "barcelona", bow: -0.12 },
 ];
