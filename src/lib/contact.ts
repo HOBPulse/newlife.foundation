@@ -7,7 +7,8 @@ export type ContactFormState = {
   error?: "validation" | "delivery";
 };
 
-const FIELDS = ["name", "contact", "location", "message"] as const;
+const CONTACT_FIELDS = ["name", "phone", "location", "message"] as const;
+const PARTNER_FIELDS = ["name", "phone", "organization", "message"] as const;
 
 async function sendTelegram(text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -25,7 +26,7 @@ async function sendTelegram(text: string): Promise<void> {
   }
 }
 
-async function sendEmail(text: string): Promise<void> {
+async function sendEmail(subject: string, text: string): Promise<void> {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_EMAIL } =
     process.env;
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !CONTACT_EMAIL) {
@@ -40,50 +41,101 @@ async function sendEmail(text: string): Promise<void> {
   await transport.sendMail({
     from: SMTP_USER,
     to: CONTACT_EMAIL,
-    subject: "Request Help — website form",
+    subject,
     text,
   });
 }
 
-export async function submitContactRequest(
-  _prev: ContactFormState,
+function readFields(
   formData: FormData,
-): Promise<ContactFormState> {
+  required: readonly string[],
+  optional: readonly string[],
+): Record<string, string> | null {
   const values: Record<string, string> = {};
-  for (const field of FIELDS) {
+  for (const field of required) {
     const value = formData.get(field);
     if (typeof value !== "string" || value.trim() === "") {
-      return { status: "error", error: "validation" };
+      return null;
     }
     values[field] = value.trim();
   }
-  if (formData.get("consent") !== "on") {
-    return { status: "error", error: "validation" };
+  for (const field of optional) {
+    const value = formData.get(field);
+    if (typeof value === "string" && value.trim() !== "") {
+      values[field] = value.trim();
+    }
   }
+  if (formData.get("consent") !== "on") {
+    return null;
+  }
+  return values;
+}
 
-  const text = [
-    "Request Help — website form",
-    `Name: ${values.name}`,
-    `Contact: ${values.contact}`,
-    `Location: ${values.location}`,
-    `Situation: ${values.message}`,
-    "Consent to personal data processing: yes",
-  ].join("\n");
-
-  // Per brief: relay to email + Telegram; the request reaches the team
-  // if at least one channel delivers. No storage.
+// Per brief: relay to email + Telegram; the request reaches the team
+// if at least one channel delivers. No storage.
+async function relay(subject: string, text: string): Promise<boolean> {
   const results = await Promise.allSettled([
     sendTelegram(text),
-    sendEmail(text),
+    sendEmail(subject, text),
   ]);
   const delivered = results.some((r) => r.status === "fulfilled");
-
   if (!delivered) {
     for (const r of results) {
       if (r.status === "rejected") {
         console.error("Contact relay failed:", r.reason);
       }
     }
+  }
+  return delivered;
+}
+
+export async function submitContactRequest(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
+  const values = readFields(formData, CONTACT_FIELDS, ["telegram"]);
+  if (!values) {
+    return { status: "error", error: "validation" };
+  }
+
+  const subject = "Request Help — website form";
+  const text = [
+    subject,
+    `Name: ${values.name}`,
+    `Phone: ${values.phone}`,
+    ...(values.telegram ? [`Telegram: ${values.telegram}`] : []),
+    `Location: ${values.location}`,
+    `Situation: ${values.message}`,
+    "Consent to personal data processing: yes",
+  ].join("\n");
+
+  if (!(await relay(subject, text))) {
+    return { status: "error", error: "delivery" };
+  }
+  return { status: "success" };
+}
+
+export async function submitPartnerRequest(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
+  const values = readFields(formData, PARTNER_FIELDS, ["telegram"]);
+  if (!values) {
+    return { status: "error", error: "validation" };
+  }
+
+  const subject = "Partnership — website form";
+  const text = [
+    subject,
+    `Name: ${values.name}`,
+    `Phone: ${values.phone}`,
+    ...(values.telegram ? [`Telegram: ${values.telegram}`] : []),
+    `Organisation: ${values.organization}`,
+    `Description: ${values.message}`,
+    "Consent to personal data processing: yes",
+  ].join("\n");
+
+  if (!(await relay(subject, text))) {
     return { status: "error", error: "delivery" };
   }
   return { status: "success" };

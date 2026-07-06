@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
-  submitContactRequest,
+  submitPartnerRequest,
   type ContactFormState,
 } from "@/lib/contact";
 
@@ -13,10 +13,10 @@ const initialState: ContactFormState = { status: "idle" };
 const inputClass =
   "w-full rounded-lg border border-sage bg-white px-3 py-2.5 text-ink placeholder:text-ink-soft/60";
 
-export function ContactForm() {
-  const t = useTranslations("ContactPage.form");
+export function PartnerForm() {
+  const t = useTranslations("PartnerPage.form");
   const [state, formAction, pending] = useActionState(
-    submitContactRequest,
+    submitPartnerRequest,
     initialState,
   );
 
@@ -64,10 +64,17 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="location" className="mb-1.5 block text-sm font-medium">
-          {t("location")}
+        <label htmlFor="organization" className="mb-1.5 block text-sm font-medium">
+          {t("organization")}
         </label>
-        <input id="location" name="location" type="text" required className={inputClass} />
+        <input
+          id="organization"
+          name="organization"
+          type="text"
+          required
+          autoComplete="organization"
+          className={inputClass}
+        />
       </div>
 
       <div>

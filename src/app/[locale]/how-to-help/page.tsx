@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { Link, getPathname } from "@/i18n/navigation";
+import { ShareActions } from "@/components/ShareActions";
 import type { Locale } from "@/i18n/routing";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -17,6 +18,9 @@ export default async function HowToHelpPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("HowToHelpPage");
+  const tCommon = await getTranslations("Common");
+  // Localized site home as the shared URL (uk has no prefix).
+  const shareUrl = `${SITE_URL}${getPathname({ locale, href: "/" })}`;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -50,6 +54,11 @@ export default async function HowToHelpPage({ params }: Props) {
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">
             {t("ways.share.body")}
           </p>
+          <ShareActions
+            url={shareUrl}
+            title={tCommon("siteName")}
+            text={t("ways.share.shareText")}
+          />
         </section>
 
         <section className="reveal rounded-xl border border-sage p-6">
@@ -60,7 +69,7 @@ export default async function HowToHelpPage({ params }: Props) {
             {t("ways.partner.body")}
           </p>
           <Link
-            href="/contact"
+            href="/partner"
             className="mt-5 inline-block text-sm font-medium text-pine transition-colors hover:text-pine-deep"
           >
             {t("ways.partner.cta")} →

@@ -30,9 +30,33 @@ export function pageAlternates(
   };
 }
 
+// Default social preview image until a dedicated 1200×630 og image exists.
+export const OG_IMAGE = "/logo.png";
+
+/**
+ * Open Graph tags shared by all pages. Relative url/image resolve against
+ * metadataBase set in the locale layout.
+ */
+export function openGraph(
+  title: string,
+  description: string,
+  href: string,
+  locale: Locale,
+  image: string = OG_IMAGE,
+): Metadata["openGraph"] {
+  return {
+    type: "website",
+    siteName: "New Life Foundation",
+    title,
+    description,
+    url: getPathname({ locale, href }),
+    images: [{ url: image }],
+  };
+}
+
 /**
  * Standard page metadata: title + description from the namespace's
- * metaTitle/metaDescription keys, plus hreflang alternates.
+ * metaTitle/metaDescription keys, plus hreflang alternates and OG tags.
  */
 export async function pageMetadata(
   locale: Locale,
@@ -44,5 +68,6 @@ export async function pageMetadata(
     title: t("metaTitle"),
     description: t("metaDescription"),
     alternates: pageAlternates(href, locale),
+    openGraph: openGraph(t("metaTitle"), t("metaDescription"), href, locale),
   };
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { pageAlternates } from "@/lib/seo";
+import { openGraph, pageAlternates } from "@/lib/seo";
 import { isStorySlug, STORY_PHOTOS, STORY_SLUGS } from "@/lib/stories";
 
 type Props = {
@@ -21,10 +21,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
   const t = await getTranslations({ locale, namespace: "StoriesPage" });
+  const href = `/stories/${slug}`;
   return {
     title: t(`items.${slug}.title`),
     description: t(`items.${slug}.excerpt`),
-    alternates: pageAlternates(`/stories/${slug}`, locale),
+    alternates: pageAlternates(href, locale),
+    openGraph: openGraph(
+      t(`items.${slug}.title`),
+      t(`items.${slug}.excerpt`),
+      href,
+      locale,
+      STORY_PHOTOS[slug][0],
+    ),
   };
 }
 
