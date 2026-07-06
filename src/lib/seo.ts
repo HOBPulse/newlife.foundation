@@ -30,19 +30,24 @@ export function pageAlternates(
   };
 }
 
-// Default social preview image until a dedicated 1200×630 og image exists.
-export const OG_IMAGE = "/logo.png";
+// Default social preview images (1200×630), one per locale.
+// Regenerate with: node scripts/generate-og-images.mjs
+const OG_IMAGES: Record<Locale, string> = {
+  uk: "/og/og-uk.png",
+  ru: "/og/og-ru.png",
+  en: "/og/og-en.png",
+};
 
 /**
  * Open Graph tags shared by all pages. Relative url/image resolve against
- * metadataBase set in the locale layout.
+ * metadataBase set in the locale layout. All pages use the locale's default
+ * preview image — patient photos deliberately never become link previews.
  */
 export function openGraph(
   title: string,
   description: string,
   href: string,
   locale: Locale,
-  image: string = OG_IMAGE,
 ): Metadata["openGraph"] {
   return {
     type: "website",
@@ -50,7 +55,7 @@ export function openGraph(
     title,
     description,
     url: getPathname({ locale, href }),
-    images: [{ url: image }],
+    images: [{ url: OG_IMAGES[locale], width: 1200, height: 630 }],
   };
 }
 

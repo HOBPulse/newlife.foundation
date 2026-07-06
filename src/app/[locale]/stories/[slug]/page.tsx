@@ -31,7 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       t(`items.${slug}.excerpt`),
       href,
       locale,
-      STORY_PHOTOS[slug][0],
     ),
   };
 }
