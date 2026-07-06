@@ -6,110 +6,152 @@ import {
   COUNTRIES,
   HUBS,
   NETWORK_LINKS,
+  ROUTE_GROUPS,
   type DestinationCity,
-  type Hub,
 } from "@/data/routes";
+import { BASEMAP_PATHS, BASEMAP_VIEWBOX } from "@/data/basemap";
 
-/* --- Projection (equirectangular, standard parallel 48°N) --------------- */
+/* --- Projection ----------------------------------------------------------
+   Equirectangular (standard parallel 48°N) with a slight vertical stretch:
+   this is a schematic map, and the extra height opens up the dense European
+   cluster (per owner: visual balance beats geographic literalism). */
 
 const DEG = Math.PI / 180;
 const K = Math.cos(48 * DEG);
+const V = 1.2; // vertical exaggeration
 
 const DEST_CITIES = COUNTRIES.flatMap((country) => country.cities);
 const ALL_POINTS: Array<{ lat: number; lng: number }> = [...HUBS, ...DEST_CITIES];
 
-const LNG_MIN = Math.min(...ALL_POINTS.map((p) => p.lng)) - 2.5;
-const LNG_MAX = Math.max(...ALL_POINTS.map((p) => p.lng)) + 2.5;
-const LAT_MIN = Math.min(...ALL_POINTS.map((p) => p.lat)) - 1.7;
-const LAT_MAX = Math.max(...ALL_POINTS.map((p) => p.lat)) + 2.5;
+const LNG_MIN = Math.min(...ALL_POINTS.map((p) => p.lng)) - 1.5;
+const LNG_MAX = Math.max(...ALL_POINTS.map((p) => p.lng)) + 1.5;
+const LAT_MIN = Math.min(...ALL_POINTS.map((p) => p.lat)) - 1.2;
+const LAT_MAX = Math.max(...ALL_POINTS.map((p) => p.lat)) + 1.5;
 
 const W = 1000;
 const S = W / ((LNG_MAX - LNG_MIN) * K);
-const H = Math.round((LAT_MAX - LAT_MIN) * S);
+const H = Math.round((LAT_MAX - LAT_MIN) * S * V);
+
+// The basemap is pre-projected by scripts/generate-basemap.mjs with these
+// exact parameters — fail the build rather than render a misaligned backdrop.
+if (BASEMAP_VIEWBOX.w !== W || BASEMAP_VIEWBOX.h !== H) {
+  throw new Error(
+    `Basemap viewBox ${BASEMAP_VIEWBOX.w}x${BASEMAP_VIEWBOX.h} != map ${W}x${H} — run node scripts/generate-basemap.mjs`,
+  );
+}
 
 type Pt = { x: number; y: number };
 
 function project(p: { lat: number; lng: number }): Pt {
   return {
     x: Math.round((p.lng - LNG_MIN) * K * S * 10) / 10,
-    y: Math.round((LAT_MAX - p.lat) * S * 10) / 10,
+    y: Math.round((LAT_MAX - p.lat) * S * V * 10) / 10,
   };
 }
 
-/* --- Routes: each destination connects to its NEAREST Ukrainian hub ----- */
-
-function degDistance(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
-  const kMid = Math.cos(((a.lat + b.lat) / 2) * DEG);
-  return Math.hypot((a.lng - b.lng) * kMid, a.lat - b.lat);
-}
-
-function nearestHub(city: DestinationCity): Hub {
-  return HUBS.reduce((best, hub) =>
-    degDistance(hub, city) < degDistance(best, city) ? hub : best,
-  );
-}
-
-function arcPath(from: Pt, to: Pt, air: boolean) {
+function arcPath(from: Pt, to: Pt, kind: "air" | "ground" | "branch") {
   const len = Math.hypot(to.x - from.x, to.y - from.y);
-  // Air arcs lift high above the chord; ground routes stay close to it
-  const lift = air ? Math.min(len * 0.22, 110) + 16 : len * 0.07 + 6;
+  const lift =
+    kind === "air"
+      ? Math.min(len * 0.22, 110) + 16
+      : kind === "ground"
+        ? len * 0.07 + 6
+        : len * 0.1 + 3;
   const mx = Math.round(((from.x + to.x) / 2) * 10) / 10;
   const my = Math.round(((from.y + to.y) / 2 - lift) * 10) / 10;
   return `M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`;
 }
 
-type RouteView = {
-  key: string;
-  d: string;
-  air: boolean;
-  lineDelay: number;
-};
+/* --- Route tree from ROUTE_GROUPS ---------------------------------------- */
+
+const cityById = new Map<string, DestinationCity>(DEST_CITIES.map((c) => [c.id, c]));
+const hubById = new Map(HUBS.map((h) => [h.id, h]));
+
+// Every destination city must be routed exactly once (entry or branch)
+{
+  const routed = ROUTE_GROUPS.flatMap((g) => [g.entry, ...(g.branches ?? [])]);
+  const routedSet = new Set(routed);
+  if (routed.length !== routedSet.size) throw new Error("Duplicate city in ROUTE_GROUPS");
+  for (const city of DEST_CITIES) {
+    if (!routedSet.has(city.id)) throw new Error(`Unrouted city: ${city.id}`);
+  }
+  for (const id of routed) {
+    if (!cityById.has(id)) throw new Error(`Unknown city in ROUTE_GROUPS: ${id}`);
+  }
+  for (const g of ROUTE_GROUPS) {
+    if (!hubById.has(g.hub)) throw new Error(`Unknown hub in ROUTE_GROUPS: ${g.hub}`);
+  }
+}
 
 const LINE_BASE_DELAY = 0.2;
-const LINE_STEP = 0.045;
+const LINE_STEP = 0.09;
 const LINE_DURATION = 0.9;
+const BRANCH_DURATION = 0.45;
 /** When the one-shot entrance sequence has finished and ambient motion starts. */
 const SEQUENCE_END = 3.8;
 
-// Shortest routes first, so the network grows outward from Ukraine
-const hubRoutes = DEST_CITIES.map((city) => {
-  const hub = nearestHub(city);
+type LineView = {
+  key: string;
+  d: string;
+  air: boolean;
+  delay: number;
+};
+
+// Shortest main lines first, so the network grows outward from Ukraine
+const mainsUnordered = ROUTE_GROUPS.map((group) => {
+  const hub = hubById.get(group.hub)!;
+  const entry = cityById.get(group.entry)!;
   const from = project(hub);
-  const to = project(city);
-  return { city, from, to, len: Math.hypot(to.x - from.x, to.y - from.y) };
+  const to = project(entry);
+  return { group, entry, from, to, len: Math.hypot(to.x - from.x, to.y - from.y) };
 }).sort((a, b) => a.len - b.len);
 
-const cityDotDelay = new Map<string, number>(
-  hubRoutes.map((r, i) => [r.city.id, LINE_BASE_DELAY + i * LINE_STEP + LINE_DURATION * 0.85]),
-);
+const MAINS: LineView[] = [];
+const BRANCHES: LineView[] = [];
+const cityDotDelay = new Map<string, number>();
 
-const cityById = new Map(DEST_CITIES.map((city) => [city.id, city]));
+mainsUnordered.forEach((main, rank) => {
+  const air = !!main.entry.air;
+  const delay = LINE_BASE_DELAY + rank * LINE_STEP;
+  MAINS.push({
+    key: `main-${main.entry.id}`,
+    d: arcPath(main.from, main.to, air ? "air" : "ground"),
+    air,
+    delay,
+  });
+  cityDotDelay.set(main.entry.id, delay + LINE_DURATION * 0.85);
 
-const ROUTES: RouteView[] = [
-  ...hubRoutes.map((r, i) => ({
-    key: `hub-${r.city.id}`,
-    d: arcPath(r.from, r.to, !!r.city.air),
-    air: !!r.city.air,
-    lineDelay: LINE_BASE_DELAY + i * LINE_STEP,
-  })),
-  ...NETWORK_LINKS.map(([fromId, toId], i) => {
-    const a = cityById.get(fromId);
-    const b = cityById.get(toId);
-    if (!a || !b) throw new Error(`Unknown network link city: ${fromId}->${toId}`);
-    return {
-      key: `net-${fromId}-${toId}`,
-      d: arcPath(project(a), project(b), !!(a.air || b.air)),
-      air: !!(a.air || b.air),
-      lineDelay: LINE_BASE_DELAY + (hubRoutes.length + i) * LINE_STEP,
-    };
-  }),
-];
+  (main.group.branches ?? []).forEach((branchId, j) => {
+    const branchCity = cityById.get(branchId)!;
+    const branchDelay = delay + LINE_DURATION + j * 0.15;
+    BRANCHES.push({
+      key: `branch-${branchId}`,
+      d: arcPath(main.to, project(branchCity), "branch"),
+      air: false,
+      delay: branchDelay,
+    });
+    cityDotDelay.set(branchId, branchDelay + BRANCH_DURATION * 0.9);
+  });
+});
 
-const AIR_ROUTES = ROUTES.filter((r) => r.air);
-// A subtle traveling dot on every 5th ground route — kept sparse on purpose
-const FLOW_ROUTES = ROUTES.filter((r) => !r.air).filter((_, i) => i % 5 === 0);
+const NETWORK: LineView[] = NETWORK_LINKS.map(([fromId, toId], i) => {
+  const a = cityById.get(fromId);
+  const b = cityById.get(toId);
+  if (!a || !b) throw new Error(`Unknown network link city: ${fromId}->${toId}`);
+  const air = !!(a.air || b.air);
+  return {
+    key: `net-${fromId}-${toId}`,
+    d: arcPath(project(a), project(b), air ? "air" : "ground"),
+    air,
+    delay: LINE_BASE_DELAY + (mainsUnordered.length + i) * LINE_STEP,
+  };
+});
 
-/* --- Graticule ----------------------------------------------------------- */
+const AIR_LINES = [...MAINS, ...NETWORK].filter((l) => l.air);
+/** Ground main lines get the periodic light sweep (branches stay quiet). */
+const SWEEP_LINES = [...MAINS, ...NETWORK].filter((l) => !l.air);
+
+/* --- Graticule ------------------------------------------------------------ */
 
 const MERIDIANS: number[] = [];
 for (let lng = Math.ceil(LNG_MIN / 10) * 10; lng < LNG_MAX; lng += 10) MERIDIANS.push(lng);
@@ -135,6 +177,23 @@ export function RoutesMap() {
           role="img"
           aria-label={t("title")}
         >
+          {/* Basemap — simplified Natural Earth country outlines, static */}
+          <g>
+            {BASEMAP_PATHS.map((d, i) => (
+              <path
+                key={i}
+                d={d}
+                fill="var(--color-sage)"
+                fillOpacity="0.55"
+                fillRule="evenodd"
+                stroke="var(--color-pine)"
+                strokeOpacity="0.12"
+                strokeWidth="0.7"
+                strokeLinejoin="round"
+              />
+            ))}
+          </g>
+
           {/* Graticule — quiet texture, no geography claims */}
           {MERIDIANS.map((lng) => {
             const x = project({ lat: LAT_MAX, lng }).x;
@@ -149,14 +208,30 @@ export function RoutesMap() {
             );
           })}
 
-          {/* Route lines */}
-          {ROUTES.map((route) =>
-            route.air ? (
+          {/* Branch lines — thin in-country connections from the entry city */}
+          {BRANCHES.map((line) => (
+            <path
+              key={line.key}
+              d={line.d}
+              pathLength={1}
+              className="map-line"
+              style={vars(line.delay, { "--dur": `${BRANCH_DURATION}s` } as CSSProperties)}
+              fill="none"
+              stroke="var(--color-pine)"
+              strokeOpacity="0.55"
+              strokeWidth="1.1"
+              strokeLinecap="round"
+            />
+          ))}
+
+          {/* Main route lines */}
+          {[...MAINS, ...NETWORK].map((line) =>
+            line.air ? (
               <path
-                key={route.key}
-                d={route.d}
+                key={line.key}
+                d={line.d}
                 className="map-air"
-                style={vars(route.lineDelay)}
+                style={vars(line.delay)}
                 fill="none"
                 stroke="var(--color-pine)"
                 strokeOpacity="0.5"
@@ -166,11 +241,11 @@ export function RoutesMap() {
               />
             ) : (
               <path
-                key={route.key}
-                d={route.d}
+                key={line.key}
+                d={line.d}
                 pathLength={1}
                 className="map-line"
-                style={vars(route.lineDelay)}
+                style={vars(line.delay)}
                 fill="none"
                 stroke="var(--color-pine)"
                 strokeOpacity="0.85"
@@ -180,26 +255,31 @@ export function RoutesMap() {
             ),
           )}
 
-          {/* Occasional pulse dots traveling along ground routes (both ways) */}
-          {FLOW_ROUTES.map((route, i) => (
-            <circle
-              key={`flow-${route.key}`}
-              r="2.6"
-              className="map-flow"
-              fill="var(--color-apricot)"
-              style={vars(SEQUENCE_END + 0.7 + i * 2.3, { offsetPath: `path("${route.d}")` })}
+          {/* Light sweep — a glint runs along each ground line, staggered */}
+          {SWEEP_LINES.map((line, i) => (
+            <path
+              key={`sweep-${line.key}`}
+              d={line.d}
+              pathLength={1}
+              className="map-sweep"
+              style={vars(SEQUENCE_END + 0.4 + i * 0.7)}
+              fill="none"
+              stroke="var(--color-paper)"
+              strokeOpacity="0.9"
+              strokeWidth="2.4"
+              strokeLinecap="round"
             />
           ))}
 
           {/* Plane glyphs looping along air arcs */}
-          {AIR_ROUTES.map((route, i) => (
+          {AIR_LINES.map((line, i) => (
             <path
-              key={`plane-${route.key}`}
+              key={`plane-${line.key}`}
               d="M 7 0 L -5 3 L -2 0 L -5 -3 Z"
               className="map-plane"
               fill="var(--color-pine-deep)"
-              style={vars(SEQUENCE_END + i * 1.9, {
-                offsetPath: `path("${route.d}")`,
+              style={vars(SEQUENCE_END + i * 2.2, {
+                offsetPath: `path("${line.d}")`,
                 offsetRotate: "auto",
               })}
             />

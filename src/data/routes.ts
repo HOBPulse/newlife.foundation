@@ -38,14 +38,14 @@ export const HUBS: Hub[] = [
     name: { uk: "Київ", ru: "Киев", en: "Kyiv" },
     lat: 50.45,
     lng: 30.52,
-    label: { dx: 0, dy: -11, anchor: "middle" },
+    label: { dx: 11, dy: 4, anchor: "start" },
   },
   {
     id: "dnipro",
     name: { uk: "Дніпро", ru: "Днепр", en: "Dnipro" },
     lat: 48.46,
     lng: 35.04,
-    label: { dx: 9, dy: 15, anchor: "start" },
+    label: { dx: -10, dy: 5, anchor: "end" },
   },
   {
     id: "lviv",
@@ -59,14 +59,14 @@ export const HUBS: Hub[] = [
     name: { uk: "Харків", ru: "Харьков", en: "Kharkiv" },
     lat: 49.99,
     lng: 36.23,
-    label: { dx: 9, dy: -7, anchor: "start" },
+    label: { dx: 0, dy: -12, anchor: "middle" },
   },
   {
     id: "odesa",
     name: { uk: "Одеса", ru: "Одесса", en: "Odesa" },
     lat: 46.48,
     lng: 30.72,
-    label: { dx: 0, dy: 16, anchor: "middle" },
+    label: { dx: 11, dy: 5, anchor: "start" },
   },
 ];
 
@@ -103,7 +103,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "spain",
     name: { uk: "Іспанія", ru: "Испания", en: "Spain" },
-    labelOffset: [10, 4],
+    labelOffset: [-24, 14],
     cities: [
       { id: "barcelona", name: { uk: "Барселона", ru: "Барселона", en: "Barcelona" }, lat: 41.39, lng: 2.17, air: true },
       { id: "malaga", name: { uk: "Малага", ru: "Малага", en: "Málaga" }, lat: 36.72, lng: -4.42, air: true },
@@ -122,7 +122,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "germany",
     name: { uk: "Німеччина", ru: "Германия", en: "Germany" },
-    labelOffset: [-8, -18],
+    labelOffset: [-11, 56],
     cities: [
       { id: "berlin", name: { uk: "Берлін", ru: "Берлин", en: "Berlin" }, lat: 52.52, lng: 13.41 },
       { id: "frankfurt", name: { uk: "Франкфурт-на-Майні", ru: "Франкфурт-на-Майне", en: "Frankfurt am Main" }, lat: 50.11, lng: 8.68 },
@@ -137,7 +137,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "poland",
     name: { uk: "Польща", ru: "Польша", en: "Poland" },
-    labelOffset: [-16, -32],
+    labelOffset: [-31, -35],
     cities: [
       { id: "wroclaw", name: { uk: "Вроцлав", ru: "Вроцлав", en: "Wrocław" }, lat: 51.11, lng: 17.03 },
       { id: "warsaw", name: { uk: "Варшава", ru: "Варшава", en: "Warsaw" }, lat: 52.23, lng: 21.01 },
@@ -151,7 +151,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "france",
     name: { uk: "Франція", ru: "Франция", en: "France" },
-    labelOffset: [-24, 10],
+    labelOffset: [-42, 6],
     cities: [
       { id: "paris", name: { uk: "Париж", ru: "Париж", en: "Paris" }, lat: 48.86, lng: 2.35, air: true },
       { id: "lyon", name: { uk: "Ліон", ru: "Лион", en: "Lyon" }, lat: 45.76, lng: 4.83 },
@@ -161,8 +161,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "austria",
     name: { uk: "Австрія", ru: "Австрия", en: "Austria" },
-    labelOffset: [-12, 8],
-    labelAnchor: "end",
+    labelOffset: [-18, 23],
     cities: [
       { id: "vienna", name: { uk: "Відень", ru: "Вена", en: "Vienna" }, lat: 48.21, lng: 16.37 },
     ],
@@ -170,7 +169,8 @@ export const COUNTRIES: Country[] = [
   {
     id: "hungary",
     name: { uk: "Угорщина", ru: "Венгрия", en: "Hungary" },
-    labelOffset: [0, 17],
+    labelOffset: [12, 13],
+    labelAnchor: "start",
     cities: [
       { id: "budapest", name: { uk: "Будапешт", ru: "Будапешт", en: "Budapest" }, lat: 47.5, lng: 19.04 },
     ],
@@ -178,7 +178,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "czechia",
     name: { uk: "Чехія", ru: "Чехия", en: "Czechia" },
-    labelOffset: [-48, 8],
+    labelOffset: [-18, -28],
     cities: [
       { id: "prague", name: { uk: "Прага", ru: "Прага", en: "Prague" }, lat: 50.08, lng: 14.44 },
       { id: "olomouc", name: { uk: "Оломоуць", ru: "Оломоуц", en: "Olomouc" }, lat: 49.59, lng: 17.25 },
@@ -188,8 +188,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "slovakia",
     name: { uk: "Словаччина", ru: "Словакия", en: "Slovakia" },
-    labelOffset: [10, -7],
-    labelAnchor: "start",
+    labelOffset: [3, 44],
     cities: [
       { id: "bratislava", name: { uk: "Братислава", ru: "Братислава", en: "Bratislava" }, lat: 48.15, lng: 17.11 },
     ],
@@ -205,7 +204,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "netherlands",
     name: { uk: "Нідерланди", ru: "Нидерланды", en: "Netherlands" },
-    labelOffset: [0, -16],
+    labelOffset: [-24, -20],
     cities: [
       { id: "utrecht", name: { uk: "Утрехт", ru: "Утрехт", en: "Utrecht" }, lat: 52.09, lng: 5.12 },
       { id: "amsterdam", name: { uk: "Амстердам", ru: "Амстердам", en: "Amsterdam" }, lat: 52.37, lng: 4.9 },
@@ -259,7 +258,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "portugal",
     name: { uk: "Португалія", ru: "Португалия", en: "Portugal" },
-    labelOffset: [6, 32],
+    labelOffset: [6, 44],
     labelAnchor: "start",
     cities: [
       { id: "porto", name: { uk: "Порту", ru: "Порту", en: "Porto" }, lat: 41.15, lng: -8.61, air: true },
@@ -269,7 +268,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "kazakhstan",
     name: { uk: "Казахстан", ru: "Казахстан", en: "Kazakhstan" },
-    labelOffset: [-8, -14],
+    labelOffset: [8, 20],
     labelAnchor: "end",
     cities: [
       { id: "almaty", name: { uk: "Алмати", ru: "Алматы", en: "Almaty" }, lat: 43.24, lng: 76.95, air: true },
@@ -282,4 +281,43 @@ export const NETWORK_LINKS: Array<[string, string]> = [
   ["rome", "warsaw"],
   ["almaty", "marburg"],
   ["milan", "berlin"],
+];
+
+/** Schematic hub assignment (owner-approved): one main line per group from a
+ *  hub to the country's entry city, thin branches to the rest. Visual balance
+ *  over geographic literalism — every hub carries visible routes. */
+export type RouteGroup = {
+  hub: string;
+  entry: string;
+  branches?: string[];
+};
+
+export const ROUTE_GROUPS: RouteGroup[] = [
+  // Kyiv — northern band
+  { hub: "kyiv", entry: "berlin", branches: ["hamburg"] },
+  { hub: "kyiv", entry: "warsaw", branches: ["gdansk", "lublin"] },
+  { hub: "kyiv", entry: "amsterdam", branches: ["utrecht"] },
+  { hub: "kyiv", entry: "vilnius", branches: ["kaunas", "klaipeda"] },
+  { hub: "kyiv", entry: "london" },
+  // Lviv — central and western Europe
+  { hub: "lviv", entry: "krakow", branches: ["przemysl", "bielsko-biala", "wroclaw"] },
+  { hub: "lviv", entry: "frankfurt", branches: ["marburg", "cologne", "bonn", "essen", "dusseldorf"] },
+  { hub: "lviv", entry: "prague", branches: ["brno", "olomouc"] },
+  { hub: "lviv", entry: "vienna" },
+  { hub: "lviv", entry: "bratislava" },
+  { hub: "lviv", entry: "budapest" },
+  { hub: "lviv", entry: "ljubljana" },
+  { hub: "lviv", entry: "zurich", branches: ["bern"] },
+  { hub: "lviv", entry: "rome", branches: ["milan", "palermo"] },
+  { hub: "lviv", entry: "paris", branches: ["lyon", "toulouse"] },
+  { hub: "lviv", entry: "barcelona", branches: ["madrid", "malaga"] },
+  { hub: "lviv", entry: "lisbon", branches: ["porto"] },
+  // Odesa — the southern corridor
+  { hub: "odesa", entry: "istanbul", branches: ["bursa", "antalya", "alanya"] },
+  { hub: "odesa", entry: "thessaloniki" },
+  { hub: "odesa", entry: "tel-aviv" },
+  // Dnipro / Kharkiv — the Caucasus and Central Asia
+  { hub: "dnipro", entry: "tbilisi" },
+  { hub: "dnipro", entry: "baku" },
+  { hub: "kharkiv", entry: "almaty" },
 ];
