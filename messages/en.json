@@ -77,10 +77,25 @@
     "metaTitle": "How we work",
     "metaDescription": "The foundation's process, step by step: from first contact to organising treatment.",
     "title": "How we work",
-    "lead": "The foundation's process, step by step. The description of each step will be published soon.",
-    "stepLabel": "Step",
-    "stepPendingTitle": "Step title to be added",
-    "stepPendingBody": "Step description to be added.",
+    "lead": "The foundation's process, step by step.",
+    "steps": {
+      "1": {
+        "title": "Consultation",
+        "body": "You tell us about your situation and share the medical documents. We help you make sense of it: if needed, we arrange to clarify, confirm, or review the diagnosis and get opinions from other specialists."
+      },
+      "2": {
+        "title": "Finding treatment",
+        "body": "We search for clinics and specialists experienced with this specific diagnosis — at home and abroad. We come back to you with concrete options."
+      },
+      "3": {
+        "title": "Arranging transportation",
+        "body": "Once the clinic is confirmed, we organize the journey. This includes critically ill patients: with medical escort en route when their condition requires it."
+      },
+      "4": {
+        "title": "Ongoing support",
+        "body": "We are with you all the way — from the first request until you arrive for treatment. After that, we stay in touch and, when support is needed, help in whatever way we can."
+      }
+    },
     "cta": {
       "title": "Need help?",
       "body": "Fill in the form on the contact page and we will get back to you.",

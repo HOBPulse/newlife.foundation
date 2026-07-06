@@ -13,8 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(locale, "HowWeWorkPage", "/how-we-work");
 }
 
-// The 4–5 step process text is [TO BE PROVIDED] by the owner — never invented.
-const PROCESS_STEPS = [1, 2, 3, 4, 5];
+const PROCESS_STEPS = [1, 2, 3, 4] as const;
 
 export default async function HowWeWorkPage({ params }: Props) {
   const { locale } = await params;
@@ -38,10 +37,10 @@ export default async function HowWeWorkPage({ params }: Props) {
             </span>
             <div className="border-l border-sage pl-5">
               <h2 className="font-medium text-ink">
-                {t("stepLabel")} {n}: {t("stepPendingTitle")}
+                {t(`steps.${n}.title`)}
               </h2>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                {t("stepPendingBody")}
+                {t(`steps.${n}.body`)}
               </p>
             </div>
           </li>
