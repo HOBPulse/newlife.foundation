@@ -117,11 +117,10 @@ export default async function HomePage({ params }: Props) {
         <h2 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink">
           {t("map.title")}
         </h2>
-        <p className="mt-3 max-w-xl text-ink-soft">{t("map.lead")}</p>
+        <p className="mt-3 max-w-xl text-lg text-ink-soft">{t("map.lead")}</p>
         <div className="mt-10">
           <RoutesMap />
         </div>
-        <p className="tnum mt-4 text-sm text-ink-soft">{t("map.statsPending")}</p>
       </section>
 
       {/* Donate band */}

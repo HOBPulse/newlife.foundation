@@ -42,9 +42,8 @@
     "map": {
       "eyebrow": "Geography",
       "title": "Routes of help",
-      "lead": "Aggregated medical transport routes — never linked to a specific patient.",
-      "pending": "Route data to be added",
-      "statsPending": "Aggregate figures will be published"
+      "lead": "Every line on this map is someone's way to treatment.",
+      "caption": "The map shows a selection of the routes we have transported patients along — from all across Ukraine."
     },
     "donate": {
       "title": "Support the foundation's work",

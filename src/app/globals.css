@@ -80,3 +80,150 @@ body {
   }
 }
 
+/* --- Transport routes map ---------------------------------------------
+   All motion is CSS keyframes; RevealOnView only stamps `.in-view` once.
+   The entrance sequence (lines draw, dots pop) plays once; afterwards only
+   planes, hub pulse rings and occasional route dots keep moving.
+   Fallbacks: no JS (`scripting`), reduced motion, or no offset-path support
+   all degrade to a fully drawn static map. */
+.map-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.map-dot,
+.map-hub-dot,
+.map-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.map-pulse,
+.map-plane,
+.map-flow {
+  opacity: 0;
+}
+
+@keyframes map-dot-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes map-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes map-pulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Plane flies for ~20% of the cycle, then rests — keeps few planes airborne */
+@keyframes map-flight {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  2% {
+    opacity: 0.9;
+  }
+  18% {
+    opacity: 0.9;
+  }
+  20% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes map-flow {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.65;
+  }
+  88% {
+    opacity: 0.65;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  /* Hidden initial state, revealed by the one-shot entrance sequence */
+  .routes-map .map-line {
+    stroke-dashoffset: 1;
+  }
+
+  .routes-map .map-air,
+  .routes-map .map-dot,
+  .routes-map .map-hub-dot,
+  .routes-map .map-label {
+    opacity: 0;
+  }
+
+  .routes-map.in-view .map-line {
+    animation: draw-path 0.9s ease-out var(--d, 0s) both;
+  }
+
+  .routes-map.in-view .map-air {
+    animation: map-fade 0.8s ease-out var(--d, 0s) both;
+  }
+
+  .routes-map.in-view .map-dot,
+  .routes-map.in-view .map-hub-dot {
+    animation: map-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+  }
+
+  .routes-map.in-view .map-label {
+    animation: map-fade 0.7s ease-out var(--d, 0s) both;
+  }
+
+  .routes-map.in-view .map-pulse {
+    animation: map-pulse 3.2s ease-out var(--d, 0s) infinite;
+  }
+
+  @supports (offset-path: path("M 0 0 L 1 1")) {
+    .routes-map.in-view .map-plane {
+      animation: map-flight 26s linear var(--d, 0s) infinite;
+    }
+
+    .routes-map.in-view .map-flow {
+      animation: map-flow 8s ease-in-out var(--d, 0s) infinite alternate;
+    }
+  }
+}
+
