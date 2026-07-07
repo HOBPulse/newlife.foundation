@@ -26,7 +26,7 @@ const ALL_POINTS: Array<{ lat: number; lng: number }> = [...HUBS, ...DEST_CITIES
 
 const LNG_MIN = Math.min(...ALL_POINTS.map((p) => p.lng)) - 1.5;
 const LNG_MAX = Math.max(...ALL_POINTS.map((p) => p.lng)) + 1.5;
-const LAT_MIN = Math.min(...ALL_POINTS.map((p) => p.lat)) - 1.2;
+const LAT_MIN = Math.min(...ALL_POINTS.map((p) => p.lat)) - 1.8;
 const LAT_MAX = Math.max(...ALL_POINTS.map((p) => p.lat)) + 1.5;
 
 const W = 1000;
@@ -277,11 +277,12 @@ export function RoutesMap() {
             />
           ))}
 
-          {/* Plane glyphs — the only traveling elements */}
+          {/* Plane glyphs — the only traveling elements. Top-down airliner
+              silhouette pointing +x; offset-rotate keeps it on heading. */}
           {AIR_LINES.map((line, i) => (
             <path
               key={`plane-${line.key}`}
-              d="M 7 0 L -5 3 L -2 0 L -5 -3 Z"
+              d="M 6 0 L 4.7 -0.9 L 1.3 -0.9 L -1.3 -4.3 L -3 -4.3 L -1.7 -0.9 L -3.8 -0.9 L -4.7 -2.1 L -5.5 -2.1 L -5.1 0 L -5.5 2.1 L -4.7 2.1 L -3.8 0.9 L -1.7 0.9 L -3 4.3 L -1.3 4.3 L 1.3 0.9 L 4.7 0.9 Z"
               className="map-plane"
               data-c={line.country}
               fill="var(--color-pine-deep)"

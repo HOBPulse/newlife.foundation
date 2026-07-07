@@ -38,7 +38,7 @@ export const HUBS: Hub[] = [
     name: { uk: "Київ", ru: "Киев", en: "Kyiv" },
     lat: 50.45,
     lng: 30.52,
-    label: { dx: 10, dy: 16, anchor: "start" },
+    label: { dx: 4, dy: -26, anchor: "middle" },
   },
   {
     id: "dnipro",
@@ -52,7 +52,7 @@ export const HUBS: Hub[] = [
     name: { uk: "Львів", ru: "Львов", en: "Lviv" },
     lat: 49.84,
     lng: 24.03,
-    label: { dx: 12, dy: 8, anchor: "start" },
+    label: { dx: 0, dy: 20, anchor: "middle" },
   },
   {
     id: "kharkiv",
@@ -213,7 +213,7 @@ export const COUNTRIES: Country[] = [
   {
     id: "lithuania",
     name: { uk: "Литва", ru: "Литва", en: "Lithuania" },
-    labelOffset: [0, -14],
+    labelOffset: [0, -20],
     cities: [
       { id: "vilnius", name: { uk: "Вільнюс", ru: "Вильнюс", en: "Vilnius" }, lat: 54.69, lng: 25.28 },
       { id: "kaunas", name: { uk: "Каунас", ru: "Каунас", en: "Kaunas" }, lat: 54.9, lng: 23.9 },

@@ -98,6 +98,15 @@ body {
   transform-origin: center;
 }
 
+/* Cartographic halo: thin paper stroke painted under the glyphs keeps
+   labels readable wherever route lines pass beneath them */
+.map-label {
+  paint-order: stroke;
+  stroke: var(--color-paper);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
 .map-pulse,
 .map-plane {
   opacity: 0;

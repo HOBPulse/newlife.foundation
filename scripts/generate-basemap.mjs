@@ -22,7 +22,7 @@ if (!src) {
 // Route-data extremes (Lisbon, Almaty, Tel Aviv, Klaipėda) + RoutesMap padding
 const LNG_MIN = -9.14 - 1.5;
 const LNG_MAX = 76.95 + 1.5;
-const LAT_MIN = 32.09 - 1.2;
+const LAT_MIN = 32.09 - 1.8;
 const LAT_MAX = 55.7 + 1.5;
 
 const DEG = Math.PI / 180;
