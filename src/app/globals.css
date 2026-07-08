@@ -13,6 +13,14 @@
   --color-apricot: #dfa679;
   --color-apricot-soft: #f3e2d2;
 
+  /* Brand mark colors — single source for the logo, favicons and generated
+     brand assets (scripts/build-brand-assets.mjs reads these values).
+     The mark's own colors are distinct from the UI palette above;
+     brand-cream mirrors --color-paper — keep them in sync. */
+  --color-brand-green: #305545;
+  --color-brand-terracotta: #c6724d;
+  --color-brand-cream: #fafbf9;
+
   --font-sans:
     var(--font-golos), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, Arial, sans-serif;
