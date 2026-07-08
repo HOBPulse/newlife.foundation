@@ -54,3 +54,17 @@ Many visitors are in crisis, on phones — mobile-first, fast loading is critica
 - Before large or hard-to-reverse changes: summarize the plan, wait for go-ahead.
 - After each task: summarize what changed and what's pending.
 - Languages: UK (default, no prefix), RU (/ru), EN (/en) — all indexed, hreflang required.
+
+## Review & escalation policy
+
+- Before EVERY `git commit` and before ANY `git push`: invoke the `reviewer`
+  subagent on the full diff. Do not commit while the verdict is ⛔.
+- If the reviewer returns ⛔ ЭСКАЛАЦИЯ: stop, show Boss ONLY the reviewer's
+  "Вопросы для Boss" block (in Russian), and wait for an explicit answer.
+  Do not proceed on assumptions.
+- Never ask Boss about anything on the reviewer's AUTO-OK list. Handle it
+  and mention it briefly in the final summary instead.
+- If the reviewer was skipped for any reason, say so explicitly in the
+  summary — silent skips are not acceptable.
+- The reviewer is read-only and advisory on fixes: implementation stays with
+  the main agent, decisions on ESCALATE items stay with Boss.
