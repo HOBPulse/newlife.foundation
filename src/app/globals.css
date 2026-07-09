@@ -52,6 +52,9 @@ body {
    viewport middle. Reduced motion: state still switches, but instantly. */
 .bg-morph {
   position: relative;
+  /* The hero watermark bleeds past the right viewport edge; clip (not
+     hidden — clip creates no scroll container) keeps the page scroll clean */
+  overflow-x: clip;
   background-color: var(--color-paper);
 }
 
@@ -120,6 +123,50 @@ body {
   }
   to {
     top: calc(100% - 9px);
+  }
+}
+
+/* --- Hero watermark (≥768px) --------------------------------------------
+   Large muted LogoMark bleeding off the right edge, painted under the hero
+   text (negative z inside the isolated hero section). One-time fade-in on
+   load; reduced motion shows it instantly at its final opacity. */
+.hero-watermark {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-watermark {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    right: -6rem;
+    display: block;
+    height: 20rem;
+    translate: 0 -50%;
+    opacity: 0.14;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-watermark {
+    right: -8rem;
+    height: 28rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-watermark {
+    animation: watermark-in 1.2s ease-out both;
+  }
+}
+
+@keyframes watermark-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.14;
   }
 }
 

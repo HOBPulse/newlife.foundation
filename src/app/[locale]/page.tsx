@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BackgroundMorph } from "@/components/BackgroundMorph";
 import { FactsRibbon } from "@/components/FactsRibbon";
+import { LogoMark } from "@/components/LogoMark";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
 import type { Locale } from "@/i18n/routing";
@@ -37,8 +38,12 @@ export default async function HomePage({ params }: Props) {
       {/* Hero — typographic thesis; no photography by design */}
       <section
         data-morph="base"
-        className="mx-auto w-full max-w-6xl px-4 pb-14 pt-16 sm:px-6 sm:pt-24"
+        className="relative isolate mx-auto w-full max-w-6xl px-4 pb-14 pt-16 sm:px-6 sm:pt-24"
       >
+        {/* Watermark mark bleeding off the right edge, under the text */}
+        <div aria-hidden="true" className="hero-watermark">
+          <LogoMark className="h-full w-auto" />
+        </div>
         <h1 className="max-w-3xl font-display text-4xl font-light leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
           {t("hero.title")}
         </h1>
