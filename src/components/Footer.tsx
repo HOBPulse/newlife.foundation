@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/lib/nav";
+import { Logo } from "./Logo";
 
 export function Footer() {
   const t = useTranslations("Common");
@@ -11,9 +12,12 @@ export function Footer() {
       <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
-            <p className="font-display text-lg font-semibold text-ink">
-              {t("siteName")}
-            </p>
+            <div className="flex items-center gap-2.5">
+              <Logo className="h-9 w-auto" />
+              <p className="font-display text-lg font-semibold text-ink">
+                {t("siteName")}
+              </p>
+            </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">
               {t("footer.mission")}
             </p>
