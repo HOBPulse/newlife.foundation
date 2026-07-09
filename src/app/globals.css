@@ -12,6 +12,9 @@
   --color-sage-soft: #eef4f0;
   --color-apricot: #dfa679;
   --color-apricot-soft: #f3e2d2;
+  /* Warm page-background tint for the homepage scroll morph —
+     paper warmed toward apricot-soft, in the spirit of #F2EDE1 */
+  --color-surface-tint: #f3eee2;
 
   /* Brand mark colors — single source for the logo, favicons and generated
      brand assets (scripts/build-brand-assets.mjs reads these values).
@@ -41,6 +44,24 @@ body {
 /* Money and stats are always shown with tabular figures */
 .tnum {
   font-variant-numeric: tabular-nums;
+}
+
+/* --- Background morph (homepage) ---------------------------------------
+   One shared background on the wrapper; sections stay transparent.
+   BackgroundMorph toggles .bg-tinted as data-morph sections cross the
+   viewport middle. Reduced motion: state still switches, but instantly. */
+.bg-morph {
+  background-color: var(--color-paper);
+}
+
+.bg-morph.bg-tinted {
+  background-color: var(--color-surface-tint);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bg-morph {
+    transition: background-color 0.7s ease;
+  }
 }
 
 /* Shared path-draw keyframes (routes map entrance) */

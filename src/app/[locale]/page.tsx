@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { BackgroundMorph } from "@/components/BackgroundMorph";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
 import type { Locale } from "@/i18n/routing";
@@ -26,9 +27,12 @@ export default async function HomePage({ params }: Props) {
   const tSteps = await getTranslations("HowWeWorkPage.steps");
 
   return (
-    <>
+    <BackgroundMorph>
       {/* Hero — typographic thesis; no photography by design */}
-      <section className="mx-auto w-full max-w-6xl px-4 pb-14 pt-16 sm:px-6 sm:pt-24">
+      <section
+        data-morph="base"
+        className="mx-auto w-full max-w-6xl px-4 pb-14 pt-16 sm:px-6 sm:pt-24"
+      >
         <h1 className="max-w-3xl font-display text-4xl font-light leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
           {t("hero.title")}
         </h1>
@@ -52,7 +56,10 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* Process preview — numbered because the content is a real sequence */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section
+        data-morph="tint"
+        className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
+      >
         <p className="text-xs font-medium uppercase tracking-widest text-pine">
           {t("process.eyebrow")}
         </p>
@@ -81,7 +88,10 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* Stories preview */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section
+        data-morph="base"
+        className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
+      >
         <p className="text-xs font-medium uppercase tracking-widest text-pine">
           {t("stories.eyebrow")}
         </p>
@@ -103,7 +113,10 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* Geography — the route line becomes real journeys */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section
+        data-morph="tint"
+        className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
+      >
         <p className="text-xs font-medium uppercase tracking-widest text-pine">
           {t("map.eyebrow")}
         </p>
@@ -131,6 +144,6 @@ export default async function HomePage({ params }: Props) {
           </Link>
         </div>
       </section>
-    </>
+    </BackgroundMorph>
   );
 }
