@@ -8,14 +8,15 @@
   --color-ink-soft: #47605a;
   --color-pine: #2e6e64;
   --color-pine-deep: #235a51;
-  /* Footer surface — deepest green, one clear step darker than the donate
-     band (bg-pine) so the two adjacent dark sections read as distinct */
-  --color-pine-deepest: #1b453e;
   --color-sage: #dce7e1;
   --color-sage-soft: #eef4f0;
   --color-apricot: #dfa679;
   --color-apricot-soft: #f3e2d2;
-  /* Warm page-background tint for the homepage scroll morph —
+  /* Deep muted terracotta for the donate CTA band — the accent
+     (--color-brand-terracotta #c6724d) darkened until cream/apricot-soft
+     body text clears WCAG AA (≥4.5:1) on it */
+  --color-brand-terracotta-deep: #8a4a32;
+  /* Warm page-background tint for the alternating homepage bands —
      paper warmed toward apricot-soft, in the spirit of #F2EDE1 */
   --color-surface-tint: #f3eee2;
 

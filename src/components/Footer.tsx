@@ -8,7 +8,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer-dark footer-reveal border-t border-paper/15 bg-pine-deepest">
+    <footer className="footer-dark footer-reveal border-t border-paper/15 bg-pine">
       <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
@@ -19,7 +19,7 @@ export function Footer() {
                 {t("siteName")}
               </p>
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-sage/80">
+            <p className="mt-2 text-sm leading-relaxed text-sage-soft">
               {t("footer.mission")}
             </p>
           </div>
@@ -31,26 +31,26 @@ export function Footer() {
               <Link
                 key={item.key}
                 href={item.href}
-                className="text-sage/80 transition-colors hover:text-paper"
+                className="text-sage transition-colors hover:text-paper"
               >
                 {t(`nav.${item.key}`)}
               </Link>
             ))}
             <Link
               href="/donate"
-              className="text-sage/80 transition-colors hover:text-paper"
+              className="text-sage transition-colors hover:text-paper"
             >
               {t("nav.donate")}
             </Link>
             <Link
               href="/privacy"
-              className="text-sage/80 transition-colors hover:text-paper"
+              className="text-sage transition-colors hover:text-paper"
             >
               {t("nav.privacy")}
             </Link>
           </nav>
         </div>
-        <p className="mt-10 text-xs text-sage/60">
+        <p className="mt-10 text-xs text-sage">
           © {year} {t("siteName")}. {t("footer.legalNote")}
         </p>
       </div>

@@ -139,16 +139,18 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Donate band */}
-      <section className="bg-pine">
+      {/* Donate band — deep terracotta, distinct from the green footer below */}
+      <section className="bg-brand-terracotta-deep">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
-          <h2 className="font-display text-3xl font-medium tracking-tight text-white">
+          <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
             {t("donate.title")}
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sage">{t("donate.lead")}</p>
+          <p className="mx-auto mt-3 max-w-xl text-apricot-soft">
+            {t("donate.lead")}
+          </p>
           <Link
             href="/donate"
-            className="mt-8 inline-block rounded-full bg-apricot px-8 py-3 font-medium text-ink transition-colors hover:bg-apricot/85"
+            className="mt-8 inline-block rounded-full bg-paper px-8 py-3 font-medium text-brand-terracotta-deep transition-colors hover:bg-paper/90"
           >
             {t("donate.cta")}
           </Link>
