@@ -274,6 +274,23 @@ export const COUNTRIES: Country[] = [
       { id: "almaty", name: { uk: "Алмати", ru: "Алматы", en: "Almaty" }, lat: 43.24, lng: 76.95, air: true },
     ],
   },
+  {
+    id: "sweden",
+    name: { uk: "Швеція", ru: "Швеция", en: "Sweden" },
+    labelOffset: [0, 18],
+    cities: [
+      { id: "stockholm", name: { uk: "Стокгольм", ru: "Стокгольм", en: "Stockholm" }, lat: 59.33, lng: 18.06, air: true },
+    ],
+  },
+  {
+    id: "latvia",
+    name: { uk: "Латвія", ru: "Латвия", en: "Latvia" },
+    labelOffset: [12, -8],
+    labelAnchor: "start",
+    cities: [
+      { id: "riga", name: { uk: "Рига", ru: "Рига", en: "Riga" }, lat: 56.95, lng: 24.11, air: true },
+    ],
+  },
 ];
 
 /** Extra non-Ukraine links — examples of the wider network (owner-provided). */
@@ -303,6 +320,7 @@ export const ROUTE_GROUPS: RouteGroup[] = [
   { hub: "kyiv", entry: "warsaw", branches: ["gdansk", "lublin"], bow: 0.1, thick: true },
   { hub: "kyiv", entry: "amsterdam", branches: ["utrecht"], bow: 0.24 },
   { hub: "kyiv", entry: "vilnius", branches: ["kaunas", "klaipeda"], bow: 0.08 },
+  { hub: "kyiv", entry: "stockholm", bow: 0.2 },
   { hub: "kyiv", entry: "london", bow: 0.32 },
   // Lviv — central and western Europe (short spokes flat, long air arcs high)
   { hub: "lviv", entry: "krakow", branches: ["przemysl", "bielsko-biala", "wroclaw"], bow: 0.1, thick: true },
@@ -321,9 +339,10 @@ export const ROUTE_GROUPS: RouteGroup[] = [
   { hub: "odesa", entry: "istanbul", branches: ["bursa", "antalya", "alanya"], bow: 0.12 },
   { hub: "odesa", entry: "thessaloniki", bow: 0.14 },
   { hub: "odesa", entry: "tel-aviv", bow: 0.1 },
-  // Dnipro / Kharkiv — the Caucasus and Central Asia
+  // Dnipro / Kharkiv — the Caucasus, Central Asia and the Baltic
   { hub: "dnipro", entry: "tbilisi", bow: 0.14 },
   { hub: "dnipro", entry: "baku", bow: 0.18 },
+  { hub: "dnipro", entry: "riga", bow: 0.2 },
   { hub: "kharkiv", entry: "almaty", bow: 0.16 },
 ];
 
