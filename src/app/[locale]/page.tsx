@@ -41,21 +41,28 @@ export default async function HomePage({ params }: Props) {
 
       {/* Hero — typographic thesis; no photography by design.
           Static band: base paper (transparent over .home-shell) */}
-      <section className="relative isolate mx-auto w-full max-w-6xl px-4 pb-14 pt-16 sm:px-6 sm:pt-24">
+      <section className="relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
         {/* Watermark mark bleeding off the right edge, under the text */}
         <div aria-hidden="true" className="hero-watermark">
           <LogoMark className="h-full w-auto" />
         </div>
-        <h1 className="max-w-3xl font-display text-4xl font-light leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-          {t("hero.title")}
+        {/* TODO-copy-review: hero.title + hero.lead are drafted copy — the
+            uk is from the brief, ru/en were translated in-house. Review
+            HomePage.hero.{title,lead} in messages/{uk,ru,en}.json before launch. */}
+        <h1 className="max-w-4xl text-balance font-display text-5xl font-light leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+          {t.rich("hero.title", {
+            em: (chunks) => (
+              <span className="text-brand-terracotta">{chunks}</span>
+            ),
+          })}
         </h1>
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+        <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-ink-soft">
           {t("hero.lead")}
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
             href="/donate"
-            className="rounded-full bg-apricot px-6 py-3 font-medium text-ink transition-colors hover:bg-apricot/85"
+            className="rounded-full bg-brand-terracotta-deep px-6 py-3 font-medium text-paper transition-colors hover:bg-brand-terracotta-deep/90"
           >
             {t("hero.ctaDonate")}
           </Link>
