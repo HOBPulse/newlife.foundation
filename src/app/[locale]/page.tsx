@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BackgroundMorph } from "@/components/BackgroundMorph";
+import { FactsRibbon } from "@/components/FactsRibbon";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
 import type { Locale } from "@/i18n/routing";
@@ -111,6 +112,9 @@ export default async function HomePage({ params }: Props) {
           {t("stories.all")} →
         </Link>
       </section>
+
+      {/* Facts ribbon — figures derived from the map data at build time */}
+      <FactsRibbon />
 
       {/* Geography — the route line becomes real journeys */}
       <section

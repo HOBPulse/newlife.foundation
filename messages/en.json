@@ -39,6 +39,11 @@
       "lead": "Real stories of people who turned to the foundation.",
       "all": "All stories"
     },
+    "facts": {
+      "routes": "{count, plural, one {route on the map} other {routes on the map}}",
+      "countries": "{count, plural, one {country on the map} other {countries on the map}}",
+      "since": "the year we started"
+    },
     "map": {
       "eyebrow": "Geography",
       "title": "Routes of help",
