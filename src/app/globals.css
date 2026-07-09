@@ -99,7 +99,7 @@ body {
     inset-block: 0;
     left: 2.5rem;
     display: block;
-    width: 9px;
+    width: 12px;
     pointer-events: none;
   }
 
@@ -107,17 +107,18 @@ body {
     content: "";
     position: absolute;
     inset-block: 0;
-    left: 4px;
-    border-left: 1px dashed var(--color-pine);
-    opacity: 0.4;
+    left: 50%;
+    margin-left: -0.75px;
+    border-left: 1.5px dashed var(--color-pine);
+    opacity: 0.6;
   }
 
   .route-thread-dot {
     position: absolute;
     top: 0;
     left: 0;
-    width: 9px;
-    height: 9px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--color-brand-terracotta);
   }
@@ -137,7 +138,7 @@ body {
     top: 0;
   }
   to {
-    top: calc(100% - 9px);
+    top: calc(100% - 12px);
   }
 }
 
