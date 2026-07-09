@@ -6,6 +6,7 @@ import { FactsRibbon } from "@/components/FactsRibbon";
 import { LogoMark } from "@/components/LogoMark";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
+import { StoryPullQuote } from "@/components/StoryPullQuote";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 import { STORY_SLUGS } from "@/lib/stories";
@@ -101,8 +102,9 @@ export default async function HomePage({ params }: Props) {
       {/* Stories preview */}
       <section
         data-morph="base"
-        className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
+        className="relative mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
       >
+        <StoryPullQuote />
         <p className="text-xs font-medium uppercase tracking-widest text-pine">
           {t("stories.eyebrow")}
         </p>
