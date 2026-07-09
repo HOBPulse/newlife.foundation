@@ -14,19 +14,19 @@ export function StoryPullQuote() {
   const tStories = useTranslations("StoriesPage");
 
   return (
-    <figure className="absolute right-6 top-10 hidden w-72 min-[1440px]:block">
-      <blockquote>
+    <figure className="absolute right-6 top-8 hidden w-80 min-[1440px]:block">
+      <blockquote className="relative pl-7">
         <span
           aria-hidden="true"
-          className="block font-display text-5xl leading-none text-brand-terracotta"
+          className="absolute -top-1 left-0 font-display text-4xl leading-none text-brand-terracotta"
         >
           {t("mark")}
         </span>
-        <p className="mt-1 font-display text-lg leading-snug text-ink">
+        <p className="font-display text-base leading-snug text-ink">
           {t("text")}
         </p>
       </blockquote>
-      <figcaption className="mt-3 text-sm">
+      <figcaption className="mt-2 pl-7 text-sm">
         <Link
           href={`/stories/${QUOTE_STORY}`}
           className="text-pine transition-colors hover:text-pine-deep"
