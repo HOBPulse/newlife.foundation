@@ -29,6 +29,11 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <BackgroundMorph>
+      {/* Route thread — decorative scroll companion on the left margin */}
+      <div aria-hidden="true" className="route-thread">
+        <span className="route-thread-dot" />
+      </div>
+
       {/* Hero — typographic thesis; no photography by design */}
       <section
         data-morph="base"

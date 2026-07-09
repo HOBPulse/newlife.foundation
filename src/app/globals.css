@@ -51,6 +51,7 @@ body {
    BackgroundMorph toggles .bg-tinted as data-morph sections cross the
    viewport middle. Reduced motion: state still switches, but instantly. */
 .bg-morph {
+  position: relative;
   background-color: var(--color-paper);
 }
 
@@ -61,6 +62,64 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .bg-morph {
     transition: background-color 0.7s ease;
+  }
+}
+
+/* --- Route thread (homepage, ≥1280px) -----------------------------------
+   Thin dashed line down the left margin; a terracotta dot travels along it
+   with scroll via a CSS scroll-driven animation. Progressive enhancement:
+   without animation-timeline support (or with reduced motion) the line and
+   the dot simply render static. Absolutely positioned inside .bg-morph, so
+   it spans the page content only and never extends over the footer. */
+.route-thread {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .route-thread {
+    position: absolute;
+    inset-block: 0;
+    left: 2.5rem;
+    display: block;
+    width: 9px;
+    pointer-events: none;
+  }
+
+  .route-thread::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 4px;
+    border-left: 1px dashed var(--color-pine);
+    opacity: 0.4;
+  }
+
+  .route-thread-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-brand-terracotta);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .route-thread-dot {
+        animation: thread-travel linear both;
+        animation-timeline: scroll(root block);
+      }
+    }
+  }
+}
+
+@keyframes thread-travel {
+  from {
+    top: 0;
+  }
+  to {
+    top: calc(100% - 9px);
   }
 }
 
