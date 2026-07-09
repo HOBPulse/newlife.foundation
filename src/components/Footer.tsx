@@ -12,10 +12,11 @@ export function Footer() {
       <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               {/* On-dark mark: line art overridden to cream */}
               <Logo className="h-9 w-auto [--logo-line:var(--color-brand-cream)]" />
-              <p className="font-display text-lg font-semibold text-paper">
+              {/* Editorial letter-spaced caps wordmark */}
+              <p className="font-display text-xs font-medium uppercase leading-tight tracking-[0.22em] text-paper">
                 {t("siteName")}
               </p>
             </div>

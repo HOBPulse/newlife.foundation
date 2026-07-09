@@ -4,6 +4,7 @@ import { HEADER_NAV } from "@/lib/nav";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
+import { WordmarkInline } from "./WordmarkInline";
 
 export function Header() {
   const t = useTranslations("Common");
@@ -12,15 +13,9 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-sage bg-paper">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         {/* Brand: compact mark + inline "NL Foundation" lockup */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-display text-base tracking-tight"
-        >
+        <Link href="/" className="flex items-center gap-2">
           <Logo className="h-6 w-auto" />
-          <span>
-            <span className="font-medium text-pine">NL</span>{" "}
-            <span className="text-ink-soft">Foundation</span>
-          </span>
+          <WordmarkInline className="text-base tracking-tight" />
         </Link>
 
         <nav
