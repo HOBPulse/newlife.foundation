@@ -71,11 +71,11 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Background morph (homepage) ---------------------------------------
-   One shared background on the wrapper; sections stay transparent.
-   BackgroundMorph toggles .bg-tinted as data-morph sections cross the
-   viewport middle. Reduced motion: state still switches, but instantly. */
-.bg-morph {
+/* --- Homepage shell -----------------------------------------------------
+   Positioning + clip context for the route thread and the hero watermark.
+   Section backgrounds are static alternating bands (base paper vs.
+   --surface-tint), set per-section in the markup — no scroll morph. */
+.home-shell {
   position: relative;
   /* The hero watermark bleeds past the right viewport edge; clip (not
      hidden — clip creates no scroll container) keeps the page scroll clean */
@@ -83,21 +83,11 @@ body {
   background-color: var(--color-paper);
 }
 
-.bg-morph.bg-tinted {
-  background-color: var(--color-surface-tint);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .bg-morph {
-    transition: background-color 0.7s ease;
-  }
-}
-
 /* --- Route thread (homepage, ≥1280px) -----------------------------------
    Thin dashed line down the left margin; a terracotta dot travels along it
    with scroll via a CSS scroll-driven animation. Progressive enhancement:
    without animation-timeline support (or with reduced motion) the line and
-   the dot simply render static. Absolutely positioned inside .bg-morph, so
+   the dot simply render static. Absolutely positioned inside .home-shell, so
    it spans the page content only and never extends over the footer. */
 .route-thread {
   display: none;
