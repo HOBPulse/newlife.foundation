@@ -72,9 +72,6 @@ function arcPath(from: Pt, to: Pt, bow: number) {
 
 const cityById = new Map<string, DestinationCity>(DEST_CITIES.map((c) => [c.id, c]));
 const hubById = new Map(HUBS.map((h) => [h.id, h]));
-const countryByCityId = new Map<string, string>(
-  COUNTRIES.flatMap((country) => country.cities.map((city) => [city.id, country.id])),
-);
 
 // Every destination city must be routed exactly once (entry or branch)
 {
@@ -110,7 +107,6 @@ type LineView = {
   air: boolean;
   delay: number;
   thick: boolean;
-  country: string;
 };
 
 // Shortest main lines first, so the network grows outward from Ukraine
@@ -134,7 +130,6 @@ mainsUnordered.forEach((main, rank) => {
     air: !!main.entry.air,
     delay,
     thick: !!main.group.thick,
-    country: countryByCityId.get(main.entry.id)!,
   });
   cityDotDelay.set(main.entry.id, delay + LINE_DURATION * 0.85);
 
@@ -147,7 +142,6 @@ mainsUnordered.forEach((main, rank) => {
       air: false,
       delay: branchDelay,
       thick: false,
-      country: countryByCityId.get(branchId)!,
     });
     cityDotDelay.set(branchId, branchDelay + BRANCH_DURATION * 0.9);
   });
@@ -161,7 +155,6 @@ const CROSSES: LineView[] = CROSS_LINKS.map((link, i) => {
     air: !!city.air,
     delay: LINE_BASE_DELAY + (mainsUnordered.length + i) * LINE_STEP,
     thick: false,
-    country: countryByCityId.get(link.to)!,
   };
 });
 
@@ -175,7 +168,6 @@ const NETWORK: LineView[] = NETWORK_LINKS.map(([fromId, toId], i) => {
     air: !!(a.air || b.air),
     delay: LINE_BASE_DELAY + (mainsUnordered.length + CROSS_LINKS.length + i) * LINE_STEP,
     thick: false,
-    country: countryByCityId.get(fromId)!,
   };
 });
 
@@ -194,19 +186,6 @@ function vars(seconds: number, extra?: CSSProperties): CSSProperties {
   return { "--d": `${seconds.toFixed(2)}s`, ...extra } as CSSProperties;
 }
 
-/* Hover/tap highlighting, generated per country id: pure CSS at runtime.
-   Hovering (or focusing) a country's label or dot dims every other country's
-   routes via filter — filter, not opacity, so it composes with the entrance
-   keyframes that already animate opacity with fill-mode: both. */
-const HIGHLIGHT_CSS = [
-  ".routes-svg [data-c] { transition: filter 0.25s ease; }",
-  ".routes-svg circle[data-c], .routes-svg text[data-c] { cursor: pointer; }",
-  ...COUNTRIES.map(({ id }) => {
-    const source = `circle[data-c="${id}"]:hover, text[data-c="${id}"]:hover, text[data-c="${id}"]:focus-within`;
-    return `.routes-svg:has(${source}) [data-c]:not([data-c="${id}"]) { filter: opacity(0.22); }`;
-  }),
-].join("\n");
-
 /* --- Component ------------------------------------------------------------ */
 
 export function RoutesMap() {
@@ -222,8 +201,6 @@ export function RoutesMap() {
           role="img"
           aria-label={t("title")}
         >
-          <style>{HIGHLIGHT_CSS}</style>
-
           {/* Basemap — simplified Natural Earth country outlines, static */}
           <g>
             {BASEMAP_PATHS.map((d, i) => (
@@ -262,7 +239,6 @@ export function RoutesMap() {
               d={line.d}
               pathLength={1}
               className="map-line"
-              data-c={line.country}
               style={vars(
                 line.delay,
                 line.key.startsWith("branch-")
@@ -284,7 +260,6 @@ export function RoutesMap() {
               key={`plane-${line.key}`}
               d="M 6 0 L 4.7 -0.9 L 1.3 -0.9 L -1.3 -4.3 L -3 -4.3 L -1.7 -0.9 L -3.8 -0.9 L -4.7 -2.1 L -5.5 -2.1 L -5.1 0 L -5.5 2.1 L -4.7 2.1 L -3.8 0.9 L -1.7 0.9 L -3 4.3 L -1.3 4.3 L 1.3 0.9 L 4.7 0.9 Z"
               className="map-plane"
-              data-c={line.country}
               fill="var(--color-pine-deep)"
               style={vars(SEQUENCE_END + i * 1.4, {
                 offsetPath: `path("${line.d}")`,
@@ -304,7 +279,6 @@ export function RoutesMap() {
                   cy={pt.y}
                   r="3.2"
                   className="map-dot"
-                  data-c={country.id}
                   fill="var(--color-apricot)"
                   stroke="var(--color-paper)"
                   strokeWidth="0.8"
@@ -331,8 +305,6 @@ export function RoutesMap() {
                 y={y}
                 textAnchor={country.labelAnchor ?? "middle"}
                 className="map-label"
-                data-c={country.id}
-                tabIndex={0}
                 fontSize="12.5"
                 fill="var(--color-ink-soft)"
                 style={vars(delay)}
