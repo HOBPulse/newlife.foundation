@@ -21,6 +21,13 @@ const COLORS = {
 
 const LOCALES = ["uk", "ru", "en"];
 
+// The brand mark (generated from the tokens by build-brand-assets.mjs) sits
+// top-right as a small accent; satori embeds it via a data URI.
+const markPng = readFileSync(
+  new URL("../public/brand/icon-512.png", import.meta.url),
+);
+const markSrc = `data:image/png;base64,${markPng.toString("base64")}`;
+
 async function loadFont(file) {
   const woff2 = readFileSync(new URL(`../src/fonts/${file}`, import.meta.url));
   const ttf = await decompress(woff2);
@@ -45,15 +52,32 @@ function ogElement(siteName, tagline) {
       },
       children: [
         {
+          // Top row: site name left (text untouched), brand mark top-right.
           type: "div",
           props: {
             style: {
               display: "flex",
-              fontSize: 40,
-              fontWeight: 500,
-              color: COLORS.pine,
+              alignItems: "center",
+              justifyContent: "space-between",
             },
-            children: siteName,
+            children: [
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    fontSize: 40,
+                    fontWeight: 500,
+                    color: COLORS.pine,
+                  },
+                  children: siteName,
+                },
+              },
+              {
+                type: "img",
+                props: { src: markSrc, width: 76, height: 76 },
+              },
+            ],
           },
         },
         {
