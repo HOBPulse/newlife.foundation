@@ -108,6 +108,20 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- View transitions (story flow) -------------------------------------
+   experimental.viewTransition wraps navigations; matching <ViewTransition
+   name> pairs on the story card and story page morph the photo + title,
+   the rest cross-fades. Reduced motion: collapse every transition to an
+   instant swap (the browser's no-VT behavior). */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 /* --- Homepage shell -----------------------------------------------------
    Positioning + clip context for the route thread and the hero watermark.
    Section backgrounds are static alternating bands (base paper vs.

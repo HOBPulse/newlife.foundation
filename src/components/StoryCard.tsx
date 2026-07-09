@@ -1,4 +1,5 @@
-import type { CSSProperties } from "react";
+/// <reference types="react/canary" />
+import { ViewTransition, type CSSProperties } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -18,13 +19,16 @@ export function StoryCard({ slug, index = 0 }: { slug: StorySlug; index?: number
     >
       <div className="relative aspect-[4/3] bg-sage">
         {mainPhoto ? (
-          <Image
-            src={mainPhoto}
-            alt={t(`items.${slug}.title`)}
-            fill
-            sizes="(max-width: 640px) 100vw, 33vw"
-            className="object-cover"
-          />
+          // Shared-element morph: matches the story page's hero photo
+          <ViewTransition name={`story-photo-${slug}`}>
+            <Image
+              src={mainPhoto}
+              alt={t(`items.${slug}.title`)}
+              fill
+              sizes="(max-width: 640px) 100vw, 33vw"
+              className="object-cover"
+            />
+          </ViewTransition>
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="rounded-full bg-paper px-3 py-1 text-xs text-ink-soft">
@@ -34,9 +38,11 @@ export function StoryCard({ slug, index = 0 }: { slug: StorySlug; index?: number
         )}
       </div>
       <div className="p-5">
-        <h3 className="font-display text-lg font-medium text-ink">
-          {t(`items.${slug}.title`)}
-        </h3>
+        <ViewTransition name={`story-title-${slug}`}>
+          <h3 className="font-display text-lg font-medium text-ink">
+            {t(`items.${slug}.title`)}
+          </h3>
+        </ViewTransition>
         <p className="mt-2 text-sm leading-relaxed text-ink-soft">
           {t(`items.${slug}.excerpt`)}
         </p>

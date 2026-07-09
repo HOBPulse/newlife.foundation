@@ -1,4 +1,6 @@
+/// <reference types="react/canary" />
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -59,21 +61,26 @@ export default async function StoryPage({ params }: Props) {
       >
         ← {t("backToStories")}
       </Link>
-      <h1 className="mt-6 font-display text-4xl font-medium tracking-tight text-ink">
-        {title}
-      </h1>
+      <ViewTransition name={`story-title-${slug}`}>
+        <h1 className="mt-6 font-display text-4xl font-medium tracking-tight text-ink">
+          {title}
+        </h1>
+      </ViewTransition>
 
       {/* Main photo full-size; any further photos in a simple grid below. */}
       {mainPhoto ? (
         <>
           <div className="relative mt-10 aspect-[3/2] overflow-hidden rounded-xl bg-sage">
-            <Image
-              src={mainPhoto}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, 768px"
-              className="object-cover"
-            />
+            {/* Shared-element morph: matches the story card's photo */}
+            <ViewTransition name={`story-photo-${slug}`}>
+              <Image
+                src={mainPhoto}
+                alt={title}
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+              />
+            </ViewTransition>
           </div>
           {morePhotos.length > 0 && (
             <div

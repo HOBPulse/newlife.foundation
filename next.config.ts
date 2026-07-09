@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
     // Per brief: no dependency on host-side image optimization (site migrates to a VPS later)
     unoptimized: true,
   },
+  experimental: {
+    // Enables React's <ViewTransition> for page-to-page morphs (story flow).
+    // Progressive enhancement: browsers without the View Transitions API just
+    // navigate instantly. App Router already ships the required React canary.
+    viewTransition: true,
+  },
 };
 
 export default withNextIntl(nextConfig);
