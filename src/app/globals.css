@@ -43,10 +43,7 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Signature: the route line ---------------------------------------
-   SVG paths with pathLength="1" draw themselves as they enter the view.
-   Progressive: without scroll-driven animation support (or with reduced
-   motion) the line is simply fully drawn. */
+/* Shared path-draw keyframes (routes map entrance) */
 @keyframes draw-path {
   from {
     stroke-dashoffset: 1;
@@ -67,19 +64,8 @@ body {
   }
 }
 
-.draw-path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .draw-path {
-      animation: draw-path linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 65%;
-    }
-
     .reveal {
       animation: rise-in 0.6s ease-out both;
       animation-timeline: view();
