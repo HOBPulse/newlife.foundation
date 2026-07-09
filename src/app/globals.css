@@ -8,6 +8,9 @@
   --color-ink-soft: #47605a;
   --color-pine: #2e6e64;
   --color-pine-deep: #235a51;
+  /* Footer surface — deepest green, one clear step darker than the donate
+     band (bg-pine) so the two adjacent dark sections read as distinct */
+  --color-pine-deepest: #1b453e;
   --color-sage: #dce7e1;
   --color-sage-soft: #eef4f0;
   --color-apricot: #dfa679;
@@ -39,6 +42,28 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-pine);
   outline-offset: 2px;
+}
+
+/* Pine outlines vanish on the deepest-green footer — use paper there */
+.footer-dark :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* --- Footer reveal -------------------------------------------------------
+   The footer is pinned behind the page (sticky, bottom 0) and the scrolling
+   content — an opaque, elevated sheet — uncovers it as the page reaches the
+   end. Pure CSS; no motion of its own, so reduced-motion needs no override. */
+.page-sheet {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-paper);
+  box-shadow: 0 10px 30px rgb(28 43 40 / 0.35);
+}
+
+.footer-reveal {
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
 }
 
 /* Money and stats are always shown with tabular figures */

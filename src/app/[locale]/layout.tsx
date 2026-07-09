@@ -46,7 +46,8 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <Header />
-          <main id="main" className="flex flex-1 flex-col">
+          {/* Opaque elevated sheet — scrolls over the pinned footer (reveal) */}
+          <main id="main" className="page-sheet flex flex-1 flex-col">
             {children}
           </main>
           <Footer />
