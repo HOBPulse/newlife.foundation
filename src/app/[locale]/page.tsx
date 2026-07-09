@@ -8,7 +8,6 @@ import { LeftRailView } from "@/components/LeftRailView";
 import { LogoMark } from "@/components/LogoMark";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
-import { StoryPullQuote } from "@/components/StoryPullQuote";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 import { STORY_SLUGS } from "@/lib/stories";
@@ -114,8 +113,7 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* Stories preview — static band: base paper (transparent) */}
-      <section className="relative mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-        <StoryPullQuote />
+      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <p className="reveal text-xs font-medium uppercase tracking-widest text-pine">
           {t("stories.eyebrow")}
         </p>

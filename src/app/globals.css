@@ -108,6 +108,33 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Story section chronology label (≥1024px) --------------------------
+   Optional right-margin annotation aligned to a section heading; renders
+   only when a section supplies marginLabel (ships empty). Hidden below
+   1024px. Width is capped to the available right margin so it never spills
+   past the viewport as the content column (max-w-3xl = 48rem) is centred. */
+.story-margin-label {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .story-margin-label {
+    display: block;
+    position: absolute;
+    top: 0.4rem;
+    left: 100%;
+    margin-left: 1.5rem;
+    width: max-content;
+    max-width: calc((100vw - 48rem) / 2 - 2.5rem);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+}
+
 /* --- View transitions (story flow) -------------------------------------
    experimental.viewTransition wraps navigations; matching <ViewTransition
    name> pairs on the story card and story page morph the photo + title,

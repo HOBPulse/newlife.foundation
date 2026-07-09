@@ -41,10 +41,6 @@
       "lead": "Real stories of people who turned to the foundation.",
       "all": "All stories"
     },
-    "pullquote": {
-      "mark": "“",
-      "text": "Today, Lyonichka is learning new languages and dreams of becoming a blogger to inspire and help others."
-    },
     "facts": {
       "routes": "{count, plural, one {route on the map} other {routes on the map}}",
       "countries": "{count, plural, one {country on the map} other {countries on the map}}",
