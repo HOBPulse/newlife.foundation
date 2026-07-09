@@ -5,6 +5,7 @@ import {
   NETWORK_LINKS,
   ROUTE_GROUPS,
 } from "@/data/routes";
+import { CountUp } from "./CountUp";
 
 /* Both figures are derived from the map data at build time — the ribbon can
    never disagree with what the map actually draws. Routes = every rendered
@@ -23,7 +24,7 @@ function Fact({ value, label }: { value: number; label: string }) {
   return (
     <div className="text-center">
       <p className="tnum font-display text-3xl font-medium text-paper sm:text-4xl">
-        {value}
+        <CountUp value={value} />
       </p>
       <p className="mt-1 text-xs text-sage sm:text-sm">{label}</p>
     </div>

@@ -45,9 +45,45 @@ body {
   outline-offset: 2px;
 }
 
-/* Pine outlines vanish on the deepest-green footer — use paper there */
+/* Pine outlines vanish on the dark footer — use paper there */
 .footer-dark :focus-visible {
   outline-color: var(--color-paper);
+}
+
+/* --- Content reveal on scroll ------------------------------------------
+   Headings/leads (.reveal) and cards (.reveal-card) fade up 16px as they
+   enter the viewport, once, via a pure-CSS scroll-driven view() timeline.
+   Cards stagger by scroll position: each card's range start is offset by
+   its --rc index (time-based delays don't apply to scroll timelines, so
+   the cascade is anchored to scroll progress instead). Wrapped in
+   @supports + no-preference: unsupported browsers and reduced-motion
+   users get the final, static state with no animation and no hidden flash. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise-in 0.6s ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    .reveal-card {
+      animation: rise-in 0.6s ease-out both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--rc, 0) * 7%) entry
+        calc(40% + var(--rc, 0) * 7%);
+    }
+  }
 }
 
 /* --- Footer reveal -------------------------------------------------------
@@ -194,27 +230,6 @@ body {
   }
   to {
     stroke-dashoffset: 0;
-  }
-}
-
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    translate: 0 1.25rem;
-  }
-  to {
-    opacity: 1;
-    translate: 0 0;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: rise-in 0.6s ease-out both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 35%;
-    }
   }
 }
 

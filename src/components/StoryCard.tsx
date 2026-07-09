@@ -1,16 +1,21 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { STORY_PHOTOS, type StorySlug } from "@/lib/stories";
 
 /** Story preview card. Shows the story's main photo (photos[0]) in full
- *  color; any further photos appear only on the story page itself. */
-export function StoryCard({ slug }: { slug: StorySlug }) {
+ *  color; any further photos appear only on the story page itself.
+ *  `index` drives the staggered scroll reveal on the homepage grid. */
+export function StoryCard({ slug, index = 0 }: { slug: StorySlug; index?: number }) {
   const t = useTranslations("StoriesPage");
   const mainPhoto = STORY_PHOTOS[slug][0];
 
   return (
-    <article className="reveal overflow-hidden rounded-xl border border-sage bg-paper">
+    <article
+      className="reveal-card overflow-hidden rounded-xl border border-sage bg-paper"
+      style={{ "--rc": index } as CSSProperties}
+    >
       <div className="relative aspect-[4/3] bg-sage">
         {mainPhoto ? (
           <Image

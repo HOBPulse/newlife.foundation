@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -68,16 +69,22 @@ export default async function HomePage({ params }: Props) {
           Static band: --surface-tint, full width */}
       <section className="bg-surface-tint">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-          <p className="text-xs font-medium uppercase tracking-widest text-pine">
+          <p className="reveal text-xs font-medium uppercase tracking-widest text-pine">
             {t("process.eyebrow")}
           </p>
-          <h2 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink">
+          <h2 className="reveal mt-2 font-display text-3xl font-medium tracking-tight text-ink">
             {t("process.title")}
           </h2>
-          <p className="mt-3 max-w-xl text-ink-soft">{t("process.lead")}</p>
+          <p className="reveal mt-3 max-w-xl text-ink-soft">
+            {t("process.lead")}
+          </p>
           <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROCESS_STEPS.map((n) => (
-              <li key={n} className="reveal rounded-xl border border-sage p-5">
+            {PROCESS_STEPS.map((n, i) => (
+              <li
+                key={n}
+                className="reveal-card rounded-xl border border-sage p-5"
+                style={{ "--rc": i } as CSSProperties}
+              >
                 <span className="tnum font-display text-2xl font-medium text-pine">
                   {String(n).padStart(2, "0")}
                 </span>
@@ -99,16 +106,16 @@ export default async function HomePage({ params }: Props) {
       {/* Stories preview — static band: base paper (transparent) */}
       <section className="relative mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <StoryPullQuote />
-        <p className="text-xs font-medium uppercase tracking-widest text-pine">
+        <p className="reveal text-xs font-medium uppercase tracking-widest text-pine">
           {t("stories.eyebrow")}
         </p>
-        <h2 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink">
+        <h2 className="reveal mt-2 font-display text-3xl font-medium tracking-tight text-ink">
           {t("stories.title")}
         </h2>
-        <p className="mt-3 max-w-xl text-ink-soft">{t("stories.lead")}</p>
+        <p className="reveal mt-3 max-w-xl text-ink-soft">{t("stories.lead")}</p>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {STORY_SLUGS.map((slug) => (
-            <StoryCard key={slug} slug={slug} />
+          {STORY_SLUGS.map((slug, i) => (
+            <StoryCard key={slug} slug={slug} index={i} />
           ))}
         </div>
         <Link
@@ -126,13 +133,15 @@ export default async function HomePage({ params }: Props) {
           Static band: --surface-tint, full width */}
       <section className="bg-surface-tint">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-          <p className="text-xs font-medium uppercase tracking-widest text-pine">
+          <p className="reveal text-xs font-medium uppercase tracking-widest text-pine">
             {t("map.eyebrow")}
           </p>
-          <h2 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink">
+          <h2 className="reveal mt-2 font-display text-3xl font-medium tracking-tight text-ink">
             {t("map.title")}
           </h2>
-          <p className="mt-3 max-w-xl text-lg text-ink-soft">{t("map.lead")}</p>
+          <p className="reveal mt-3 max-w-xl text-lg text-ink-soft">
+            {t("map.lead")}
+          </p>
           <div className="mt-10">
             <RoutesMap />
           </div>
