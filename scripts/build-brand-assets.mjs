@@ -14,8 +14,10 @@
 // 2. Rasterizes favicon-mark.svg into favicon.ico (16/32/48),
 //    icon-192.png / icon-512.png (transparent) and apple-touch-icon.png
 //    (180px, cream background). favicon-full.ico is left untouched.
+// 3. Syncs the App Router icon files: src/app/favicon.ico, icon.svg,
+//    apple-icon.png (Next serves them via the metadata file conventions).
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import pngToIco from "png-to-ico";
@@ -112,3 +114,18 @@ await sharp({
   .png()
   .toFile(fileURLToPath(new URL("apple-touch-icon.png", BRAND)));
 console.log(`apple-touch-icon.png: ${APPLE}px on cream`);
+
+// --- 4. Sync App Router metadata icon files -------------------------------
+
+const APP = new URL("src/app/", ROOT);
+for (const [src, dest] of [
+  ["favicon.ico", "favicon.ico"],
+  ["favicon-mark.svg", "icon.svg"],
+  ["apple-touch-icon.png", "apple-icon.png"],
+]) {
+  copyFileSync(
+    fileURLToPath(new URL(src, BRAND)),
+    fileURLToPath(new URL(dest, APP)),
+  );
+  console.log(`src/app/${dest} <- brand/${src}`);
+}
