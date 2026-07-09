@@ -1,8 +1,10 @@
-import type { CSSProperties } from "react";
+import { Suspense, type CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FactsRibbon } from "@/components/FactsRibbon";
+import { LeftRail } from "@/components/LeftRail";
+import { LeftRailView } from "@/components/LeftRailView";
 import { LogoMark } from "@/components/LogoMark";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
@@ -31,10 +33,11 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <div className="home-shell">
-      {/* Route thread — decorative scroll companion on the left margin */}
-      <div aria-hidden="true" className="route-thread">
-        <span className="route-thread-dot" />
-      </div>
+      {/* Left rail — decorative scroll companion (?rail=curve|dots|off).
+          Fallback renders the default curve so it shows before hydration. */}
+      <Suspense fallback={<LeftRailView variant="curve" />}>
+        <LeftRail />
+      </Suspense>
 
       {/* Hero — typographic thesis; no photography by design.
           Static band: base paper (transparent over .home-shell) */}

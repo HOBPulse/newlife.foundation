@@ -132,64 +132,90 @@ body {
      hidden — clip creates no scroll container) keeps the page scroll clean */
   overflow-x: clip;
   background-color: var(--color-paper);
+  /* Named view timeline the left rail draws along — tied to this sections
+     wrapper, never scroll(root) with hardcoded document percentages */
+  view-timeline-name: --rail;
 }
 
-/* --- Route thread (homepage, ≥1280px) -----------------------------------
-   Thin dashed line down the left margin; a terracotta dot travels along it
-   with scroll via a CSS scroll-driven animation. Progressive enhancement:
-   without animation-timeline support (or with reduced motion) the line and
-   the dot simply render static. Absolutely positioned inside .home-shell, so
-   it spans the page content only and never extends over the footer. */
-.route-thread {
+/* --- Left rail (homepage, ≥1024px) --------------------------------------
+   Decorative curved rail down the left margin with station dots near the
+   section boundaries. Absolutely positioned inside .home-shell, so it spans
+   the page content only (never the footer) and adds zero layout / CLS.
+   Variants (?rail=): curve = line + stations, dots = stations only,
+   off = nothing. The curve draws on scroll via stroke-dashoffset on the
+   wrapper's view timeline; without support or with reduced motion it renders
+   fully drawn and static. */
+.left-rail {
   display: none;
 }
 
-@media (min-width: 1280px) {
-  .route-thread {
+@media (min-width: 1024px) {
+  .left-rail {
     position: absolute;
     inset-block: 0;
     left: 2.5rem;
     display: block;
-    width: 12px;
+    width: 40px;
     pointer-events: none;
   }
 
-  .route-thread::before {
-    content: "";
+  .left-rail-line {
     position: absolute;
     inset-block: 0;
-    left: 50%;
-    margin-left: -0.75px;
-    border-left: 1.5px dashed var(--color-pine);
-    opacity: 0.6;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    overflow: visible;
   }
 
-  .route-thread-dot {
+  .rail-path {
+    /* Fallback / reduced motion: the curve is simply fully drawn */
+    stroke-dashoffset: 0;
+    opacity: 0.5;
+  }
+
+  .rail-station {
     position: absolute;
-    top: 0;
-    left: 0;
+    left: 50%;
     width: 12px;
     height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
     border-radius: 50%;
+    border: 2px solid var(--color-pine);
+    background: var(--color-paper);
+  }
+
+  /* First station: solid terracotta with the map-hub radar pulse */
+  .rail-station--lead {
+    border-color: transparent;
     background: var(--color-brand-terracotta);
   }
 
-  @supports (animation-timeline: scroll()) {
+  @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .route-thread-dot {
-        animation: thread-travel linear both;
-        animation-timeline: scroll(root block);
+      .rail-path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        /* 1ms duration is ignored by Chromium's progress timeline but is
+           required by Firefox for a scroll/view-driven animation to run */
+        animation: draw-path 1ms linear both;
+        animation-timeline: --rail;
+        animation-range: cover 0% cover 100%;
       }
     }
   }
-}
 
-@keyframes thread-travel {
-  from {
-    top: 0;
-  }
-  to {
-    top: calc(100% - 12px);
+  @media (prefers-reduced-motion: no-preference) {
+    .rail-station--lead::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-brand-terracotta);
+      transform-origin: center;
+      animation: map-pulse 3.2s ease-out infinite;
+    }
   }
 }
 
