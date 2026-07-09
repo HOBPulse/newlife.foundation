@@ -48,6 +48,8 @@
       "PowerShell(npm run *)",
       "Bash(npx playwright *)",
       "PowerShell(npx playwright *)",
+      "Bash(npx playwright test:*)",
+      "PowerShell(npx playwright test:*)",
       "Bash(git switch *)",
       "PowerShell(git switch *)",
       "Bash(git stash *)",
