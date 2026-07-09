@@ -447,6 +447,81 @@ body {
   }
 }
 
+/* --- Hero photo card (?hero=photo) --------------------------------------
+   Mobile (<768): full-width card in flow, right below the subline.
+   Desktop (≥768): absolute in the right zone; the text column narrows via
+   :has(.hero-photo) so the card never collides with the oversized headline.
+   The photo is the LCP element here — loaded eagerly (priority), not lazy. */
+.hero-photo {
+  margin-top: 1.75rem;
+  max-width: 30rem;
+}
+
+.hero-photo-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--color-sage);
+  border-radius: 0.75rem;
+  background: var(--color-sage-soft);
+}
+
+.hero-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-ink-soft);
+  opacity: 0.45;
+}
+
+.hero-photo-caption {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-ink-soft);
+}
+
+@media (min-width: 768px) {
+  .hero-photo {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 19rem;
+    margin-top: 0;
+    translate: 0 -50%;
+  }
+
+  /* reserve the right zone so the card clears the oversized headline */
+  .hero-section:has(.hero-photo) .hero-headline,
+  .hero-section:has(.hero-photo) .hero-subline,
+  .hero-section:has(.hero-photo) .hero-ctas {
+    max-width: 24rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-photo {
+    width: 22rem;
+  }
+
+  .hero-section:has(.hero-photo) .hero-headline,
+  .hero-section:has(.hero-photo) .hero-subline {
+    max-width: 34rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-photo {
+    width: 24rem;
+  }
+
+  .hero-section:has(.hero-photo) .hero-headline {
+    max-width: 38rem;
+  }
+}
+
 /* Shared path-draw keyframes (routes map entrance) */
 @keyframes draw-path {
   from {
