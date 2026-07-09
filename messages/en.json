@@ -15,8 +15,6 @@
     "menu": "Menu",
     "nav": {
       "label": "Navigation",
-      "needHelp": "Need help",
-      "routes": "Routes",
       "about": "About us",
       "howWeWork": "How we work",
       "stories": "Stories",
@@ -34,11 +32,12 @@
     "metaTitle": "Help finding specialised treatment",
     "metaDescription": "A charitable foundation that helps patients find specialised treatment and reach it when local options have run out.",
     "hero": {
-      "title": "We find treatment. <em>We bring</em> you to it.",
-      "lead": "When those around you say there are no options left, we help find a clinic and arrange the journey.",
-      "ctaDonate": "Support",
-      "ctaHelp": "Need help",
-      "photoCaption": "TODO"
+      "title": "When they say there are no options left, we keep searching.",
+      "lead": "The foundation helps patients and their families find specialised treatment and reach it when the options where they live have run out.",
+      "ctaDonate": "Support the foundation",
+      "ctaHelp": "Request help",
+      "photoCaption": "TODO",
+      "photoAlt": "TODO"
     },
     "process": {
       "eyebrow": "Process",

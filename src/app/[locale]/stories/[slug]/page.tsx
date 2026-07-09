@@ -4,7 +4,6 @@ import { ViewTransition } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { StoryMarginLabel } from "@/components/StoryMarginLabel";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { openGraph, pageAlternates } from "@/lib/seo";
@@ -49,12 +48,9 @@ export default async function StoryPage({ params }: Props) {
   const [mainPhoto, ...morePhotos] = photos;
   const title = t(`items.${slug}.title`);
   // Empty array until the owner provides the story's text (see messages/*.json).
-  // marginLabel is optional per section — a right-margin chronology label,
-  // shipped empty; never invent dates.
   const sections = t.raw(`items.${slug}.sections`) as {
     heading: string;
     body: string;
-    marginLabel?: string;
   }[];
 
   return (
@@ -124,8 +120,7 @@ export default async function StoryPage({ params }: Props) {
       {sections.length > 0 ? (
         <div className="mt-10 space-y-8">
           {sections.map((section) => (
-            <section key={section.heading} className="relative">
-              <StoryMarginLabel label={section.marginLabel} />
+            <section key={section.heading}>
               <h2 className="font-display text-2xl font-medium tracking-tight text-ink">
                 {section.heading}
               </h2>

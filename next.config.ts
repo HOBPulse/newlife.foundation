@@ -4,6 +4,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  // Hide the dev-only "N" indicator badge (bottom-corner medallion)
+  devIndicators: false,
   images: {
     // Per brief: no dependency on host-side image optimization (site migrates to a VPS later)
     unoptimized: true,

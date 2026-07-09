@@ -1,10 +1,8 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { HEADER_NAV } from "@/lib/nav";
+import { NAV_ITEMS } from "@/lib/nav";
 import { LocaleSwitcher } from "./LocaleSwitcher";
-import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
-import { WordmarkInline } from "./WordmarkInline";
 
 export function Header() {
   const t = useTranslations("Common");
@@ -12,17 +10,27 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-sage bg-paper">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        {/* Brand: compact mark + inline "NL Foundation" lockup */}
-        <Link href="/" className="flex items-center gap-2">
-          <Logo className="h-6 w-auto" />
-          <WordmarkInline className="text-base tracking-tight" />
+        {/* Brand: NL seal + "New Life Foundation" */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-ink"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/nl-seal.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7"
+          />
+          <span className="hidden min-[420px]:block">{t("siteName")}</span>
         </Link>
 
         <nav
           aria-label={t("nav.label")}
           className="hidden items-center gap-6 lg:flex"
         >
-          {HEADER_NAV.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -37,7 +45,7 @@ export function Header() {
           <LocaleSwitcher className="hidden lg:flex" />
           <Link
             href="/donate"
-            className="header-cta rounded-full bg-brand-terracotta-deep px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-brand-terracotta-deep/90"
+            className="hidden rounded-full bg-apricot px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-apricot/85 sm:block"
           >
             {t("nav.donate")}
           </Link>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { HEADER_NAV } from "@/lib/nav";
+import { NAV_ITEMS } from "@/lib/nav";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 export function MobileMenu() {
@@ -56,8 +56,7 @@ export function MobileMenu() {
           aria-label={t("nav.label")}
           className="absolute right-0 top-12 z-50 w-60 rounded-lg border border-sage bg-paper p-2 shadow-lg"
         >
-          {/* "Потрібна допомога" leads, per the brief */}
-          {HEADER_NAV.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -66,6 +65,12 @@ export function MobileMenu() {
               {t(`nav.${item.key}`)}
             </Link>
           ))}
+          <Link
+            href="/donate"
+            className="mt-1 block rounded bg-apricot px-3 py-2.5 font-medium text-ink"
+          >
+            {t("nav.donate")}
+          </Link>
           <div className="mt-1 border-t border-sage px-3 pb-1 pt-3">
             <LocaleSwitcher />
           </div>

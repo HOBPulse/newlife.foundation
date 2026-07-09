@@ -33,7 +33,7 @@ function HeroPhoto({ photoAvailable }: { photoAvailable: boolean }) {
           // LCP zone — eager (priority), no lazy-load
           <Image
             src="/photos/hero-transport.jpg"
-            alt=""
+            alt={t("photoAlt")}
             fill
             priority
             sizes="(max-width: 768px) 100vw, 24rem"

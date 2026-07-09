@@ -1,18 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-/* Part 4 verification shots. The `shots` project forces reduced motion, so
-   the rail renders as its fully-drawn static fallback (good for comparing
-   the three variants). */
-
-for (const variant of ["curve", "dots", "off"] as const) {
-  test(`homepage rail=${variant} at 1280`, async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 860 });
-    await page.goto(`/?rail=${variant}`, { waitUntil: "networkidle" });
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(300);
-    await page.screenshot({ path: `screenshots/part4-rail-${variant}.png`, clip: { x: 0, y: 0, width: 1280, height: 720 } });
-  });
-}
+/* Part 4 verification shots. The `shots` project forces reduced motion. */
 
 test("mobile header menu open (390)", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
