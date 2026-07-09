@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FactsRibbon } from "@/components/FactsRibbon";
+import { Faq } from "@/components/Faq";
 import { LeftRail } from "@/components/LeftRail";
 import { LeftRailView } from "@/components/LeftRailView";
 import { LogoMark } from "@/components/LogoMark";
@@ -155,6 +156,9 @@ export default async function HomePage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* FAQ skeleton — behind showFaq (default off): ships nothing yet */}
+      <Faq />
 
       {/* Donate band — deep terracotta, distinct from the green footer below */}
       <section className="bg-brand-terracotta-deep">

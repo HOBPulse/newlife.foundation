@@ -108,6 +108,51 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- FAQ (editorial, native details/summary, no JS) --------------------
+   The +/− marker is pure CSS, flipped by the [open] state. */
+.faq-summary {
+  list-style: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-mark {
+  position: relative;
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.faq-mark::before,
+.faq-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.faq-mark::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.faq-mark::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  transform: translateX(-50%);
+}
+
+/* "+" collapses to "−" when the item is open */
+.faq-item[open] .faq-mark::after {
+  opacity: 0;
+}
+
 /* --- Story section chronology label (≥1024px) --------------------------
    Optional right-margin annotation aligned to a section heading; renders
    only when a section supplies marginLabel (ships empty). Hidden below

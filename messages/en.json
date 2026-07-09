@@ -1,4 +1,14 @@
 {
+  "FAQ": {
+    "title": "TODO",
+    "items": {
+      "1": { "q": "TODO", "a": "TODO" },
+      "2": { "q": "TODO", "a": "TODO" },
+      "3": { "q": "TODO", "a": "TODO" },
+      "4": { "q": "TODO", "a": "TODO" },
+      "5": { "q": "TODO", "a": "TODO" }
+    }
+  },
   "Common": {
     "siteName": "New Life Foundation",
     "localeSwitcher": "Site language",
