@@ -5,6 +5,8 @@
     "menu": "Menu",
     "nav": {
       "label": "Navigation",
+      "needHelp": "Need help",
+      "routes": "Routes",
       "about": "About us",
       "howWeWork": "How we work",
       "stories": "Stories",

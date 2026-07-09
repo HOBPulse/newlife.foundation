@@ -122,6 +122,35 @@ body {
   }
 }
 
+/* --- Header CTA scroll reveal (≥1024px) --------------------------------
+   The "Підтримати" pill stays hidden while the hero is on screen and fades
+   in once the hero has scrolled roughly a viewport away, via the root scroll
+   timeline (a range near the top). Space is always reserved (visibility, not
+   display) so nothing shifts when it appears. Scoped to ≥1024px: on mobile
+   the pill is always visible. Fallback / reduced motion: always visible. */
+@media (min-width: 1024px) {
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .header-cta {
+        animation: header-cta-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 55vh 85vh;
+      }
+    }
+  }
+}
+
+@keyframes header-cta-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 /* --- Homepage shell -----------------------------------------------------
    Positioning + clip context for the route thread and the hero watermark.
    Section backgrounds are static alternating bands (base paper vs.

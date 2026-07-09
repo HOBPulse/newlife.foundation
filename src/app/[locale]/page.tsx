@@ -133,8 +133,8 @@ export default async function HomePage({ params }: Props) {
       <FactsRibbon />
 
       {/* Geography — the route line becomes real journeys.
-          Static band: --surface-tint, full width */}
-      <section className="bg-surface-tint">
+          Static band: --surface-tint, full width. #routes = header "Маршрути" */}
+      <section id="routes" className="scroll-mt-20 bg-surface-tint">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
           <p className="reveal text-xs font-medium uppercase tracking-widest text-pine">
             {t("map.eyebrow")}

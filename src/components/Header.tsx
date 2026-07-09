@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { NAV_ITEMS } from "@/lib/nav";
+import { HEADER_NAV } from "@/lib/nav";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
@@ -9,21 +9,25 @@ export function Header() {
   const t = useTranslations("Common");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-sage bg-paper/95 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <header className="sticky top-0 z-40 border-b border-sage bg-paper">
+      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        {/* Brand: compact mark + inline "NL Foundation" lockup */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-ink"
+          className="flex items-center gap-2 font-display text-base tracking-tight"
         >
-          <Logo className="h-11 w-auto" />
-          <span className="hidden min-[420px]:block">{t("siteName")}</span>
+          <Logo className="h-6 w-auto" />
+          <span>
+            <span className="font-medium text-pine">NL</span>{" "}
+            <span className="text-ink-soft">Foundation</span>
+          </span>
         </Link>
 
         <nav
           aria-label={t("nav.label")}
           className="hidden items-center gap-6 lg:flex"
         >
-          {NAV_ITEMS.map((item) => (
+          {HEADER_NAV.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -35,10 +39,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <LocaleSwitcher />
+          <LocaleSwitcher className="hidden lg:flex" />
           <Link
             href="/donate"
-            className="hidden rounded-full bg-apricot px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-apricot/85 sm:block"
+            className="header-cta rounded-full bg-brand-terracotta-deep px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-brand-terracotta-deep/90"
           >
             {t("nav.donate")}
           </Link>

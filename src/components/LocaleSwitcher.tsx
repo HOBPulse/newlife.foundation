@@ -4,15 +4,18 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
-const LABELS: Record<Locale, string> = { uk: "Укр", ru: "Рус", en: "Eng" };
+const LABELS: Record<Locale, string> = { uk: "UA", ru: "RU", en: "EN" };
 
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ className = "" }: { className?: string }) {
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations("Common");
 
   return (
-    <nav aria-label={t("localeSwitcher")} className="flex items-center gap-0.5 text-sm">
+    <nav
+      aria-label={t("localeSwitcher")}
+      className={`flex items-center gap-0.5 text-sm ${className}`}
+    >
       {routing.locales.map((l) =>
         l === locale ? (
           <span
