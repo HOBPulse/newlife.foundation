@@ -9,6 +9,8 @@ import { Faq } from "@/components/Faq";
 import { HeroPhoto } from "@/components/HeroPhoto";
 import { HeroPhotoView } from "@/components/HeroPhotoView";
 import { RoutesMap } from "@/components/RoutesMap";
+import { RoutesMapSwitch } from "@/components/RoutesMapSwitch";
+import { RoutesMapV2 } from "@/components/RoutesMapV2";
 import { StoryCard } from "@/components/StoryCard";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
@@ -177,8 +179,12 @@ export default async function HomePage({ params }: Props) {
           <p className="reveal mt-3 max-w-xl text-lg text-ink-soft">
             {t("map.lead")}
           </p>
+          {/* v2 comparison (?map=v2, default v1) — remove the switch once
+              the owner approves one of them */}
           <div className="mt-10">
-            <RoutesMap />
+            <Suspense fallback={<RoutesMap />}>
+              <RoutesMapSwitch v1={<RoutesMap />} v2={<RoutesMapV2 />} />
+            </Suspense>
           </div>
         </div>
       </section>

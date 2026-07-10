@@ -74,7 +74,12 @@
       "eyebrow": "Geography",
       "title": "Routes of help",
       "lead": "Every line on this map is someone's way to treatment.",
-      "caption": "The map shows a selection of the routes we have transported patients along — from all across Ukraine."
+      "caption": "The map shows a selection of the routes we have transported patients along — from all across Ukraine.",
+      "legendThickness": "Line weight — number of routes",
+      "legendAir": "Air",
+      "legendGround": "Ground",
+      "legendHub": "Hub in Ukraine",
+      "list": "All destinations as a list"
     },
     "donate": {
       "title": "Support the foundation's work",

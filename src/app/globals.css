@@ -482,6 +482,29 @@ body {
   }
 }
 
+/* v2 (?map=v2) — warm cream basemap frame; shares v1's animation machinery.
+   Land a touch deeper than the water so the coastline reads on cream. */
+.routes-map-v2-frame {
+  --map2-land: color-mix(in srgb, var(--color-gold) 5%, var(--color-surface-tint));
+  background: color-mix(in srgb, var(--color-surface-tint) 45%, var(--color-paper));
+  border-color: color-mix(in srgb, var(--color-pine) 22%, transparent);
+}
+
+@keyframes map-pulse-calm {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  60% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
   /* Hidden initial state, revealed by the one-shot entrance sequence */
   .routes-map .map-line {
@@ -509,6 +532,11 @@ body {
 
   .routes-map.in-view .map-pulse {
     animation: map-pulse 3.2s ease-out var(--d, 0s) infinite;
+  }
+
+  /* v2 hubs pulse calmer: slower, softer, smaller reach */
+  .routes-map--v2.in-view .map-pulse {
+    animation: map-pulse-calm 5.4s ease-out var(--d, 0s) infinite;
   }
 
   @supports (offset-path: path("M 0 0 L 1 1")) {
