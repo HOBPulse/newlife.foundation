@@ -79,6 +79,10 @@
     "cta": {
       "body": "Sometimes a single request can change a life. We will carefully review your case and tell you honestly what is possible.",
       "button": "Request help"
+    },
+    "photos": {
+      "emergencyRoom": "Foundation ambulances at a hospital emergency entrance",
+      "clinicAbroad": "Medical transport vehicles outside a clinic abroad"
     }
   },
   "HowWeWorkPage": {

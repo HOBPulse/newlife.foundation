@@ -74,5 +74,7 @@ export async function pageMetadata(
     description: t("metaDescription"),
     alternates: pageAlternates(href, locale),
     openGraph: openGraph(t("metaTitle"), t("metaDescription"), href, locale),
+    // Twitter/X reuses the OG title/description/per-locale image via fallback.
+    twitter: { card: "summary_large_image" },
   };
 }

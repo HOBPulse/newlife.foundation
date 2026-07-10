@@ -34,6 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       href,
       locale,
     ),
+    // Twitter/X reuses the OG title/description/per-locale image via fallback.
+    twitter: { card: "summary_large_image" },
   };
 }
 

@@ -25,6 +25,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const PROCESS_STEPS = [1, 2, 3, 4] as const;
 
+// Organization structured data (schema.org NGO). Owner-provided values only —
+// no contact/registration fields (see task + CLAUDE.md: never invent).
+const ORG_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "New Life Foundation",
+  legalName: "Благодійний фонд «НОВЕ ЖИТТЯ!»",
+  url: "https://newlife.foundation",
+  logo: "https://newlife.foundation/brand/logo.png",
+};
+
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -39,6 +50,10 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <div className="home-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
+      />
       {/* Hero — typographic thesis; no photography by design.
           Static band: base paper (transparent over .home-shell) */}
       <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -35,8 +36,31 @@ export default async function AboutPage({ params }: Props) {
         {t("title")}
       </h1>
 
+      <p className="mt-8 text-lg leading-relaxed text-ink-soft">{t("p1")}</p>
+
+      {/* Two context photos — responsive, lazy-loaded (next/image default). */}
+      <div className="mt-8 grid gap-3 sm:grid-cols-2">
+        <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage">
+          <Image
+            src="/photos/emergency-room.jpg"
+            alt={t("photos.emergencyRoom")}
+            fill
+            sizes="(max-width: 640px) 100vw, 336px"
+            className="object-cover"
+          />
+        </div>
+        <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage">
+          <Image
+            src="/photos/clinic-abroad.jpg"
+            alt={t("photos.clinicAbroad")}
+            fill
+            sizes="(max-width: 640px) 100vw, 336px"
+            className="object-cover"
+          />
+        </div>
+      </div>
+
       <div className="mt-8 space-y-6 text-lg leading-relaxed text-ink-soft">
-        <p>{t("p1")}</p>
         <p>{t("p2")}</p>
         <p>{t("p3")}</p>
         <p>{t("p4")}</p>
