@@ -1,10 +1,19 @@
-import { Golos_Text } from "next/font/google";
+import { Golos_Text, PT_Serif } from "next/font/google";
 import localFont from "next/font/local";
 
 // Body/UI face — sturdy humanist sans designed for Cyrillic screens
 export const golos = Golos_Text({
   subsets: ["cyrillic", "latin"],
   variable: "--font-golos",
+  display: "swap",
+});
+
+// Hero font trial — only rendered behind ?font=serif (see HeroHeadline);
+// preload off so the default page ships no extra font bytes
+export const ptSerif = PT_Serif({
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "700"],
+  preload: false,
   display: "swap",
 });
 
