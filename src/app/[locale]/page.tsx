@@ -49,10 +49,11 @@ export default async function HomePage({ params }: Props) {
         <p className="hero-subline mt-6 max-w-[60ch] text-lg leading-relaxed text-ink-soft">
           {t("hero.lead")}
         </p>
-        {/* Hero media (?hero=photo|mark, default mark). Fallback = watermark
-            so the static default renders before hydration. On mobile the
-            photo card sits here, below the subline; on desktop it moves to
-            the right zone (or the watermark bleeds there). */}
+        {/* Hero media (?hero=mark|photo|full, default mark). Fallback =
+            watermark so the static default renders before hydration.
+            photo: card in the right zone (desktop) / below the subline
+            (mobile). full: full-bleed photo, text overlaid left (desktop) /
+            photo block on top (mobile). */}
         <Suspense
           fallback={
             <HeroMediaView variant="mark" photoAvailable={heroPhotoAvailable} />
@@ -69,7 +70,7 @@ export default async function HomePage({ params }: Props) {
           </Link>
           <Link
             href="/contact"
-            className="rounded-full border border-pine px-6 py-3 font-medium text-pine transition-colors hover:bg-sage-soft"
+            className="hero-cta-secondary rounded-full border border-pine px-6 py-3 font-medium text-pine transition-colors hover:bg-sage-soft"
           >
             {t("hero.ctaHelp")}
           </Link>

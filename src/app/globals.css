@@ -335,13 +335,6 @@ body {
   opacity: 0.45;
 }
 
-.hero-photo-caption {
-  margin-top: 0.5rem;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--color-ink-soft);
-}
-
 @media (min-width: 768px) {
   .hero-photo {
     position: absolute;
@@ -379,6 +372,99 @@ body {
 
   .hero-section:has(.hero-photo) .hero-headline {
     max-width: 38rem;
+  }
+}
+
+/* --- Hero full-bleed variant (?hero=full) -------------------------------
+   charity:water layout. Mobile (<768): the photo is a full-bleed block on
+   top (~45vh), text stacked below on paper (no overlay). Desktop (≥768): the
+   photo covers the section (~85vh), text overlaid on the calm left, made
+   legible by a pine scrim fading left→right. The van/AMBULÀNCIA are pushed
+   into the right half by the crop zoom (--hero-scale / --hero-origin-x, set
+   per ?crop=1..5). LCP image is eager; container heights are fixed → no CLS. */
+.hero-full {
+  position: relative;
+  order: -1;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  height: 45vh;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  background: var(--color-sage-soft);
+}
+
+.hero-section:has(.hero-full) {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-full-placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-scrim {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-section:has(.hero-full) {
+    min-height: 85vh;
+    justify-content: center;
+    isolation: isolate;
+  }
+
+  .hero-full {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    order: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+
+  .hero-full-img {
+    transform: scale(var(--hero-scale, 1.42));
+    transform-origin: var(--hero-origin-x, 26%) 50%;
+  }
+
+  .hero-scrim {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      var(--color-pine) 0%,
+      color-mix(in srgb, var(--color-pine) 55%, transparent) 30%,
+      transparent 52%
+    );
+  }
+
+  /* Text overlaid on the calm left, above the photo + scrim */
+  .hero-section:has(.hero-full) .hero-headline,
+  .hero-section:has(.hero-full) .hero-subline {
+    position: relative;
+    z-index: 2;
+    max-width: 34rem;
+    color: var(--color-paper);
+  }
+
+  .hero-section:has(.hero-full) .hero-ctas {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* outline CTA legible on the photo */
+  .hero-section:has(.hero-full) .hero-cta-secondary {
+    border-color: var(--color-paper);
+    color: var(--color-paper);
+  }
+
+  .hero-section:has(.hero-full) .hero-cta-secondary:hover {
+    background-color: rgb(255 255 255 / 0.14);
   }
 }
 
