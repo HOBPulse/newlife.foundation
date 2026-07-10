@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { Logo } from "@/components/Logo";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -18,43 +20,34 @@ export default async function AboutPage({ params }: Props) {
   const t = await getTranslations("AboutPage");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+    <div className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
+      {/* Decorative brand mark near the intro (identity "sign"; aria-hidden
+          baked into LogoMark). Static — no animation. */}
+      <Logo className="mb-6 h-16 w-16" />
       <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
         {t("title")}
       </h1>
-      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
-        {t("intro")}
-      </p>
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-2">
-        <section className="reveal">
-          <h2 className="font-display text-2xl font-medium text-ink">
-            {t("mission.title")}
-          </h2>
-          <p className="mt-3 leading-relaxed text-ink-soft">
-            {t("mission.body")}
-          </p>
-        </section>
-        <section className="reveal">
-          <h2 className="font-display text-2xl font-medium text-ink">
-            {t("work.title")}
-          </h2>
-          <p className="mt-3 leading-relaxed text-ink-soft">{t("work.body")}</p>
-        </section>
+      <div className="mt-8 space-y-6 text-lg leading-relaxed text-ink-soft">
+        <p>{t("p1")}</p>
+        <p>{t("p2")}</p>
+        <p>{t("p3")}</p>
+        <p>{t("p4")}</p>
+        <p>{t("p5")}</p>
       </div>
 
-      {/* Transparency — flexible placeholder structure per brief;
-          registration disclosure pending owner's decision */}
-      <section className="reveal mt-14 rounded-xl border border-sage bg-sage-soft p-6 sm:p-8">
-        <h2 className="font-display text-2xl font-medium text-ink">
-          {t("transparency.title")}
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft">
-          {t("transparency.body")}
+      {/* Closing CTA — reuses the site's contact route + label, terracotta
+          button styling matching the hero donate CTA. */}
+      <section className="reveal mt-12 border-t border-sage pt-8">
+        <p className="max-w-xl text-lg leading-relaxed text-ink">
+          {t("cta.body")}
         </p>
-        <p className="mt-4 inline-block rounded-full border border-sage bg-paper px-3 py-1 text-sm text-ink-soft">
-          {t("transparency.pending")}
-        </p>
+        <Link
+          href="/contact"
+          className="mt-6 inline-block rounded-full bg-brand-terracotta-deep px-6 py-3 font-medium text-paper transition-colors hover:bg-brand-terracotta-deep/90"
+        >
+          {t("cta.button")}
+        </Link>
       </section>
     </div>
   );

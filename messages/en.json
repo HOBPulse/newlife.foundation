@@ -70,20 +70,15 @@
   "AboutPage": {
     "metaTitle": "About us",
     "metaDescription": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local options have run out.",
-    "title": "About us",
-    "intro": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local doctors say no options remain.",
-    "mission": {
-      "title": "Our mission",
-      "body": "\"No options left\" should never be the final answer. When treatment options in a region are exhausted, we help find specialised clinics and organise the journey to them."
-    },
-    "work": {
-      "title": "What we do",
-      "body": "The foundation supports patients in finding specialised treatment and organising medical transport. Read more on the How we work page."
-    },
-    "transparency": {
-      "title": "Transparency",
-      "body": "The foundation's registration details and reports will be published in this section.",
-      "pending": "Information to be added"
+    "title": "Finding possibilities for the most difficult cases",
+    "p1": "New Life Charitable Foundation helps patients in complex medical situations — when treatment where they live is no longer possible or has been exhausted. We look for specialized treatment at appropriate clinics and arrange medical transport, so that each patient can reach the place where they can truly be helped.",
+    "p2": "The foundation was established in 2019 to bring together the experience and resources of a team that has worked in medicine since 2011. Over these years we have learned one thing: even when a situation seems hopeless, there is almost always at least one option that simply hasn't been explored yet.",
+    "p3": "The foundation is led by Olesya Oleksandrivna, a physician specializing in emergency medicine and air ambulance services. She deals daily with cases where every hour counts — and consistently finds solutions where others see none. That experience shapes how the entire foundation works.",
+    "p4": "We approach every case the same way: we carefully study the medical situation, look for realistic treatment options, and honestly assess what is possible. We do not promise results we cannot guarantee, and we do not name timelines until we fully understand the picture.",
+    "p5": "Experience shows that options exist more often than it seems at first. Our job is to find them.",
+    "cta": {
+      "body": "Sometimes a single request can change a life. We will carefully review your case and tell you honestly what is possible.",
+      "button": "Request help"
     }
   },
   "HowWeWorkPage": {

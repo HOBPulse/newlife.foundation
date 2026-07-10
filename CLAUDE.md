@@ -30,6 +30,13 @@ report instead of asking. Mandatory stops: deploy and hard-to-reverse actions.
 - Owner-approved content (nav items/order, hero copy, story texts, brand marks):
   change it only when a task explicitly names it. If it changes as a side effect,
   FLAG it at the top of the report — never ship it silently.
+- Text-change policy for owner-approved copy:
+  - Trivial typos (missing letter, doubled space, obviously broken punctuation):
+    fix silently, but list every fix in the report (original → fixed).
+  - Anything affecting wording, meaning, or tone: do NOT apply. Propose in the
+    report (original → proposed + reason) and wait for explicit owner approval.
+  - Structure, components, navigation, button labels: out of scope entirely
+    unless a task explicitly says so.
 ## Transport routes map (v1 shipped)
 - v1 is live: static stylized SVG map — 61 routes / 23 countries, 5 Ukrainian hubs,
   equirectangular projection on a Natural Earth basemap, CSS stroke-dashoffset draw

@@ -116,7 +116,7 @@
 
 ## FLAGS
 - Per project instructions: flag any legal/compliance risk (medical claims, financial disclosure wording, patient data/consent) instead of silently writing around it
-- Do not build out Heart of Blockchain (HOB) integration now — brief mention only, as a future partner, if it fits naturally
+- HOB Labs: off-site entirely until the owner explicitly re-enables it post-launch — see CLAUDE.md HOB rule
 - Open items still requiring a decision:
   - Final VPS provider (Ukrainian hosting with Node.js) — not yet selected
   - Transparency/registration disclosure wording — pending your decision
