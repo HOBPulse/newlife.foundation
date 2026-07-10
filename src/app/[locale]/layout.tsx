@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FontTrial } from "@/components/FontTrial";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { fixelDisplay, golos, ptSerif } from "@/lib/fonts";
@@ -46,10 +44,6 @@ export default async function LocaleLayout({
       className={`${golos.variable} ${fixelDisplay.variable} ${ptSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        {/* Dev heading-font trial (?font=serif) — renders nothing */}
-        <Suspense fallback={null}>
-          <FontTrial />
-        </Suspense>
         <NextIntlClientProvider>
           <Header />
           {/* Opaque elevated sheet — scrolls over the pinned footer (reveal) */}

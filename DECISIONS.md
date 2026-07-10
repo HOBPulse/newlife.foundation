@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-10 — PT Serif locked as heading font, trial scaffolding removed (serif trial approved)
 2026-07-10 — Heading font: PT Serif site-wide, hero 400 / paper 700 (trial over Fixel, final pick pending)
 2026-07-10 — Hero = full-bleed ambulance photo, left scrim (over watermark/card variants)
 2026-07-10 — Header: seal + "New Life Foundation", apricot donate always on (donor path always visible)

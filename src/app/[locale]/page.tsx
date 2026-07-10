@@ -42,9 +42,8 @@ export default async function HomePage({ params }: Props) {
       {/* Hero — typographic thesis; no photography by design.
           Static band: base paper (transparent over .home-shell) */}
       <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
-        {/* Headline — the site-wide dev font trial (?font=serif, see
-            FontTrial + globals.css) restyles this via CSS; the markup is the
-            locked Fixel treatment */}
+        {/* Headline — PT Serif at 400 (see the heading rules in globals.css,
+            which set the family + weight on .hero-headline) */}
         <h1 className="hero-headline max-w-4xl text-balance font-display text-5xl font-light leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
           {t("hero.title")}
         </h1>

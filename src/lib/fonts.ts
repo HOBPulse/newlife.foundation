@@ -8,18 +8,19 @@ export const golos = Golos_Text({
   display: "swap",
 });
 
-// Heading font trial — only rendered behind ?font=serif (see FontTrial +
-// the html[data-font-trial] rules in globals.css); preload off so the
-// default page ships no extra font bytes
+// Heading face — PT Serif (see the heading rules in globals.css). Preloaded:
+// the hero h1 is the LCP element on the homepage.
 export const ptSerif = PT_Serif({
   subsets: ["cyrillic", "latin"],
   weight: ["400", "700"],
   variable: "--font-pt-serif",
-  preload: false,
   display: "swap",
 });
 
-// Display face — Fixel by MacPaw (OFL, see src/fonts/OFL-Fixel.txt), self-hosted
+// Numerals / wordmark / caps face — Fixel by MacPaw (OFL, see
+// src/fonts/OFL-Fixel.txt), self-hosted. Exposed as --font-display; headings
+// override it with PT Serif, so Fixel now carries tabular numerals, the
+// wordmark and the footer caps only.
 export const fixelDisplay = localFont({
   src: [
     { path: "../fonts/FixelDisplay-Light.woff2", weight: "300" },
