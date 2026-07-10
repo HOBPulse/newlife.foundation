@@ -43,16 +43,6 @@ export default async function AboutPage({ params }: Props) {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-2xl">
-        {/* Decorative NL seal near the intro — aria-hidden, no animation. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/brand/nl-seal.svg"
-          alt=""
-          aria-hidden="true"
-          width={64}
-          height={64}
-          className="mb-6 h-16 w-16"
-        />
         <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
           {t("title")}
         </h1>
