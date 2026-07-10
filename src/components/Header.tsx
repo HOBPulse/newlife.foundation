@@ -10,18 +10,18 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-sage bg-paper">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        {/* Brand: NL seal + "New Life Foundation" */}
+        {/* Brand: house-and-heart mark + "New Life Foundation" */}
         <Link
           href="/"
           className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-ink"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/brand/nl-seal.svg"
+            src="/brand/logo.png"
             alt=""
-            width={28}
-            height={28}
-            className="h-7 w-7"
+            width={30}
+            height={40}
+            className="h-8 w-auto"
           />
           <span className="hidden min-[420px]:block">{t("siteName")}</span>
         </Link>

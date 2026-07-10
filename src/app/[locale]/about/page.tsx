@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { AboutBody } from "@/components/AboutBody";
+import { AboutBodyView } from "@/components/AboutBodyView";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -14,10 +16,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(locale, "AboutPage", "/about");
 }
 
+// Dev-only preview captions for the ?layout=a|b photo variants (owner-provided
+// text). Throwaway — delete with the AboutBody switch once a variant is chosen.
+const PREVIEW: Record<Locale, { caption: string; readStory: string }> = {
+  uk: {
+    caption: "Святослав із родиною дорогою на лікування",
+    readStory: "Читати історію →",
+  },
+  ru: {
+    caption: "Святослав с семьёй по дороге на лечение",
+    readStory: "Читать историю →",
+  },
+  en: {
+    caption: "Svyatoslav and his family on the way to treatment",
+    readStory: "Read the story →",
+  },
+};
+
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("AboutPage");
+  const tStories = await getTranslations("StoriesPage");
+
+  const bodyData = {
+    paragraphs: [t("p1"), t("p2"), t("p3"), t("p4"), t("p5")],
+    emergencyRoomAlt: t("photos.emergencyRoom"),
+    clinicAbroadAlt: t("photos.clinicAbroad"),
+    // Reuse the story's existing text for this image (no invented alt).
+    familyAlt: tStories("items.story-1.title"),
+    caption: PREVIEW[locale].caption,
+    readStory: PREVIEW[locale].readStory,
+  };
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
@@ -36,36 +66,12 @@ export default async function AboutPage({ params }: Props) {
         {t("title")}
       </h1>
 
-      <p className="mt-8 text-lg leading-relaxed text-ink-soft">{t("p1")}</p>
-
-      {/* Two context photos — responsive, lazy-loaded (next/image default). */}
-      <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage">
-          <Image
-            src="/photos/emergency-room.jpg"
-            alt={t("photos.emergencyRoom")}
-            fill
-            sizes="(max-width: 640px) 100vw, 336px"
-            className="object-cover"
-          />
-        </div>
-        <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage">
-          <Image
-            src="/photos/clinic-abroad.jpg"
-            alt={t("photos.clinicAbroad")}
-            fill
-            sizes="(max-width: 640px) 100vw, 336px"
-            className="object-cover"
-          />
-        </div>
-      </div>
-
-      <div className="mt-8 space-y-6 text-lg leading-relaxed text-ink-soft">
-        <p>{t("p2")}</p>
-        <p>{t("p3")}</p>
-        <p>{t("p4")}</p>
-        <p>{t("p5")}</p>
-      </div>
+      {/* Photo layout: shipped default, with dev-only ?layout=a|b preview
+          variants. Suspense fallback renders the default so /about stays
+          static and shows it before hydration. */}
+      <Suspense fallback={<AboutBodyView layout="default" {...bodyData} />}>
+        <AboutBody {...bodyData} />
+      </Suspense>
 
       {/* Closing CTA — reuses the site's contact route + label, terracotta
           button styling matching the hero donate CTA. */}
