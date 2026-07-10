@@ -76,13 +76,9 @@
     "p3": "The foundation is led by Olesya Oleksandrivna, a physician specializing in emergency medicine and air ambulance services. She deals daily with cases where every hour counts — and consistently finds solutions where others see none. That experience shapes how the entire foundation works.",
     "p4": "We approach every case the same way: we carefully study the medical situation, look for realistic treatment options, and honestly assess what is possible. We do not promise results we cannot guarantee, and we do not name timelines until we fully understand the picture.",
     "p5": "Experience shows that options exist more often than it seems at first. Our job is to find them.",
-    "cta": {
-      "body": "Sometimes a single request can change a life. We will carefully review your case and tell you honestly what is possible.",
-      "button": "Request help"
-    },
     "photos": {
       "emergencyRoom": "Foundation ambulances at a hospital emergency entrance",
-      "clinicAbroad": "Medical transport vehicles outside a clinic abroad"
+      "familyCaption": "Svyatoslav and his family on the way to treatment"
     }
   },
   "HowWeWorkPage": {

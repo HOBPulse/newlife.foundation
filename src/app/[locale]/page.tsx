@@ -4,8 +4,6 @@ import { Suspense, type CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { DonateBand } from "@/components/DonateBand";
-import { DonateBandView } from "@/components/DonateBandView";
 import { FactsRibbon } from "@/components/FactsRibbon";
 import { Faq } from "@/components/Faq";
 import { HeroPhoto } from "@/components/HeroPhoto";
@@ -179,25 +177,24 @@ export default async function HomePage({ params }: Props) {
       {/* FAQ skeleton — behind showFaq (default off): ships nothing yet */}
       <Faq />
 
-      {/* Donate band — background compared behind ?cta=green|amber (default
-          green), distinct from the footer green. Suspense keeps the page
-          static with the green default before hydration. */}
-      <Suspense
-        fallback={
-          <DonateBandView
-            variant="green"
-            title={t("donate.title")}
-            lead={t("donate.lead")}
-            cta={t("donate.cta")}
-          />
-        }
-      >
-        <DonateBand
-          title={t("donate.title")}
-          lead={t("donate.lead")}
-          cta={t("donate.cta")}
-        />
-      </Suspense>
+      {/* Donate band — amber, distinct from the green footer; dark-green
+          (footer-green family) button with light text. */}
+      <section className="bg-[#9a5b12]">
+        <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
+          <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
+            {t("donate.title")}
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-paper/80">
+            {t("donate.lead")}
+          </p>
+          <Link
+            href="/donate"
+            className="mt-8 inline-block rounded-full bg-pine-deep px-8 py-3 font-medium text-paper transition-colors hover:bg-pine"
+          >
+            {t("donate.cta")}
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
