@@ -8,11 +8,13 @@ export const golos = Golos_Text({
   display: "swap",
 });
 
-// Hero font trial — only rendered behind ?font=serif (see HeroHeadline);
-// preload off so the default page ships no extra font bytes
+// Heading font trial — only rendered behind ?font=serif (see FontTrial +
+// the html[data-font-trial] rules in globals.css); preload off so the
+// default page ships no extra font bytes
 export const ptSerif = PT_Serif({
   subsets: ["cyrillic", "latin"],
   weight: ["400", "700"],
+  variable: "--font-pt-serif",
   preload: false,
   display: "swap",
 });

@@ -6,8 +6,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FactsRibbon } from "@/components/FactsRibbon";
 import { Faq } from "@/components/Faq";
-import { HeroHeadline } from "@/components/HeroHeadline";
-import { HeroHeadlineView } from "@/components/HeroHeadlineView";
 import { HeroPhoto } from "@/components/HeroPhoto";
 import { HeroPhotoView } from "@/components/HeroPhotoView";
 import { RoutesMap } from "@/components/RoutesMap";
@@ -44,11 +42,12 @@ export default async function HomePage({ params }: Props) {
       {/* Hero — typographic thesis; no photography by design.
           Static band: base paper (transparent over .home-shell) */}
       <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
-        {/* Headline — ?font=serif&weight=400|700 is a temporary dev font
-            trial (PT Serif); default renders the locked Fixel treatment */}
-        <Suspense fallback={<HeroHeadlineView />}>
-          <HeroHeadline />
-        </Suspense>
+        {/* Headline — the site-wide dev font trial (?font=serif, see
+            FontTrial + globals.css) restyles this via CSS; the markup is the
+            locked Fixel treatment */}
+        <h1 className="hero-headline max-w-4xl text-balance font-display text-5xl font-light leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+          {t("hero.title")}
+        </h1>
         <p className="hero-subline mt-6 max-w-[60ch] text-lg leading-relaxed text-ink-soft">
           {t("hero.lead")}
         </p>

@@ -517,3 +517,25 @@ body {
   }
 }
 
+/* --- Heading font trial (temporary dev switch, ?font=serif) --------------
+   FontTrial (root layout) mirrors the URL param onto <html data-font-trial>;
+   without the param none of this applies. Headings only: kickers, numerals,
+   nav, buttons and body text keep their sans faces. Weight logic: 700 on
+   paper backgrounds, 400 for large display headings on dark/photo
+   backgrounds (hero photo, terracotta donate band). */
+html[data-font-trial="serif"] :is(h1, h2, h3, h4).font-display,
+html[data-font-trial="serif"] .story-hover-title {
+  font-family: var(--font-pt-serif), Georgia, serif;
+  font-weight: 700;
+}
+
+html[data-font-trial="serif"] h1.hero-headline,
+html[data-font-trial="serif"] :is(h1, h2, h3, h4).font-display.text-paper {
+  font-weight: 400;
+}
+
+/* The hero keeps its explicit &weight=400|700 override from the first trial */
+html[data-font-trial="serif"][data-hero-serif-weight="700"] h1.hero-headline {
+  font-weight: 700;
+}
+
