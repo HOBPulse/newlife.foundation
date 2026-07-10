@@ -59,8 +59,17 @@ export default async function HomePage({ params }: Props) {
       <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
         {/* Headline — PT Serif at 400 (see the heading rules in globals.css,
             which set the family + weight on .hero-headline) */}
+        {/* Two-sentence headline: break after the first sentence so each
+            "Ми шукаємо…" clause starts its own line (still wraps responsively). */}
         <h1 className="hero-headline max-w-4xl text-balance font-display text-5xl font-light leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
-          {t("hero.title")}
+          {t("hero.title")
+            .split(". ")
+            .map((sentence, i, arr) => (
+              <span key={i}>
+                {i < arr.length - 1 ? `${sentence}.` : sentence}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
         </h1>
         <p className="hero-subline mt-6 max-w-[60ch] text-lg leading-relaxed text-ink-soft">
           {t("hero.lead")}
