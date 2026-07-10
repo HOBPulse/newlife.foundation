@@ -67,7 +67,7 @@ export function MobileMenu() {
           ))}
           <Link
             href="/donate"
-            className="mt-1 block rounded bg-apricot px-3 py-2.5 font-medium text-ink"
+            className="mt-1 block rounded bg-gold px-3 py-2.5 font-medium text-gold-ink"
           >
             {t("nav.donate")}
           </Link>

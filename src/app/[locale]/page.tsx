@@ -4,6 +4,8 @@ import { Suspense, type CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { DonateBand } from "@/components/DonateBand";
+import { DonateBandView } from "@/components/DonateBandView";
 import { FactsRibbon } from "@/components/FactsRibbon";
 import { Faq } from "@/components/Faq";
 import { HeroPhoto } from "@/components/HeroPhoto";
@@ -79,7 +81,7 @@ export default async function HomePage({ params }: Props) {
         <div className="hero-ctas mt-10 flex flex-wrap gap-3">
           <Link
             href="/donate"
-            className="rounded-full bg-brand-terracotta-deep px-6 py-3 font-medium text-paper transition-colors hover:bg-brand-terracotta-deep/90"
+            className="rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
           >
             {t("hero.ctaDonate")}
           </Link>
@@ -177,23 +179,25 @@ export default async function HomePage({ params }: Props) {
       {/* FAQ skeleton — behind showFaq (default off): ships nothing yet */}
       <Faq />
 
-      {/* Donate band — deep terracotta, distinct from the green footer below */}
-      <section className="bg-brand-terracotta-deep">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
-          <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
-            {t("donate.title")}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-apricot-soft">
-            {t("donate.lead")}
-          </p>
-          <Link
-            href="/donate"
-            className="mt-8 inline-block rounded-full bg-paper px-8 py-3 font-medium text-brand-terracotta-deep transition-colors hover:bg-paper/90"
-          >
-            {t("donate.cta")}
-          </Link>
-        </div>
-      </section>
+      {/* Donate band — background compared behind ?cta=green|amber (default
+          green), distinct from the footer green. Suspense keeps the page
+          static with the green default before hydration. */}
+      <Suspense
+        fallback={
+          <DonateBandView
+            variant="green"
+            title={t("donate.title")}
+            lead={t("donate.lead")}
+            cta={t("donate.cta")}
+          />
+        }
+      >
+        <DonateBand
+          title={t("donate.title")}
+          lead={t("donate.lead")}
+          cta={t("donate.cta")}
+        />
+      </Suspense>
     </div>
   );
 }

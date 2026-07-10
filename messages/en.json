@@ -53,7 +53,7 @@
     "facts": {
       "routes": "{count, plural, one {route on the map} other {routes on the map}}",
       "countries": "{count, plural, one {country on the map} other {countries on the map}}",
-      "since": "the year we started"
+      "since": "Founded"
     },
     "map": {
       "eyebrow": "Geography",

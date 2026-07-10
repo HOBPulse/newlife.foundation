@@ -1,8 +1,8 @@
 import { test, type Page } from "@playwright/test";
 
-/* Dev-only About photo layout variants (?layout=a|b). The `shots` project
-   forces reduced motion. The variant is applied client-side, so wait until
-   the family photo (svyats.jpg) has rendered before capturing. */
+/* Dev-only About photo layout comparison (?layout=w wide full-bleed default,
+   ?layout=z staggered). The `shots` project forces reduced motion. The variant
+   applies client-side, so wait for the family photo (svyats.jpg) to render. */
 
 async function gotoVariant(page: Page, url: string) {
   await page.goto(url, { waitUntil: "networkidle" });
@@ -11,10 +11,10 @@ async function gotoVariant(page: Page, url: string) {
 }
 
 const CASES = [
-  { name: "a", w: 1280, h: 900, tag: "1280" },
-  { name: "a", w: 390, h: 844, tag: "390" },
-  { name: "b", w: 1280, h: 900, tag: "1280" },
-  { name: "b", w: 390, h: 844, tag: "390" },
+  { name: "w", w: 1280, h: 900, tag: "1280" },
+  { name: "w", w: 390, h: 844, tag: "390" },
+  { name: "z", w: 1280, h: 900, tag: "1280" },
+  { name: "z", w: 390, h: 844, tag: "390" },
 ] as const;
 
 for (const { name, w, h, tag } of CASES) {

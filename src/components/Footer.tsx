@@ -13,8 +13,8 @@ export function Footer() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
             <div className="flex items-center gap-3">
-              {/* On-dark mark: line art overridden to cream */}
-              <Logo className="h-9 w-auto [--logo-line:var(--color-brand-cream)]" />
+              {/* On-dark mark: green line art recolored to cream via currentColor */}
+              <Logo className="h-9 w-auto text-brand-cream" />
               {/* Editorial letter-spaced caps wordmark */}
               <p className="font-display text-xs font-medium uppercase leading-tight tracking-[0.22em] text-paper">
                 {t("siteName")}

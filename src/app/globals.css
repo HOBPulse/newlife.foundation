@@ -12,6 +12,11 @@
   --color-sage-soft: #eef4f0;
   --color-apricot: #dfa679;
   --color-apricot-soft: #f3e2d2;
+  /* Primary CTA accent — gold. Replaces the former terracotta/peach accent on
+     buttons/CTAs (the logo heart stays terracotta — that's the mark, not the
+     accent). Dark ink pairs on gold for WCAG-AA contrast. */
+  --color-gold: #d69a2d;
+  --color-gold-ink: #3a2a08;
   /* Deep muted terracotta for the donate CTA band — the accent
      (--color-brand-terracotta #c6724d) darkened until cream/apricot-soft
      body text clears WCAG AA (≥4.5:1) on it */
