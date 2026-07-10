@@ -55,5 +55,5 @@ report instead of asking. Mandatory stops: deploy and hard-to-reverse actions.
 ## How
 - A task.md from the owner IS the go-ahead.
 - After each task: summarize what changed and what's pending.
-- After any significant decision, append ONE terse line to DECISIONS.md (format: date — decision — ≤8-word why). Keep the file lean; never rewrite past entries.
+- After any significant decision, append ONE terse line to DECISIONS.md (format: date — decision (≤8-word why)). Keep the file lean; never rewrite past entries.
 - Languages: UK (default, no prefix), RU (/ru), EN (/en) — all indexed, hreflang required.
