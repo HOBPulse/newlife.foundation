@@ -21,9 +21,12 @@ report instead of asking. Mandatory stops: deploy and hard-to-reverse actions.
   story earns them. One hard line: never promise or imply medical outcomes.
 - Animations: CSS-only, minimal (scroll-reveal, hovers). No framer-motion/GSAP,
   no JS map libraries.
-- Entity distinction: the foundation and the affiliated private organization (HOB)
-  are separate entities. HOB must not appear on the site except as a possible future
-  partner mention. Never blur this line in any copy.
+- HOB Labs and the foundation are separate tracks. HOB Labs has NOT launched yet
+  and must NOT appear anywhere on the site — no logo, no partner mention, no
+  section — until the owner explicitly re-enables it after launch. When re-enabled,
+  minimal presence only (small neutral logo and/or a plain partner line).
+- People in repo docs and site materials: name only the director, Olesya
+  Oleksandrivna. Never reference the co-founder anywhere.
 - Owner-approved content (nav items/order, hero copy, story texts, brand marks):
   change it only when a task explicitly names it. If it changes as a side effect,
   FLAG it at the top of the report — never ship it silently.

@@ -2,6 +2,10 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-10 — HOB Labs = foundation initiative (IT/crypto/fundraising/community/platform); on-site a foundation partner, not a separate entity [SUPERSEDED 2026-07-10 — HOB Labs off-site entirely until owner re-enables post-launch; see CLAUDE.md HOB rule]
+2026-07-10 — Transport: foundation organizes it, public copy high-level (own capacity or partners for air)
+2026-07-10 — Director: Olesya Oleksandrivna, emergency-medicine & air-ambulance physician — trust asset for About
+2026-07-10 — Funding varies (per-patient fundraiser / grant / reserve when it exists) — so public copy states NO timelines or funding mechanism; just 'contact us, we assess and find a way'
 2026-07-10 — PT Serif locked as site heading font, hero 400 / paper 700 (over Fixel)
 2026-07-10 — Hero = full-bleed ambulance photo, left scrim (over watermark/card variants)
 2026-07-10 — Header: seal + "New Life Foundation", apricot donate always on (donor path always visible)
