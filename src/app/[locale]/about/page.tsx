@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "@/components/Logo";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -21,9 +20,17 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
-      {/* Decorative brand mark near the intro (identity "sign"; aria-hidden
-          baked into LogoMark). Static — no animation. */}
-      <Logo className="mb-6 h-16 w-16" />
+      {/* Decorative NL seal near the intro — same mark as the header.
+          aria-hidden, no animation. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/brand/nl-seal.svg"
+        alt=""
+        aria-hidden="true"
+        width={64}
+        height={64}
+        className="mb-6 h-16 w-16"
+      />
       <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
         {t("title")}
       </h1>
