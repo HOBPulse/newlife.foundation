@@ -18,11 +18,20 @@ const CROP: Record<number, { scale: number; originX: number }> = {
   5: { scale: 1.0, originX: 50 },
 };
 
+/* Vertical framing (dev &sky=1..3): object-position Y. Lower % anchors nearer
+   the image top → more sky shows and the van drops lower. 1 = mild … 3 = max. */
+const SKY: Record<number, string> = {
+  1: "36%",
+  2: "17%",
+  3: "4%",
+};
+
 type Props = {
   variant: HeroVariant;
   photoAvailable: boolean;
   crop?: number;
   scrim?: boolean;
+  sky?: number;
 };
 
 /** Presentational hero media: watermark (mark), a photo card (photo), or a
@@ -33,6 +42,7 @@ export function HeroMediaView({
   photoAvailable,
   crop = 2,
   scrim = true,
+  sky = 2,
 }: Props) {
   if (variant === "mark") {
     return (
@@ -42,7 +52,14 @@ export function HeroMediaView({
     );
   }
   if (variant === "full") {
-    return <HeroFull photoAvailable={photoAvailable} crop={crop} scrim={scrim} />;
+    return (
+      <HeroFull
+        photoAvailable={photoAvailable}
+        crop={crop}
+        scrim={scrim}
+        sky={sky}
+      />
+    );
   }
   return <HeroPhoto photoAvailable={photoAvailable} />;
 }
@@ -84,18 +101,21 @@ function HeroFull({
   photoAvailable,
   crop,
   scrim,
+  sky,
 }: {
   photoAvailable: boolean;
   crop: number;
   scrim: boolean;
+  sky: number;
 }) {
   const t = useTranslations("HomePage.hero");
   const c = CROP[crop] ?? CROP[2];
-  // Crop is applied via CSS vars only at ≥768 (see globals.css) so mobile
-  // shows the natural cover framing, not the desktop right-half zoom.
+  // Crop + sky are applied via CSS vars only at ≥768 (see globals.css) so
+  // mobile shows the natural cover framing, not the desktop right-half zoom.
   const frameStyle = {
     "--hero-scale": String(c.scale),
     "--hero-origin-x": `${c.originX}%`,
+    "--hero-sky": SKY[sky] ?? SKY[2],
   } as CSSProperties;
   return (
     <>

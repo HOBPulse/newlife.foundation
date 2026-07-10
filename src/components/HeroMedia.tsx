@@ -15,12 +15,15 @@ export function HeroMedia({ photoAvailable }: { photoAvailable: boolean }) {
   const cropParam = Number(params.get("crop"));
   const crop = cropParam >= 1 && cropParam <= 5 ? Math.round(cropParam) : 2;
   const scrim = params.get("scrim") !== "0";
+  const skyParam = Number(params.get("sky"));
+  const sky = skyParam >= 1 && skyParam <= 3 ? Math.round(skyParam) : 2;
   return (
     <HeroMediaView
       variant={variant}
       photoAvailable={photoAvailable}
       crop={crop}
       scrim={scrim}
+      sky={sky}
     />
   );
 }
