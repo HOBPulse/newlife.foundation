@@ -1,16 +1,14 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
-/** Quiet editorial FAQ skeleton — native <details>/<summary>, no JS.
- *  Behind the showFaq flag (default off): renders nothing to the DOM until
- *  the flag is on and real Q/A copy replaces the "TODO" placeholders in
- *  messages (FAQ.title + FAQ.items.1..5.{q,a}). */
-const SHOW_FAQ = false;
-
+/** Quiet editorial FAQ — native <details>/<summary>, no JS. Copy lives in
+ *  messages (FAQ.title + FAQ.items.1..5.{q,a}); item 5's answer is followed by
+ *  the gold donate CTA (reuses the hero's label + /donate route). */
 const SLOTS = ["1", "2", "3", "4", "5"] as const;
 
 export function Faq() {
   const t = useTranslations("FAQ");
-  if (!SHOW_FAQ) return null;
+  const tHero = useTranslations("HomePage.hero");
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
@@ -29,9 +27,17 @@ export function Faq() {
               </span>
               <span aria-hidden="true" className="faq-mark text-ink-soft" />
             </summary>
-            <p className="pb-5 pl-9 leading-relaxed text-ink-soft">
-              {t(`items.${n}.a`)}
-            </p>
+            <div className="pb-5 pl-9">
+              <p className="leading-relaxed text-ink-soft">{t(`items.${n}.a`)}</p>
+              {n === "5" && (
+                <Link
+                  href="/donate"
+                  className="mt-4 inline-block rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
+                >
+                  {tHero("ctaDonate")}
+                </Link>
+              )}
+            </div>
           </details>
         ))}
       </div>

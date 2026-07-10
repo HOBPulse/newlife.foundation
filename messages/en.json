@@ -1,12 +1,27 @@
 {
   "FAQ": {
-    "title": "TODO",
+    "title": "Frequently asked questions",
     "items": {
-      "1": { "q": "TODO", "a": "TODO" },
-      "2": { "q": "TODO", "a": "TODO" },
-      "3": { "q": "TODO", "a": "TODO" },
-      "4": { "q": "TODO", "a": "TODO" },
-      "5": { "q": "TODO", "a": "TODO" }
+      "1": {
+        "q": "Who does the foundation help?",
+        "a": "We work with the most difficult cases — when doctors where a patient lives say there are no options left. We carefully review every request and honestly assess what can be done. If we see a way forward, we look for specialized treatment and arrange medical transport."
+      },
+      "2": {
+        "q": "What does it cost the patient?",
+        "a": "First we review your case — this costs nothing. What follows depends on the specific situation: what is needed, where, and how. We talk about the options and terms honestly and openly once we understand your case. Write to us — we'll assess it."
+      },
+      "3": {
+        "q": "How quickly can you help?",
+        "a": "It depends on the case — the patient's condition, the treatment needed, and the route. Some requests call for urgent action, others for careful preparation. We recommend reaching out as early as possible: the sooner we study the situation, the more options we can find."
+      },
+      "4": {
+        "q": "How is medical transport organized?",
+        "a": "We arrange the transport of patients, including those who need medical accompaniment during the journey. We tailor the route, method, and accompaniment to each case and to the person's condition. We discuss the details individually after assessing the request."
+      },
+      "5": {
+        "q": "How can I support the foundation?",
+        "a": "You can support our work with a donation — every contribution helps us take on new cases."
+      }
     }
   },
   "Common": {
@@ -32,7 +47,7 @@
     "metaTitle": "Help finding specialised treatment",
     "metaDescription": "A charitable foundation that helps patients find specialised treatment and reach it when local options have run out.",
     "hero": {
-      "title": "We don't look for miracles. We look for a way.",
+      "title": "We don't look for miracles. We look for a way",
       "lead": "The foundation helps patients and their families find specialised treatment and reach it when the options where they live have run out.",
       "ctaDonate": "Support the foundation",
       "ctaHelp": "Request help",
