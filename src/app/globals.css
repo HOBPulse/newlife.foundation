@@ -262,126 +262,14 @@ body {
   background-color: var(--color-paper);
 }
 
-/* --- Hero watermark (≥768px) --------------------------------------------
-   Large muted LogoMark bleeding off the right edge, painted under the hero
-   text (negative z inside the isolated hero section). One-time fade-in on
-   load; reduced motion shows it instantly at its final opacity. */
-.hero-watermark {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .hero-watermark {
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    right: -6rem;
-    display: block;
-    height: 20rem;
-    translate: 0 -50%;
-    opacity: 0.14;
-    pointer-events: none;
-  }
-}
-
-@media (min-width: 1280px) {
-  .hero-watermark {
-    right: -8rem;
-    height: 28rem;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-watermark {
-    animation: watermark-in 1.2s ease-out both;
-  }
-}
-
-@keyframes watermark-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.14;
-  }
-}
-
-/* --- Hero photo card (?hero=photo) --------------------------------------
-   Mobile (<768): full-width card in flow, right below the subline.
-   Desktop (≥768): absolute in the right zone; the text column narrows via
-   :has(.hero-photo) so the card never collides with the oversized headline.
-   The photo is the LCP element here — loaded eagerly (priority), not lazy. */
-.hero-photo {
-  margin-top: 1.75rem;
-  max-width: 30rem;
-}
-
-.hero-photo-frame {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid var(--color-sage);
-  border-radius: 0.75rem;
-  background: var(--color-sage-soft);
-}
-
-.hero-photo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: var(--color-ink-soft);
-  opacity: 0.45;
-}
-
-@media (min-width: 768px) {
-  .hero-photo {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 19rem;
-    margin-top: 0;
-    translate: 0 -50%;
-  }
-
-  /* reserve the right zone so the card clears the oversized headline */
-  .hero-section:has(.hero-photo) .hero-headline,
-  .hero-section:has(.hero-photo) .hero-subline,
-  .hero-section:has(.hero-photo) .hero-ctas {
-    max-width: 24rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-photo {
-    width: 22rem;
-  }
-
-  .hero-section:has(.hero-photo) .hero-headline,
-  .hero-section:has(.hero-photo) .hero-subline,
-  .hero-section:has(.hero-photo) .hero-ctas {
-    max-width: 34rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .hero-photo {
-    width: 24rem;
-  }
-
-  .hero-section:has(.hero-photo) .hero-headline {
-    max-width: 38rem;
-  }
-}
-
-/* --- Hero full-bleed variant (?hero=full) -------------------------------
-   charity:water layout. Mobile (<768): the photo is a full-bleed block on
-   top (~45vh), text stacked below on paper (no overlay). Desktop (≥768): the
-   photo covers the section (~85vh), text overlaid on the calm left, made
-   legible by a pine scrim fading left→right. The van/AMBULÀNCIA are pushed
-   into the right half by the crop zoom (--hero-scale / --hero-origin-x, set
-   per ?crop=1..5). LCP image is eager; container heights are fixed → no CLS. */
+/* --- Hero (locked full-bleed) -------------------------------------------
+   The homepage hero is a permanent full-bleed photo (charity:water look).
+   Mobile (<768): the photo is a full-bleed block on top (~45vh), text stacked
+   below on paper. Desktop (≥768): the photo covers the section (~85vh, flush
+   under the sticky header, edge-to-edge), text overlaid on the calm left over
+   a pine scrim. No crop (the image is composed for the hero); only the
+   vertical position is adjustable via the temporary &sky (--sky-y). LCP image
+   is eager; fixed container heights → no CLS. */
 .hero-full {
   position: relative;
   order: -1;
@@ -393,7 +281,7 @@ body {
   background: var(--color-sage-soft);
 }
 
-.hero-section:has(.hero-full) {
+.hero-section {
   display: flex;
   flex-direction: column;
 }
@@ -401,6 +289,11 @@ body {
 .hero-full-placeholder {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-soft);
+  opacity: 0.45;
 }
 
 .hero-scrim {
@@ -408,63 +301,79 @@ body {
 }
 
 @media (min-width: 768px) {
-  .hero-section:has(.hero-full) {
+  .hero-section {
     min-height: 85vh;
     justify-content: center;
     isolation: isolate;
   }
 
+  /* True full-bleed: break out of the section's max-width + padding to span
+     100vw, flush from the section top (directly under the sticky header) to
+     its bottom. The 100vw overflow is clipped by .home-shell (overflow-x:
+     clip) so there is no horizontal scrollbar. */
   .hero-full {
     position: absolute;
-    inset: 0;
-    z-index: 0;
-    order: 0;
-    width: auto;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
     height: auto;
     margin: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+    order: 0;
   }
 
+  /* No crop/zoom — the image is composed for the hero. Only the vertical
+     crop position is adjustable via the temporary &sky (--sky-y). */
   .hero-full-img {
-    object-position: 50% var(--hero-sky, 22%);
-    transform: scale(var(--hero-scale, 1.42));
-    transform-origin: var(--hero-origin-x, 26%) 50%;
+    object-position: 50% var(--sky-y, 32%);
   }
 
+  /* Scrim is a full-bleed overlay of the whole hero (same 100vw breakout as
+     the photo), NOT the content column — otherwise its rectangle edge shows
+     as a vertical seam at the container boundary. Gradient starts strongest
+     at the left viewport edge (x=0) and fades to fully transparent before the
+     horizontal centre; light, since the photo has a baked-in dark corner. */
   .hero-scrim {
     display: block;
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
     z-index: 1;
     pointer-events: none;
     background: linear-gradient(
       to right,
-      var(--color-pine) 0%,
-      color-mix(in srgb, var(--color-pine) 55%, transparent) 30%,
-      transparent 52%
+      color-mix(in srgb, var(--color-pine) 80%, transparent) 0%,
+      color-mix(in srgb, var(--color-pine) 46%, transparent) 24%,
+      transparent 47%
     );
   }
 
   /* Text overlaid on the calm left, above the photo + scrim */
-  .hero-section:has(.hero-full) .hero-headline,
-  .hero-section:has(.hero-full) .hero-subline {
+  .hero-headline,
+  .hero-subline {
     position: relative;
     z-index: 2;
     max-width: 34rem;
     color: var(--color-paper);
   }
 
-  .hero-section:has(.hero-full) .hero-ctas {
+  .hero-ctas {
     position: relative;
     z-index: 2;
   }
 
   /* outline CTA legible on the photo */
-  .hero-section:has(.hero-full) .hero-cta-secondary {
+  .hero-cta-secondary {
     border-color: var(--color-paper);
     color: var(--color-paper);
   }
 
-  .hero-section:has(.hero-full) .hero-cta-secondary:hover {
+  .hero-cta-secondary:hover {
     background-color: rgb(255 255 255 / 0.14);
   }
 }

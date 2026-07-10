@@ -6,8 +6,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FactsRibbon } from "@/components/FactsRibbon";
 import { Faq } from "@/components/Faq";
-import { HeroMedia } from "@/components/HeroMedia";
-import { HeroMediaView } from "@/components/HeroMediaView";
+import { HeroPhoto } from "@/components/HeroPhoto";
+import { HeroPhotoView } from "@/components/HeroPhotoView";
 import { RoutesMap } from "@/components/RoutesMap";
 import { StoryCard } from "@/components/StoryCard";
 import type { Locale } from "@/i18n/routing";
@@ -31,9 +31,8 @@ export default async function HomePage({ params }: Props) {
   const t = await getTranslations("HomePage");
   // Step titles come from the How We Work page so the teaser never drifts.
   const tSteps = await getTranslations("HowWeWorkPage.steps");
-  // Hero photo experiment (?hero=photo). Built against this path; when the
-  // owner has not added it yet, HeroMedia shows a neutral placeholder.
-  // Build-time check — rebuild after dropping in the file.
+  // Locked full-bleed hero photo. Build-time existence check — a neutral
+  // placeholder renders if the file is missing (rebuild after adding it).
   const heroPhotoAvailable = existsSync(
     join(process.cwd(), "public", "photos", "hero-transport.jpg"),
   );
@@ -49,17 +48,16 @@ export default async function HomePage({ params }: Props) {
         <p className="hero-subline mt-6 max-w-[60ch] text-lg leading-relaxed text-ink-soft">
           {t("hero.lead")}
         </p>
-        {/* Hero media (?hero=mark|photo|full, default mark). Fallback =
-            watermark so the static default renders before hydration.
-            photo: card in the right zone (desktop) / below the subline
-            (mobile). full: full-bleed photo, text overlaid left (desktop) /
-            photo block on top (mobile). */}
+        {/* Locked full-bleed hero photo: covers the hero with the text
+            overlaid on the left (desktop); a block on top with text below
+            (mobile). Scrim + framing fixed in globals.css; &sky=1..3 (default
+            2) is a temporary dev control for vertical position. */}
         <Suspense
           fallback={
-            <HeroMediaView variant="mark" photoAvailable={heroPhotoAvailable} />
+            <HeroPhotoView sky={2} photoAvailable={heroPhotoAvailable} />
           }
         >
-          <HeroMedia photoAvailable={heroPhotoAvailable} />
+          <HeroPhoto photoAvailable={heroPhotoAvailable} />
         </Suspense>
         <div className="hero-ctas mt-10 flex flex-wrap gap-3">
           <Link
