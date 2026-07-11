@@ -138,6 +138,13 @@
       "title": "Need help?",
       "body": "Fill in the form on the contact page and we will get back to you.",
       "button": "Request help"
+    },
+    "photos": {
+      "ambuPark": "The foundation's ambulances among emergency vehicles at a clinic",
+      "lesyaBack": "Olesya Oleksandrivna next to a Berlin emergency service ambulance",
+      "convoyNight": "Night transport: the foundation's ambulance on the road",
+      "uaPlatesEr": "The foundation's ambulance at a hospital emergency entrance in Germany",
+      "clinicAbroad": "Ambulances at a clinic abroad"
     }
   },
   "StoriesPage": {
