@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-11 — About previews add ?about=edge (edge-bleed) + ?about=zigzag-tight; H1 scroll-mt-20 clears sticky header on all variants
 2026-07-11 — About layout previews behind ?about=zigzag|strip; layout W stays default (owner comparison, no copy changes)
 2026-07-11 — Kyiv→Thessaloniki air leg (owner) in data; story hover cards use published assets only; quiet flag removed (default 0.32 chosen)
 2026-07-11 — Post-launch polish candidates: circular hub-port spacing at ±180°, micro-gaps at branch junctions

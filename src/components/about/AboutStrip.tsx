@@ -23,7 +23,7 @@ export async function AboutStrip({ locale }: { locale: Locale }) {
       <p className="text-xs font-medium uppercase tracking-widest text-pine">
         {tCommon("nav.about")}
       </p>
-      <h1 className="mt-3 max-w-3xl font-display text-4xl font-medium leading-[1.1] tracking-tight text-ink sm:text-5xl">
+      <h1 className="mt-3 max-w-3xl scroll-mt-20 font-display text-4xl font-medium leading-[1.1] tracking-tight text-ink sm:text-5xl">
         {t("title")}
       </h1>
 

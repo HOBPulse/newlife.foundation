@@ -13,15 +13,32 @@ import type { Locale } from "@/i18n/routing";
 
 const PROSE = "text-lg leading-relaxed text-ink-soft";
 const HEADING = "font-display text-2xl font-medium tracking-tight text-ink";
+// H1 clears the sticky 57px header when scrolled/anchored to the top.
+const H1_CLEAR = "scroll-mt-20";
 // Landscape frame — MSF 666×520 proportion, not 4:3.
 const FRAME = "aspect-[666/520] w-full rounded-xl object-cover";
 // Photo column wider than text (~57% / ~43%); mirror by swapping the template.
-const ROW = "mt-12 grid items-center gap-8 md:mt-14 md:gap-12";
-const TEXT_LEFT = `${ROW} md:grid-cols-[1fr_1.35fr]`;
-const PHOTO_LEFT = `${ROW} md:grid-cols-[1.35fr_1fr]`;
+const COLS = { text: "md:grid-cols-[1fr_1.35fr]", photo: "md:grid-cols-[1.35fr_1fr]" };
 
-export async function AboutZigzag({ locale }: { locale: Locale }) {
+export async function AboutZigzag({
+  locale,
+  tight = false,
+}: {
+  locale: Locale;
+  /** ?about=zigzag-tight — collapses the inter-pair gap into one close ladder. */
+  tight?: boolean;
+}) {
   setRequestLocale(locale);
+
+  // Tight variant packs the three pairs together; default keeps the airy MSF
+  // rhythm. Only vertical spacing differs between the two.
+  const row = tight
+    ? "mt-6 grid items-center gap-6 md:mt-7 md:gap-10"
+    : "mt-12 grid items-center gap-8 md:mt-14 md:gap-12";
+  const textLeft = `${row} ${COLS.text}`;
+  const photoLeft = `${row} ${COLS.photo}`;
+  const closeMt = tight ? "mt-7 md:mt-8" : "mt-12 md:mt-16";
+
   const t = await getTranslations("AboutPage");
   const tStories = await getTranslations("StoriesPage");
   const familyAlt = tStories("items.story-1.title");
@@ -42,7 +59,7 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
     <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6">
       {/* Intro — the thesis, at reading width */}
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
+        <h1 className={`font-display text-4xl font-medium tracking-tight text-ink ${H1_CLEAR}`}>
           {t("title")}
         </h1>
         <p className={`mt-8 ${PROSE}`}>{t("p1")}</p>
@@ -50,7 +67,7 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
 
       {/* Pair 1 — Olesya (p3) + emergency room. Desktop: text left, photo
           right. Mobile: photo above heading+text (figure first in DOM). */}
-      <div className={TEXT_LEFT}>
+      <div className={textLeft}>
         <figure className="md:order-2">
           <Image
             src="/photos/emergency-room.jpg"
@@ -69,7 +86,7 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
 
       {/* Pair 2 — "Кожен випадок" (p4) + clinic abroad. Mirrored: photo left,
           text right on desktop; photo above heading+text on mobile. */}
-      <div className={PHOTO_LEFT}>
+      <div className={photoLeft}>
         <figure className="md:order-1">
           <Image
             src="/photos/clinic-abroad.jpg"
@@ -88,7 +105,7 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
 
       {/* Pair 3 — founding 2019/2011 (p2) + family photo with the story
           overlay card. Desktop: text left, photo right. */}
-      <div className={TEXT_LEFT}>
+      <div className={textLeft}>
         <figure className="relative md:order-2">
           <Image
             src="/stories/svyats.jpg"
@@ -107,7 +124,7 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
       </div>
 
       {/* Closing line (p5) */}
-      <div className="mx-auto mt-12 max-w-2xl md:mt-16">
+      <div className={`mx-auto ${closeMt} max-w-2xl`}>
         <p className={`${PROSE} font-medium text-ink`}>{t("p5")}</p>
       </div>
     </div>

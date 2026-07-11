@@ -8,6 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 import { AboutLayoutSwitch } from "@/components/AboutLayoutSwitch";
 import { AboutZigzag } from "@/components/about/AboutZigzag";
 import { AboutStrip } from "@/components/about/AboutStrip";
+import { AboutEdge } from "@/components/about/AboutEdge";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -50,7 +51,7 @@ export default async function AboutPage({ params }: Props) {
   const layoutW = (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-2xl">
-        <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
+        <h1 className="font-display text-4xl font-medium tracking-tight text-ink scroll-mt-20">
           {t("title")}
         </h1>
         <p className={`mt-8 ${PROSE}`}>{t("p1")}</p>
@@ -106,7 +107,9 @@ export default async function AboutPage({ params }: Props) {
       <AboutLayoutSwitch
         w={layoutW}
         zigzag={<AboutZigzag locale={locale} />}
+        zigzagTight={<AboutZigzag locale={locale} tight />}
         strip={<AboutStrip locale={locale} />}
+        edge={<AboutEdge locale={locale} />}
       />
     </Suspense>
   );
