@@ -494,32 +494,49 @@ body {
   direction: rtl;
 }
 
-.routes-map-v2-frame > svg {
+.routes-map-v2-inner {
   direction: ltr;
 }
 
-/* Quiet-layer density: point-to-point lines and internal legs. The
-   ?map=v2&quiet=40 preview raises both (owner will compare live). */
-.routes-map--v2 {
-  --map2-quiet-op: 0.32;
-  --map2-legs-op: 0.22;
-}
-
-.map-quiet-40 .routes-map--v2 {
-  --map2-quiet-op: 0.4;
-  --map2-legs-op: 0.27;
-}
-
-/* Story markers: pointer + ring emphasis in every motion mode (this is the
-   static emphasis under reduced motion). Routes are NEVER highlighted from
-   a story marker — privacy rule. */
-.map-story {
+/* Story markers (v2): a 0×0 anchor at the city's % coordinates; the badge
+   (gold ring + heart) and the hover card hang off it, so both track the map
+   at any scale/scroll. Card shows only published story assets. Routes are
+   NEVER highlighted from a story marker — privacy rule. */
+.map-story-spot {
+  position: absolute;
+  width: 0;
+  height: 0;
   cursor: pointer;
 }
 
-.map-story:hover .map-story-ring,
-.map-story:focus-visible .map-story-ring {
-  stroke-width: 2.4;
+.map-story-badge {
+  position: absolute;
+  left: -18px;
+  top: -26px;
+}
+
+.map-story-card {
+  position: absolute;
+  bottom: 22px;
+  left: -70px;
+  z-index: 10;
+  display: block;
+  width: 14.5rem;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Desktop only — touch devices navigate on tap without a card */
+@media (hover: hover) {
+  .map-story-spot:hover .map-story-card {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.map-story-spot:focus-visible .map-story-card {
+  visibility: visible;
+  opacity: 1;
 }
 
 @keyframes map-pulse-calm {
@@ -571,19 +588,27 @@ body {
     animation: map-pulse-calm 5.4s ease-out var(--d, 0s) infinite;
   }
 
-  /* Story-marker hover: gentle heart scale-up (motion mode only; reduced
-     motion falls back to the static ring emphasis outside this block).
-     animation: none drops the entrance keyframes' fill state — restate
-     opacity so the heart doesn't fall back to the hidden initial state. */
-  .routes-map--v2 .map-story .map-story-heart {
-    transition: transform 0.15s ease-out;
+  /* Story badges pop in with the entrance sequence; the hover card fades
+     and rises. Reduced motion skips this block: badges are simply visible
+     and the card appears instantly (it is content, not motion). */
+  .routes-map .map-story-badge {
+    opacity: 0;
   }
 
-  .routes-map--v2.in-view .map-story:hover .map-story-heart,
-  .routes-map--v2.in-view .map-story:focus-visible .map-story-heart {
-    animation: none;
-    opacity: 1;
-    transform: scale(1.25);
+  .routes-map.in-view .map-story-badge {
+    animation: map-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+  }
+
+  .map-story-card {
+    transform: translateY(4px);
+    transition:
+      opacity 0.16s ease-out,
+      transform 0.16s ease-out;
+  }
+
+  .map-story-spot:hover .map-story-card,
+  .map-story-spot:focus-visible .map-story-card {
+    transform: translateY(0);
   }
 
   @supports (offset-path: path("M 0 0 L 1 1")) {

@@ -7,7 +7,6 @@ import { test } from "@playwright/test";
 const variants = [
   { name: "v1", query: "?map=v1" },
   { name: "v2", query: "?map=v2" },
-  { name: "v2-quiet40", query: "?map=v2&quiet=40" },
 ];
 const viewports = [
   { width: 390, height: 844 },

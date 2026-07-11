@@ -1,8 +1,10 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { RevealOnView } from "@/components/RevealOnView";
 import {
+  AIR_LINKS,
   COUNTRIES,
   CROSS_LINKS,
   HUBS,
@@ -11,6 +13,7 @@ import {
   ROUTE_GROUPS,
   type DestinationCity,
 } from "@/data/routes";
+import { STORY_PHOTOS, type StorySlug } from "@/lib/stories";
 import { BASEMAP_EUROPE_PATHS, BASEMAP_EUROPE_VIEWBOX } from "@/data/basemap-europe";
 
 /* --- v2: corridor-tree rework (?map=v2) -----------------------------------
@@ -316,6 +319,10 @@ const hubById = new Map(HUBS.map((h) => [h.id, h]));
     if (!hubById.has(leg.from) || !hubById.has(leg.to))
       throw new Error(`v2: internal leg endpoints must be hubs: ${leg.from}->${leg.to}`);
   }
+  for (const link of AIR_LINKS) {
+    if (!hubById.has(link.hub) || !cityById.has(link.to))
+      throw new Error(`v2: bad air link ${link.hub}->${link.to}`);
+  }
 }
 
 /* --- Edge/plane/dot views ---------------------------------------------------- */
@@ -401,6 +408,11 @@ const portAngles = new Map<string, number>(); // `${hub}:${key}` -> angle
     // A diag-first path arrives axis-aligned (and vice versa) — the arrival
     // port needs the reversed path's departure direction
     add(leg.to, `leg-in-${leg.from}`, startAngle(b, a, false, 0, bend === "diag" ? "axis" : "diag"));
+  }
+  for (const link of AIR_LINKS) {
+    const hub = project(hubById.get(link.hub)!);
+    const to = project(cityById.get(link.to)!);
+    add(link.hub, `air-${link.to}`, startAngle(hub, to, true, link.bow, "straight"));
   }
   for (const [hub, list] of byHub) {
     list.sort((a, b) => a.dep.angle - b.dep.angle);
@@ -537,9 +549,25 @@ const QUIET_LINES: EdgeView[] = [
   }),
 ];
 
+/* Owner-confirmed second-origin air legs (Kyiv → Thessaloniki): real routes,
+   so they carry thin-corridor weight — brighter than the quiet layer. */
+const AIR_EXTRA: EdgeView[] = AIR_LINKS.map((link, i) => {
+  const from = portPoint(link.hub, `air-${link.to}`);
+  const to = project(cityById.get(link.to)!);
+  return {
+    key: `air-${link.hub}-${link.to}`,
+    d: arcPath(from, to, link.bow),
+    width: 1.3,
+    air: true,
+    delay: 3 + (CROSS_LINKS.length + NETWORK_LINKS.length + i) * 0.12,
+    dur: 0.7,
+    opacity: 0.6,
+  };
+});
+
 // Air point-to-point lines fly a plane too (same convention as corridors);
 // they queue up after the corridor planes.
-for (const line of QUIET_LINES.filter((l) => l.air)) {
+for (const line of [...QUIET_LINES.filter((l) => l.air), ...AIR_EXTRA]) {
   PLANES.push({ key: `plane-${line.key}`, d: line.d, delay: 0 });
 }
 PLANES.forEach((plane, i) => {
@@ -592,9 +620,10 @@ const HUB_LABELS: Record<string, { dx: number; dy: number; anchor: "start" | "mi
    Up to three, one per published story city, only when that city exists in
    the routes data. story-1 (Sviatoslav) names Barcelona; story-3 (Lenya) →
    Thessaloniki, owner-confirmed (task, 2026-07-11); story-2 stays unmarked
-   (no confirmed city). */
+   (no confirmed city). Rendered as HTML overlays on the svg: the hover card
+   and its badge share one <a>, so hover moves seamlessly between them. */
 
-const STORY_MARKERS: Array<{ slug: string; city: string }> = [
+const STORY_MARKERS: Array<{ slug: StorySlug; city: string }> = [
   { slug: "story-1", city: "barcelona" },
   { slug: "story-3", city: "thessaloniki" },
 ];
@@ -602,6 +631,9 @@ const STORY_MARKERS: Array<{ slug: string; city: string }> = [
 for (const marker of STORY_MARKERS) {
   if (!cityById.has(marker.city)) throw new Error(`v2: story marker city ${marker.city} not in data`);
 }
+
+const HEART_D =
+  "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z";
 
 /* --- Graticule ---------------------------------------------------------------- */
 
@@ -637,9 +669,12 @@ export function RoutesMapV2() {
   return (
     <RevealOnView className="routes-map routes-map--v2">
       <div className="routes-map-v2-frame overflow-x-auto rounded-xl border">
+        {/* ltr inner wrapper: anchors the HTML story overlays to the svg box
+            (the frame itself is rtl only for the east-first scroll start) */}
+        <div className="routes-map-v2-inner relative min-w-[44rem]">
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          className="routes-svg block h-auto w-full min-w-[44rem]"
+          className="routes-svg block h-auto w-full"
           role="img"
           aria-label={t("title")}
         >
@@ -700,12 +735,10 @@ export function RoutesMapV2() {
               d={edge.d}
               pathLength={1}
               className="map-line"
-              style={vars(edge.delay, {
-                "--dur": `${edge.dur.toFixed(2)}s`,
-                strokeOpacity: "var(--map2-legs-op)",
-              } as CSSProperties)}
+              style={vars(edge.delay, { "--dur": `${edge.dur.toFixed(2)}s` } as CSSProperties)}
               fill="none"
               stroke="var(--color-pine)"
+              strokeOpacity="0.22"
               strokeWidth={edge.width}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -713,18 +746,16 @@ export function RoutesMapV2() {
           ))}
 
           {/* Rare point-to-point routes — quieter than the corridor tree */}
-          {QUIET_LINES.map((line) => (
+          {[...QUIET_LINES, ...AIR_EXTRA].map((line) => (
             <path
               key={line.key}
               d={line.d}
               pathLength={1}
               className="map-line"
-              style={vars(line.delay, {
-                "--dur": `${line.dur.toFixed(2)}s`,
-                strokeOpacity: line.opacity ?? "var(--map2-quiet-op)",
-              } as CSSProperties)}
+              style={vars(line.delay, { "--dur": `${line.dur.toFixed(2)}s` } as CSSProperties)}
               fill="none"
               stroke="var(--color-pine)"
+              strokeOpacity={line.opacity ?? 0.32}
               strokeWidth={line.width}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -822,46 +853,6 @@ export function RoutesMapV2() {
             {`${kazakhstan.name[locale]} →`}
           </text>
 
-          {/* Story markers — link a routed city to its published story */}
-          {STORY_MARKERS.map((marker) => {
-            const pt = project(cityById.get(marker.city)!);
-            const title = tStories(`items.${marker.slug}.title`);
-            return (
-              <a
-                key={marker.slug}
-                href={`${localePrefix}/stories/${marker.slug}`}
-                aria-label={`${title} — ${tStories("readMore")}`}
-                className="map-story"
-              >
-                {/* Hit area: the ring is fill=none, so without this the city
-                    dot underneath intercepts hover/click inside the ring */}
-                <circle cx={pt.x} cy={pt.y} r="9" fill="none" pointerEvents="all" />
-                <circle
-                  cx={pt.x}
-                  cy={pt.y}
-                  r="6.4"
-                  className="map-dot map-story-ring"
-                  fill="none"
-                  stroke="var(--color-gold)"
-                  strokeWidth="1.4"
-                  style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.3)}
-                />
-                {/* Position lives on the <g>: the pop/hover animations set a
-                    CSS transform on the path, which would otherwise REPLACE an
-                    attribute transform and fling the heart to the origin. */}
-                <g transform={`translate(${r1(pt.x - 6)} ${r1(pt.y - 24)}) scale(0.5)`}>
-                  <path
-                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                    className="map-dot map-story-heart"
-                    fill="var(--color-gold)"
-                    style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.45)}
-                  />
-                </g>
-                <title>{title}</title>
-              </a>
-            );
-          })}
-
           {/* Ukrainian hubs — dot + ring; corridors depart from the ring */}
           {HUBS.map((hub, i) => {
             const pt = project(hub);
@@ -917,6 +908,61 @@ export function RoutesMapV2() {
             );
           })}
         </svg>
+
+        {/* Story markers — HTML overlays anchored to city coordinates in %,
+            so they track the map at any scale and scroll position. Hovering
+            the badge opens the card; the card is inside the same link, so it
+            never blocks clicking through to the story. Touch devices get no
+            card (hover: hover) — a tap navigates directly. Card content is
+            strictly the published story assets: photo, title, excerpt. */}
+        {STORY_MARKERS.map((marker) => {
+          const pt = project(cityById.get(marker.city)!);
+          const title = tStories(`items.${marker.slug}.title`);
+          const teaser = tStories(`items.${marker.slug}.excerpt`);
+          return (
+            <a
+              key={marker.slug}
+              href={`${localePrefix}/stories/${marker.slug}`}
+              className="map-story-spot"
+              style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.3, {
+                left: `${r1((pt.x / W) * 100)}%`,
+                top: `${r1((pt.y / H) * 100)}%`,
+              })}
+              aria-label={`${title} — ${tStories("readMore")}`}
+            >
+              <svg
+                className="map-story-badge"
+                width="36"
+                height="40"
+                viewBox="-18 -26 36 40"
+                aria-hidden="true"
+              >
+                <circle r="7" fill="none" stroke="var(--color-gold)" strokeWidth="1.5" />
+                <path d={HEART_D} fill="var(--color-gold)" transform="translate(-6 -19.6) scale(0.5)" />
+              </svg>
+              <span className="map-story-card overflow-hidden rounded-lg border border-sage bg-paper shadow-lg">
+                <Image
+                  src={STORY_PHOTOS[marker.slug][0]}
+                  alt=""
+                  width={230}
+                  height={124}
+                  className="h-[7.75rem] w-full object-cover"
+                />
+                <span className="block px-3 py-2.5">
+                  <span className="block text-sm font-medium text-ink">{title}</span>
+                  {/* no `block` here — line-clamp needs its -webkit-box display */}
+                  <span className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-soft">
+                    {teaser}
+                  </span>
+                  <span className="mt-1.5 block text-xs font-medium text-pine">
+                    {tStories("readMore")} →
+                  </span>
+                </span>
+              </span>
+            </a>
+          );
+        })}
+        </div>
       </div>
 
       {/* Legend — small and quiet: thickness scale, air vs ground, hub */}
