@@ -498,6 +498,30 @@ body {
   direction: ltr;
 }
 
+/* Quiet-layer density: point-to-point lines and internal legs. The
+   ?map=v2&quiet=40 preview raises both (owner will compare live). */
+.routes-map--v2 {
+  --map2-quiet-op: 0.32;
+  --map2-legs-op: 0.22;
+}
+
+.map-quiet-40 .routes-map--v2 {
+  --map2-quiet-op: 0.4;
+  --map2-legs-op: 0.27;
+}
+
+/* Story markers: pointer + ring emphasis in every motion mode (this is the
+   static emphasis under reduced motion). Routes are NEVER highlighted from
+   a story marker — privacy rule. */
+.map-story {
+  cursor: pointer;
+}
+
+.map-story:hover .map-story-ring,
+.map-story:focus-visible .map-story-ring {
+  stroke-width: 2.4;
+}
+
 @keyframes map-pulse-calm {
   0% {
     transform: scale(0.6);
@@ -545,6 +569,21 @@ body {
   /* v2 hubs pulse calmer: slower, softer, smaller reach */
   .routes-map--v2.in-view .map-pulse {
     animation: map-pulse-calm 5.4s ease-out var(--d, 0s) infinite;
+  }
+
+  /* Story-marker hover: gentle heart scale-up (motion mode only; reduced
+     motion falls back to the static ring emphasis outside this block).
+     animation: none drops the entrance keyframes' fill state — restate
+     opacity so the heart doesn't fall back to the hidden initial state. */
+  .routes-map--v2 .map-story .map-story-heart {
+    transition: transform 0.15s ease-out;
+  }
+
+  .routes-map--v2.in-view .map-story:hover .map-story-heart,
+  .routes-map--v2.in-view .map-story:focus-visible .map-story-heart {
+    animation: none;
+    opacity: 1;
+    transform: scale(1.25);
   }
 
   @supports (offset-path: path("M 0 0 L 1 1")) {

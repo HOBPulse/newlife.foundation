@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-11 — Post-launch polish candidates: circular hub-port spacing at ±180°, micro-gaps at branch junctions
 2026-07-11 — Polish transit on map — rejected after visual mock (Rzeszów collides with Lviv node at this scale; transit is an operational detail, not a destination)
 2026-07-11 — 3 internal UA hub legs (owner-confirmed) in data; v2-only quiet background layer
 2026-07-11 — Thessaloniki story marker added (owner confirmed city for story-3)

@@ -351,6 +351,13 @@ const LEG_BENDS: Record<string, BendStyle> = {
   "dnipro-lviv": "axis",
 };
 
+/* Ground point-to-point bends: Dnipro's western fan needs two straights —
+   a diag would double the Kyiv leg, an axis would double the Lviv leg. */
+const QUIET_BENDS: Record<string, BendStyle> = {
+  "dnipro-warsaw": "straight",
+  "dnipro-prague": "straight",
+};
+
 /* Hub ports: gather every departure (corridor trunks + cross links + internal
    legs), space them at least MIN_PORT_SEP apart around the ring, then start
    each line on the perimeter at its angle. */
@@ -376,8 +383,15 @@ const portAngles = new Map<string, number>(); // `${hub}:${key}` -> angle
   }
   CROSS_LINKS.forEach((link) => {
     const hub = project(hubById.get(link.hub)!);
-    const to = project(cityById.get(link.to)!);
-    add(link.hub, `cross-${link.to}`, startAngle(hub, to, true, link.bow, "straight"));
+    const city = cityById.get(link.to)!;
+    const to = project(city);
+    add(
+      link.hub,
+      `cross-${link.to}`,
+      city.air
+        ? startAngle(hub, to, true, link.bow, "straight")
+        : startAngle(hub, to, false, 0, QUIET_BENDS[`${link.hub}-${link.to}`] ?? "diag"),
+    );
   });
   for (const leg of INTERNAL_LEGS) {
     const a = project(hubById.get(leg.from)!);
@@ -463,9 +477,6 @@ corridorsOrdered.forEach(({ corridor, from }, rank) => {
 
 /** When the one-shot entrance sequence has finished and ambient motion starts. */
 const SEQUENCE_END = 4.4;
-PLANES.forEach((plane, i) => {
-  plane.delay = SEQUENCE_END + i * 1.7;
-});
 
 /* Internal Ukrainian hub-to-hub legs (owner-confirmed data) — the quietest
    layer of all: thin roads under everything, no destination dots. */
@@ -483,20 +494,26 @@ const INTERNAL_EDGES: EdgeView[] = INTERNAL_LEGS.map((leg, i) => {
 });
 
 /* Rare point-to-point routes outside the tree (cross-sector + network links
-   from the data) — thin, visually quieter than the corridors. */
+   from the data) — thin, visually quieter than the corridors. Styled by
+   transport type, consistent with the tree's language: air targets get an
+   arc + plane, ground targets a road-like polyline. */
 const QUIET_LINES: EdgeView[] = [
   ...CROSS_LINKS.map((link, i) => {
     const from = portPoint(link.hub, `cross-${link.to}`);
-    const to = project(cityById.get(link.to)!);
+    const city = cityById.get(link.to)!;
+    const to = project(city);
+    const air = !!city.air;
     // Kharkiv's two point-to-point lines (Berlin, Istanbul) carry
     // thin-corridor weight — they are that hub's only western connections
     // and it read as bare otherwise (owner decision, task 2026-07-11).
     const emphasized = link.hub === "kharkiv";
     return {
       key: `cross-${link.hub}-${link.to}`,
-      d: arcPath(from, to, link.bow),
+      d: air
+        ? arcPath(from, to, link.bow)
+        : roadPath(from, to, QUIET_BENDS[`${link.hub}-${link.to}`] ?? "diag"),
       width: emphasized ? 1.3 : 1,
-      air: false,
+      air,
       delay: 3 + i * 0.12,
       dur: 0.7,
       opacity: emphasized ? 0.6 : undefined,
@@ -506,16 +523,28 @@ const QUIET_LINES: EdgeView[] = [
     const a = cityById.get(fromId);
     const b = cityById.get(toId);
     if (!a || !b) throw new Error(`v2: unknown network link city: ${fromId}->${toId}`);
+    const air = !!(a.air || b.air);
     return {
       key: `net-${fromId}-${toId}`,
-      d: arcPath(project(a), project(b), DEFAULT_BOW),
+      d: air
+        ? arcPath(project(a), project(b), DEFAULT_BOW)
+        : roadPath(project(a), project(b), "diag"),
       width: 1,
-      air: false,
+      air,
       delay: 3 + (CROSS_LINKS.length + i) * 0.12,
       dur: 0.7,
     };
   }),
 ];
+
+// Air point-to-point lines fly a plane too (same convention as corridors);
+// they queue up after the corridor planes.
+for (const line of QUIET_LINES.filter((l) => l.air)) {
+  PLANES.push({ key: `plane-${line.key}`, d: line.d, delay: 0 });
+}
+PLANES.forEach((plane, i) => {
+  plane.delay = SEQUENCE_END + i * 1.7;
+});
 
 /* --- Kazakhstan cue: where the Almaty trunk crosses the right crop edge ---- */
 
@@ -671,10 +700,12 @@ export function RoutesMapV2() {
               d={edge.d}
               pathLength={1}
               className="map-line"
-              style={vars(edge.delay, { "--dur": `${edge.dur.toFixed(2)}s` } as CSSProperties)}
+              style={vars(edge.delay, {
+                "--dur": `${edge.dur.toFixed(2)}s`,
+                strokeOpacity: "var(--map2-legs-op)",
+              } as CSSProperties)}
               fill="none"
               stroke="var(--color-pine)"
-              strokeOpacity="0.22"
               strokeWidth={edge.width}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -688,12 +719,15 @@ export function RoutesMapV2() {
               d={line.d}
               pathLength={1}
               className="map-line"
-              style={vars(line.delay, { "--dur": `${line.dur.toFixed(2)}s` } as CSSProperties)}
+              style={vars(line.delay, {
+                "--dur": `${line.dur.toFixed(2)}s`,
+                strokeOpacity: line.opacity ?? "var(--map2-quiet-op)",
+              } as CSSProperties)}
               fill="none"
               stroke="var(--color-pine)"
-              strokeOpacity={line.opacity ?? 0.32}
               strokeWidth={line.width}
               strokeLinecap="round"
+              strokeLinejoin="round"
             />
           ))}
 
@@ -797,25 +831,33 @@ export function RoutesMapV2() {
                 key={marker.slug}
                 href={`${localePrefix}/stories/${marker.slug}`}
                 aria-label={`${title} — ${tStories("readMore")}`}
+                className="map-story"
               >
+                {/* Hit area: the ring is fill=none, so without this the city
+                    dot underneath intercepts hover/click inside the ring */}
+                <circle cx={pt.x} cy={pt.y} r="9" fill="none" pointerEvents="all" />
                 <circle
                   cx={pt.x}
                   cy={pt.y}
                   r="6.4"
-                  className="map-dot"
+                  className="map-dot map-story-ring"
                   fill="none"
                   stroke="var(--color-gold)"
                   strokeWidth="1.4"
                   style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.3)}
                 />
-                <path
-                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                  className="map-dot map-story-heart"
-                  fill="var(--color-gold)"
-                  transform={`translate(${r1(pt.x - 6)} ${r1(pt.y - 24)}) scale(0.5)`}
-                  style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.45)}
-                />
-                <title>{`${title} — ${tStories("readMore")}`}</title>
+                {/* Position lives on the <g>: the pop/hover animations set a
+                    CSS transform on the path, which would otherwise REPLACE an
+                    attribute transform and fling the heart to the origin. */}
+                <g transform={`translate(${r1(pt.x - 6)} ${r1(pt.y - 24)}) scale(0.5)`}>
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    className="map-dot map-story-heart"
+                    fill="var(--color-gold)"
+                    style={vars((cityDotDelay.get(marker.city) ?? 0) + 0.45)}
+                  />
+                </g>
+                <title>{title}</title>
               </a>
             );
           })}
