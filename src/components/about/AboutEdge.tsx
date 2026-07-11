@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { AboutCollage } from "@/components/about/AboutCollage";
 
 /* About layout preview — ?about=edge (edge-bleed zigzag, owner's idea).
    Alternating rows: the photo bleeds to the viewport edge on one side, the
@@ -16,6 +17,8 @@ const H1_CLEAR = "scroll-mt-20";
 // Photo bleeds to the true viewport edge (matches the W full-bleed pattern).
 const BLEED = "relative left-1/2 w-screen -translate-x-1/2";
 const PHOTO = "aspect-[666/520] w-full object-cover";
+// Pair 1 (lesya-depot) is a tall portrait — keep her + open doors in view.
+const PAIR1_POS = "object-[center_38%]";
 // Text half: comfortable padding, capped reading width pulled toward center.
 const TEXT_CELL = "flex items-center px-4 py-10 sm:px-6 md:py-14";
 
@@ -53,12 +56,12 @@ export async function AboutEdge({ locale }: { locale: Locale }) {
           <div className="grid items-center md:grid-cols-2">
             <figure className="md:order-1">
               <Image
-                src="/photos/emergency-room.jpg"
-                alt={t("photos.emergencyRoom")}
+                src="/photos/lesya-depot.jpg"
+                alt={t("photos.lesyaDepot")}
                 width={666}
                 height={520}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                className={PHOTO}
+                className={`${PHOTO} ${PAIR1_POS}`}
               />
             </figure>
             <div className={`${TEXT_CELL} md:order-2 md:pl-10 md:pr-6 lg:pl-16`}>
@@ -70,18 +73,11 @@ export async function AboutEdge({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        {/* Row 2 — photo right (bleeds right), "Кожен випадок" (p4) */}
+        {/* Row 2 — collage right (bleeds right), "Кожен випадок" (p4) */}
         <div className={BLEED}>
           <div className="grid items-center md:grid-cols-2">
             <figure className="md:order-2">
-              <Image
-                src="/photos/clinic-abroad.jpg"
-                alt=""
-                width={666}
-                height={520}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className={PHOTO}
-              />
+              <AboutCollage locale={locale} bleed />
             </figure>
             <div className={`${TEXT_CELL} md:order-1 md:pr-10 md:pl-6 lg:pr-16`}>
               <div className="max-w-xl md:ml-auto">

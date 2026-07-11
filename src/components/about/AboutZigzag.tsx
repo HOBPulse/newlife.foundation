@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { AboutCollage } from "@/components/about/AboutCollage";
 
 /* About layout preview — ?about=zigzag (MSF "media beside text" pattern).
    Reference: doctorswithoutborders.org/who-we-are. Landscape photos (~1.28:1,
@@ -17,6 +18,8 @@ const HEADING = "font-display text-2xl font-medium tracking-tight text-ink";
 const H1_CLEAR = "scroll-mt-20";
 // Landscape frame — MSF 666×520 proportion, not 4:3.
 const FRAME = "aspect-[666/520] w-full rounded-xl object-cover";
+// Pair 1 (lesya-depot) is a tall portrait — keep her + open doors in view.
+const PAIR1_POS = "object-[center_38%]";
 // Photo column wider than text (~57% / ~43%); mirror by swapping the template.
 const COLS = { text: "md:grid-cols-[1fr_1.35fr]", photo: "md:grid-cols-[1.35fr_1fr]" };
 
@@ -70,12 +73,12 @@ export async function AboutZigzag({
       <div className={textLeft}>
         <figure className="md:order-2">
           <Image
-            src="/photos/emergency-room.jpg"
-            alt={t("photos.emergencyRoom")}
+            src="/photos/lesya-depot.jpg"
+            alt={t("photos.lesyaDepot")}
             width={666}
             height={520}
             sizes="(min-width: 768px) 32rem, 100vw"
-            className={FRAME}
+            className={`${FRAME} ${PAIR1_POS}`}
           />
         </figure>
         <div className="md:order-1">
@@ -84,18 +87,11 @@ export async function AboutZigzag({
         </div>
       </div>
 
-      {/* Pair 2 — "Кожен випадок" (p4) + clinic abroad. Mirrored: photo left,
-          text right on desktop; photo above heading+text on mobile. */}
+      {/* Pair 2 — "Кожен випадок" (p4) + Germany collage. Mirrored: collage
+          left, text right on desktop; collage above heading+text on mobile. */}
       <div className={photoLeft}>
         <figure className="md:order-1">
-          <Image
-            src="/photos/clinic-abroad.jpg"
-            alt=""
-            width={666}
-            height={520}
-            sizes="(min-width: 768px) 32rem, 100vw"
-            className={FRAME}
-          />
+          <AboutCollage locale={locale} />
         </figure>
         <div className="md:order-2">
           <h3 className={HEADING}>{t("pairHeadings.start")}</h3>
