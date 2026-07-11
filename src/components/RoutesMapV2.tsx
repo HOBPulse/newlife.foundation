@@ -918,7 +918,9 @@ export function RoutesMapV2() {
         {STORY_MARKERS.map((marker) => {
           const pt = project(cityById.get(marker.city)!);
           const title = tStories(`items.${marker.slug}.title`);
-          const teaser = tStories(`items.${marker.slug}.excerpt`);
+          // Dedicated diagnosis-free card teaser (owner copy, task 2026-07-11)
+          // — never the story excerpt, which carries published medical detail
+          const teaser = tStories(`items.${marker.slug}.mapTeaser`);
           return (
             <a
               key={marker.slug}

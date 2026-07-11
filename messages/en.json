@@ -141,6 +141,7 @@
     "items": {
       "story-1": {
         "title": "Sviatoslav’s Story",
+        "mapTeaser": "Sviatoslav’s road to treatment in Barcelona",
         "excerpt": "At 1.5 years old, Sviatoslav was diagnosed with a brainstem tumor — a rare and complex condition causing neurological and respiratory complications.",
         "sections": [
           {
@@ -193,6 +194,7 @@
       },
       "story-3": {
         "title": "Lyonichka’s Story",
+        "mapTeaser": "Lyonichka’s journey to Thessaloniki",
         "excerpt": "At 3 years old, Lyonichka’s life changed suddenly. A severe illness, later diagnosed as the rare West Nile virus, struck him without warning.",
         "sections": [
           {
