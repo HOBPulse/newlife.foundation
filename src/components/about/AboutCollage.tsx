@@ -45,10 +45,10 @@ export async function AboutCollage({
         sizes="(min-width: 768px) 16rem, 45vw"
         className="absolute bottom-[-7%] left-[5%] w-[46%] rotate-[-1.5deg] rounded-lg object-cover shadow-lg"
       />
-      {/* Card — UA-plated ambulance, top-right, slight right tilt */}
+      {/* Card — night EMERGENCY ROOM sign + ambulances, top-right, right tilt */}
       <Image
-        src="/photos/ua-plates-er.jpg"
-        alt={t("uaPlatesEr")}
+        src="/photos/emergency-room.jpg"
+        alt={t("emergencyRoomNight")}
         width={600}
         height={450}
         sizes="(min-width: 768px) 15rem, 44vw"
