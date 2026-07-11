@@ -4,13 +4,14 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { AboutCollage } from "@/components/about/AboutCollage";
 
-/* About layout preview — ?about=zigzag (MSF "media beside text" pattern).
-   Reference: doctorswithoutborders.org/who-we-are. Landscape photos (~1.28:1,
-   MSF's 666×520) beside a small PT-Serif heading + the approved paragraph,
-   photo ~57% of the row, pairs in a tight vertical ladder with the text
-   vertically centered. Copy is verbatim from AboutPage; only the block ORDER
-   is arranged into the owner's meaning-pairs and the pair headings are new
-   (task 2026-07-11). Default layout W is unchanged. */
+/* The About page (MSF "media beside text" pattern, tight ladder).
+   Reference: doctorswithoutborders.org/who-we-are. Owner-approved as the
+   /about layout (2026-07-11). Landscape photos (~1.28:1, MSF's 666×520)
+   beside a small PT-Serif heading + the approved paragraph; the three pairs
+   sit as one close vertical ladder with the text vertically centered.
+   Pair 1 is the vertical Lesya portrait (per-pair exception). Copy is
+   verbatim from AboutPage; the block ORDER follows the owner's meaning-pairs
+   and the pair headings live in AboutPage.pairHeadings. */
 
 const PROSE = "text-lg leading-relaxed text-ink-soft";
 const HEADING = "font-display text-2xl font-medium tracking-tight text-ink";
@@ -27,21 +28,13 @@ const PAIR1_IMG =
 // photos read large; the wider max-w-6xl frame keeps the text column ≥50ch.
 const COLS = { text: "md:grid-cols-[1fr_1.45fr]", photo: "md:grid-cols-[1.45fr_1fr]" };
 
-export async function AboutZigzag({
-  locale,
-  tight = false,
-}: {
-  locale: Locale;
-  /** ?about=zigzag-tight — collapses the inter-pair gap into one close ladder. */
-  tight?: boolean;
-}) {
+export async function AboutZigzag({ locale }: { locale: Locale }) {
   setRequestLocale(locale);
 
-  // Tight variant packs the three pairs together; default keeps the airy MSF
-  // rhythm. Only vertical spacing differs between the two.
-  const gapY = tight ? "mt-6 md:mt-7" : "mt-12 md:mt-14";
-  // Tighter gutter so each pair reads as one unit, not two far-apart things.
-  const landGap = tight ? "gap-5 md:gap-6" : "gap-6 md:gap-8";
+  // Tight vertical rhythm so the three pairs read as one close ladder.
+  const gapY = "mt-6 md:mt-7";
+  // Tight gutter so each pair reads as one unit, not two far-apart things.
+  const landGap = "gap-5 md:gap-6";
   const landscape = `${gapY} grid items-center ${landGap}`;
   const textLeft = `${landscape} ${COLS.text}`;
   const photoLeft = `${landscape} ${COLS.photo}`;
@@ -49,7 +42,7 @@ export async function AboutZigzag({
   // intrinsic width. Constrained to a narrower centered band and centered so
   // Lesya sits close to the text as one unit rather than floating apart.
   const pair1 = `${gapY} mx-auto flex max-w-5xl flex-col gap-8 md:flex-row md:items-center md:justify-center md:gap-12`;
-  const closeMt = tight ? "mt-7 md:mt-8" : "mt-12 md:mt-16";
+  const closeMt = "mt-7 md:mt-8";
 
   const t = await getTranslations("AboutPage");
   const tStories = await getTranslations("StoriesPage");

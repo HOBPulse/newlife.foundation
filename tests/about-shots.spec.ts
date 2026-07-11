@@ -19,14 +19,18 @@ const LOCALES = [
   { name: "en", path: "/en/about" },
 ] as const;
 
+const WIDTHS = [1280, 390] as const;
+
 for (const { name, path } of LOCALES) {
-  test(`about ${name} (1280)`, async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto(path, { waitUntil: "networkidle" });
-    await waitForHeadingFont(page);
-    await page.screenshot({
-      path: `screenshots/about-${name}-1280.png`,
-      fullPage: true,
+  for (const width of WIDTHS) {
+    test(`about ${name} (${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path, { waitUntil: "networkidle" });
+      await waitForHeadingFont(page);
+      await page.screenshot({
+        path: `screenshots/about-${name}-${width}.png`,
+        fullPage: true,
+      });
     });
-  });
+  }
 }
