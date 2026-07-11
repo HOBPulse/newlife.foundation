@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-11 — Map v2 promoted to the only homepage map (?map= flag + v1 RoutesMap/basemap/generate-basemap.mjs/RoutesMapSwitch removed); facts counter 61→62 (AIR_LINKS Kyiv→Thessaloniki merged into count)
 2026-07-11 — About finalized: zigzag-tight is the default /about (flag + AboutW/Strip/Edge/Mix/LayoutSwitch removed); only AboutZigzag + AboutCollage kept
 2026-07-11 — About adds ?about=mix: contained in-column vertical pair 1 + edge-bleeding pairs 2/3 (alternating), reusing shared pairs/photos/collage
 2026-07-11 — About zigzag(+tight): pairs enlarged (max-w-6xl, photo ~59%), gutter tightened; vertical pair 1 in a centered max-w-5xl band so Lesya reads big and close, not floating

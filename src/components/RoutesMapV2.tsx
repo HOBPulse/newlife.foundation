@@ -16,12 +16,11 @@ import {
 import { STORY_PHOTOS, type StorySlug } from "@/lib/stories";
 import { BASEMAP_EUROPE_PATHS, BASEMAP_EUROPE_VIEWBOX } from "@/data/basemap-europe";
 
-/* --- v2: corridor-tree rework (?map=v2) -----------------------------------
-   Same owner data as v1, new visual organization: routes sharing a direction
-   bundle into corridors that branch near destinations. Line weight tapers
-   with the number of routes downstream of each segment (thicker trunk,
-   thinner branches) — direction reads from the taper, no arrowheads.
-   v1 (RoutesMap.tsx) stays untouched until v2 is approved. */
+/* --- Homepage routes map (corridor tree) ----------------------------------
+   The owner-approved map (2026-07-11). Routes sharing a direction bundle into
+   corridors that branch near destinations. Line weight tapers with the number
+   of routes downstream of each segment (thicker trunk, thinner branches) —
+   direction reads from the taper, no arrowheads. */
 
 /* --- Projection ------------------------------------------------------------
    Equirectangular, standard parallel 48°N — cropped to Europe. Kazakhstan

@@ -1,6 +1,5 @@
 // Generates src/data/basemap-europe.ts — the Europe-cropped basemap for the
-// v2 routes map, from Natural Earth 110m admin_0 countries (public domain).
-// v1 keeps its own script/basemap (generate-basemap.mjs) — do not mix them.
+// homepage routes map, from Natural Earth 110m admin_0 countries (public domain).
 //
 // Usage:
 //   curl -sL -o /tmp/ne110.geojson \

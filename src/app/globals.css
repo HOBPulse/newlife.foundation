@@ -482,7 +482,7 @@ body {
   }
 }
 
-/* v2 (?map=v2) — warm cream basemap frame; shares v1's animation machinery.
+/* Routes map (corridor tree) — warm cream basemap frame.
    Land a touch deeper than the water so the coastline reads on cream.
    direction: rtl starts the horizontal overflow scroll at the EAST edge on
    narrow screens (UA hubs visible first, no JS/no animated scroll); the svg
