@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-11 — About zigzag(+tight): pairs enlarged (max-w-6xl, photo ~59%), gutter tightened; vertical pair 1 in a centered max-w-5xl band so Lesya reads big and close, not floating
 2026-07-11 — About pair 1 (lesya-depot) → vertical portrait exception (near-native 9/16, capped height); edge bleeds it to the wall at full row height; pairs 2/3 stay landscape
 2026-07-11 — About pairs get real foundation photos: lesya-depot (pair 1), 3-photo Germany collage (pair 2); Olesya paragraph replaced (owner-final); pair-1 landscape crop kept via object-[center_38%] (no aspect exception)
 2026-07-11 — About previews add ?about=edge (edge-bleed) + ?about=zigzag-tight; H1 scroll-mt-20 clears sticky header on all variants

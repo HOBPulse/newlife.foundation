@@ -20,10 +20,12 @@ const H1_CLEAR = "scroll-mt-20";
 const FRAME = "aspect-[666/520] w-full rounded-xl object-cover";
 // Pair 1 (lesya-depot) is a tall portrait — per-pair exception: render her
 // vertically at (near-)native ratio, capped height, full figure, no dead space.
+// Taller than before so she fills the row rather than floating.
 const PAIR1_IMG =
-  "h-[22rem] w-auto rounded-xl object-cover shadow-sm md:h-[30rem]";
-// Photo column wider than text (~57% / ~43%); mirror by swapping the template.
-const COLS = { text: "md:grid-cols-[1fr_1.35fr]", photo: "md:grid-cols-[1.35fr_1fr]" };
+  "h-[24rem] w-auto rounded-xl object-cover shadow-sm md:h-[38rem]";
+// Photo column ~59% of the row (mirror by swapping the template) — landscape
+// photos read large; the wider max-w-6xl frame keeps the text column ≥50ch.
+const COLS = { text: "md:grid-cols-[1fr_1.45fr]", photo: "md:grid-cols-[1.45fr_1fr]" };
 
 export async function AboutZigzag({
   locale,
@@ -38,13 +40,15 @@ export async function AboutZigzag({
   // Tight variant packs the three pairs together; default keeps the airy MSF
   // rhythm. Only vertical spacing differs between the two.
   const gapY = tight ? "mt-6 md:mt-7" : "mt-12 md:mt-14";
-  const gapX = tight ? "gap-6 md:gap-10" : "gap-8 md:gap-12";
-  const landscape = `${gapY} grid items-center ${gapX}`;
+  // Tighter gutter so each pair reads as one unit, not two far-apart things.
+  const landGap = tight ? "gap-5 md:gap-6" : "gap-6 md:gap-8";
+  const landscape = `${gapY} grid items-center ${landGap}`;
   const textLeft = `${landscape} ${COLS.text}`;
   const photoLeft = `${landscape} ${COLS.photo}`;
   // Pair 1 uses flex (not the fr-grid) so the vertical photo keeps its
-  // intrinsic width while the text fills the rest, capped for readability.
-  const pair1 = `${gapY} flex flex-col ${gapX} md:flex-row md:items-center md:justify-between`;
+  // intrinsic width. Constrained to a narrower centered band and centered so
+  // Lesya sits close to the text as one unit rather than floating apart.
+  const pair1 = `${gapY} mx-auto flex max-w-5xl flex-col gap-8 md:flex-row md:items-center md:justify-center md:gap-12`;
   const closeMt = tight ? "mt-7 md:mt-8" : "mt-12 md:mt-16";
 
   const t = await getTranslations("AboutPage");
@@ -64,7 +68,7 @@ export async function AboutZigzag({
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6">
+    <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
       {/* Intro — the thesis, at reading width */}
       <div className="mx-auto max-w-2xl">
         <h1 className={`font-display text-4xl font-medium tracking-tight text-ink ${H1_CLEAR}`}>
@@ -87,7 +91,7 @@ export async function AboutZigzag({
             className={PAIR1_IMG}
           />
         </figure>
-        <div className="md:order-1 md:max-w-xl">
+        <div className="md:order-1 md:max-w-lg">
           <h3 className={HEADING}>{t("pairHeadings.experience")}</h3>
           <p className={`mt-4 ${PROSE}`}>{t("p3")}</p>
         </div>
