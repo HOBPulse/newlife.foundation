@@ -1,9 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
+import { AboutLayoutSwitch } from "@/components/AboutLayoutSwitch";
+import { AboutZigzag } from "@/components/about/AboutZigzag";
+import { AboutStrip } from "@/components/about/AboutStrip";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -40,7 +44,10 @@ export default async function AboutPage({ params }: Props) {
     </>
   );
 
-  return (
+  // Shipped layout W — the default. Preview variants (?about=zigzag|strip)
+  // are compared behind a flag; W renders for everyone else and as the
+  // Suspense fallback so the page stays prerendered.
+  const layoutW = (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-2xl">
         <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
@@ -92,5 +99,15 @@ export default async function AboutPage({ params }: Props) {
         <p className={PROSE}>{t("p5")}</p>
       </div>
     </div>
+  );
+
+  return (
+    <Suspense fallback={layoutW}>
+      <AboutLayoutSwitch
+        w={layoutW}
+        zigzag={<AboutZigzag locale={locale} />}
+        strip={<AboutStrip locale={locale} />}
+      />
+    </Suspense>
   );
 }
