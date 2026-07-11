@@ -337,6 +337,8 @@ type EdgeView = {
   air: boolean;
   delay: number;
   dur: number;
+  /** Stroke opacity override for the quiet layer (default 0.32). */
+  opacity?: number;
 };
 
 const edgeAir = (node: TreeNode) => !!cityById.get(node.city)!.air;
@@ -486,13 +488,18 @@ const QUIET_LINES: EdgeView[] = [
   ...CROSS_LINKS.map((link, i) => {
     const from = portPoint(link.hub, `cross-${link.to}`);
     const to = project(cityById.get(link.to)!);
+    // Kharkiv's two point-to-point lines (Berlin, Istanbul) carry
+    // thin-corridor weight — they are that hub's only western connections
+    // and it read as bare otherwise (owner decision, task 2026-07-11).
+    const emphasized = link.hub === "kharkiv";
     return {
       key: `cross-${link.hub}-${link.to}`,
       d: arcPath(from, to, link.bow),
-      width: 1,
+      width: emphasized ? 1.3 : 1,
       air: false,
       delay: 3 + i * 0.12,
       dur: 0.7,
+      opacity: emphasized ? 0.6 : undefined,
     };
   }),
   ...NETWORK_LINKS.map(([fromId, toId], i) => {
@@ -684,7 +691,7 @@ export function RoutesMapV2() {
               style={vars(line.delay, { "--dur": `${line.dur.toFixed(2)}s` } as CSSProperties)}
               fill="none"
               stroke="var(--color-pine)"
-              strokeOpacity="0.32"
+              strokeOpacity={line.opacity ?? 0.32}
               strokeWidth={line.width}
               strokeLinecap="round"
             />
