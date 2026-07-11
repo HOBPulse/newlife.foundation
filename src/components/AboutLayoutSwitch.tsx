@@ -13,17 +13,20 @@ export function AboutLayoutSwitch({
   zigzagTight,
   strip,
   edge,
+  mix,
 }: {
   w: ReactNode;
   zigzag: ReactNode;
   zigzagTight: ReactNode;
   strip: ReactNode;
   edge: ReactNode;
+  mix: ReactNode;
 }) {
   const variant = useSearchParams().get("about");
   if (variant === "zigzag") return <>{zigzag}</>;
   if (variant === "zigzag-tight") return <>{zigzagTight}</>;
   if (variant === "strip") return <>{strip}</>;
   if (variant === "edge") return <>{edge}</>;
+  if (variant === "mix") return <>{mix}</>;
   return <>{w}</>;
 }

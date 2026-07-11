@@ -9,6 +9,7 @@ import { AboutLayoutSwitch } from "@/components/AboutLayoutSwitch";
 import { AboutZigzag } from "@/components/about/AboutZigzag";
 import { AboutStrip } from "@/components/about/AboutStrip";
 import { AboutEdge } from "@/components/about/AboutEdge";
+import { AboutMix } from "@/components/about/AboutMix";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -110,6 +111,7 @@ export default async function AboutPage({ params }: Props) {
         zigzagTight={<AboutZigzag locale={locale} tight />}
         strip={<AboutStrip locale={locale} />}
         edge={<AboutEdge locale={locale} />}
+        mix={<AboutMix locale={locale} />}
       />
     </Suspense>
   );
