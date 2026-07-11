@@ -99,6 +99,11 @@
     "photos": {
       "emergencyRoom": "Foundation ambulances at a hospital emergency entrance",
       "familyCaption": "Svyatoslav and his family on the way to treatment"
+    },
+    "pairHeadings": {
+      "experience": "Experience that finds solutions",
+      "start": "Where we start",
+      "team": "A team working since 2011"
     }
   },
   "HowWeWorkPage": {

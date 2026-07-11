@@ -3,15 +3,22 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
-/* About layout preview — ?about=zigzag (MSF / Direct Relief pattern, soft).
-   Alternating text/photo pairs at content width, generous whitespace, site
-   tokens (cream/pine/gold, PT Serif headings). Copy is verbatim from
-   AboutPage — only the block ORDER is arranged into the owner's meaning-pairs
-   (task 2026-07-11); wording is untouched. Default layout W is unchanged. */
+/* About layout preview — ?about=zigzag (MSF "media beside text" pattern).
+   Reference: doctorswithoutborders.org/who-we-are. Landscape photos (~1.28:1,
+   MSF's 666×520) beside a small PT-Serif heading + the approved paragraph,
+   photo ~57% of the row, pairs in a tight vertical ladder with the text
+   vertically centered. Copy is verbatim from AboutPage; only the block ORDER
+   is arranged into the owner's meaning-pairs and the pair headings are new
+   (task 2026-07-11). Default layout W is unchanged. */
 
 const PROSE = "text-lg leading-relaxed text-ink-soft";
-// Photo frame shared by every pair — equal aspect keeps the zigzag calm.
-const FRAME = "aspect-[4/3] w-full rounded-xl object-cover";
+const HEADING = "font-display text-2xl font-medium tracking-tight text-ink";
+// Landscape frame — MSF 666×520 proportion, not 4:3.
+const FRAME = "aspect-[666/520] w-full rounded-xl object-cover";
+// Photo column wider than text (~57% / ~43%); mirror by swapping the template.
+const ROW = "mt-12 grid items-center gap-8 md:mt-14 md:gap-12";
+const TEXT_LEFT = `${ROW} md:grid-cols-[1fr_1.35fr]`;
+const PHOTO_LEFT = `${ROW} md:grid-cols-[1.35fr_1fr]`;
 
 export async function AboutZigzag({ locale }: { locale: Locale }) {
   setRequestLocale(locale);
@@ -42,56 +49,65 @@ export async function AboutZigzag({ locale }: { locale: Locale }) {
       </div>
 
       {/* Pair 1 — Olesya (p3) + emergency room. Desktop: text left, photo
-          right. Mobile: photo above text (figure first in DOM). */}
-      <div className="mt-16 grid items-center gap-8 md:mt-24 md:grid-cols-2 md:gap-12">
+          right. Mobile: photo above heading+text (figure first in DOM). */}
+      <div className={TEXT_LEFT}>
         <figure className="md:order-2">
           <Image
             src="/photos/emergency-room.jpg"
             alt={t("photos.emergencyRoom")}
-            width={1600}
-            height={655}
-            sizes="(min-width: 768px) 34rem, 100vw"
+            width={666}
+            height={520}
+            sizes="(min-width: 768px) 32rem, 100vw"
             className={FRAME}
           />
         </figure>
-        <p className={`${PROSE} md:order-1`}>{t("p3")}</p>
+        <div className="md:order-1">
+          <h3 className={HEADING}>{t("pairHeadings.experience")}</h3>
+          <p className={`mt-4 ${PROSE}`}>{t("p3")}</p>
+        </div>
       </div>
 
       {/* Pair 2 — "Кожен випадок" (p4) + clinic abroad. Mirrored: photo left,
-          text right on desktop; photo above text on mobile. */}
-      <div className="mt-16 grid items-center gap-8 md:mt-24 md:grid-cols-2 md:gap-12">
+          text right on desktop; photo above heading+text on mobile. */}
+      <div className={PHOTO_LEFT}>
         <figure className="md:order-1">
           <Image
             src="/photos/clinic-abroad.jpg"
             alt=""
-            width={1600}
-            height={1200}
-            sizes="(min-width: 768px) 34rem, 100vw"
+            width={666}
+            height={520}
+            sizes="(min-width: 768px) 32rem, 100vw"
             className={FRAME}
           />
         </figure>
-        <p className={`${PROSE} md:order-2`}>{t("p4")}</p>
+        <div className="md:order-2">
+          <h3 className={HEADING}>{t("pairHeadings.start")}</h3>
+          <p className={`mt-4 ${PROSE}`}>{t("p4")}</p>
+        </div>
       </div>
 
       {/* Pair 3 — founding 2019/2011 (p2) + family photo with the story
           overlay card. Desktop: text left, photo right. */}
-      <div className="mt-16 grid items-center gap-8 md:mt-24 md:grid-cols-2 md:gap-12">
+      <div className={TEXT_LEFT}>
         <figure className="relative md:order-2">
           <Image
             src="/stories/svyats.jpg"
             alt={familyAlt}
-            width={1280}
-            height={960}
-            sizes="(min-width: 768px) 34rem, 100vw"
+            width={666}
+            height={520}
+            sizes="(min-width: 768px) 32rem, 100vw"
             className={FRAME}
           />
           {storyCard}
         </figure>
-        <p className={`${PROSE} md:order-1`}>{t("p2")}</p>
+        <div className="md:order-1">
+          <h3 className={HEADING}>{t("pairHeadings.team")}</h3>
+          <p className={`mt-4 ${PROSE}`}>{t("p2")}</p>
+        </div>
       </div>
 
       {/* Closing line (p5) */}
-      <div className="mx-auto mt-16 max-w-2xl md:mt-24">
+      <div className="mx-auto mt-12 max-w-2xl md:mt-16">
         <p className={`${PROSE} font-medium text-ink`}>{t("p5")}</p>
       </div>
     </div>
