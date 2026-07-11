@@ -41,6 +41,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Anchor links (e.g. how-to-help cards → their forms) glide instead of
+   jumping — motion-safe only */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--color-pine);
   outline-offset: 2px;

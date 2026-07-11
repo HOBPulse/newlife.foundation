@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — How-to-help forms: anchor-scroll to always-rendered sections, not inline expand (works without JS)
+2026-07-12 — Volunteer/partnership forms post to Web3Forms client-side (per task); /contact + /partner keep server relay
 2026-07-12 — Step 03 duo → single park-org.jpg (owner swap); wider accent column kept, convoy-night deleted
 2026-07-11 — How-we-work steps get photos (right column, quiet); step 03 duo accent (convoy + UA-plates overlap) — transport is the core
 2026-07-11 — Map v2 promoted to the only homepage map (?map= flag + v1 RoutesMap/basemap/generate-basemap.mjs/RoutesMapSwitch removed); facts counter 61→62 (AIR_LINKS Kyiv→Thessaloniki merged into count)

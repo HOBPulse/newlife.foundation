@@ -239,28 +239,60 @@
   },
   "HowToHelpPage": {
     "metaTitle": "How to help",
-    "metaDescription": "Ways to support the foundation's work: donating, spreading the word, partnership.",
+    "metaDescription": "Ways to support the foundation's work: donating, volunteering, partnership, spreading the word.",
     "title": "How to help",
-    "lead": "There are several ways to support the foundation's work.",
-    "ways": {
+    "lead": "The foundation exists thanks to people who help — with money, time, and skills. Here's how you can join.",
+    "cards": {
       "donate": {
         "title": "Donate",
-        "body": "A one-time or regular donation is the fastest way to support the foundation's work.",
-        "cta": "Go to donation"
+        "body": "A one-time donation is the fastest way to support the foundation's work. Every contribution helps us take on new cases.",
+        "cta": "Donate"
+      },
+      "volunteer": {
+        "title": "Become a volunteer",
+        "body": "We need many kinds of hands — from drivers and paramedics to developers and marketers. Tell us how you can help and we'll get in touch.",
+        "cta": "Fill out the form"
+      },
+      "partnership": {
+        "title": "Become a partner",
+        "body": "If you'd like to support the foundation financially, professionally, or organizationally — get in touch.",
+        "cta": "Write to us"
       },
       "share": {
         "title": "Spread the word",
-        "body": "Share the site with those who might need help — or with those ready to support.",
-        "cta": "Share",
+        "body": "It's free and it truly works: the more people know about the foundation, the more patients we can find and support. Share the site on social media.",
         "copyLink": "Copy link",
-        "copied": "Link copied",
+        "copied": "Copied",
         "shareText": "New Life Foundation helps find specialized treatment and get there — even when people are told there are no options left. Sometimes one forwarded link can change someone's story."
-      },
-      "partner": {
-        "title": "Become a partner",
-        "body": "If you represent a clinic, a transport provider or an organisation ready to help, write to us.",
-        "cta": "Get in touch"
       }
+    },
+    "volunteerForm": {
+      "name": "Name",
+      "contact": "Email or phone",
+      "role": "How can you help",
+      "rolePlaceholder": "Select an option",
+      "roles": {
+        "driver": "Driver",
+        "paramedic": "Paramedic, medical escort",
+        "developer": "Developer",
+        "marketer": "Marketer",
+        "smm": "Social media",
+        "other": "Other"
+      },
+      "message": "Message",
+      "submit": "Send"
+    },
+    "partnershipForm": {
+      "org": "Organization or name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send"
+    },
+    "form": {
+      "sending": "Sending…",
+      "success": "Thank you! We've received your message.",
+      "error": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
   "DonatePage": {
@@ -326,18 +358,38 @@
     }
   },
   "PrivacyPage": {
-    "metaTitle": "Privacy policy",
-    "metaDescription": "New Life Foundation personal data processing policy.",
-    "title": "Privacy policy",
-    "intro": "The policy text is being prepared and will be published before the site launches.",
-    "pendingNotice": "This section requires legal review: the contact form collects health data — a special category of personal data.",
-    "sectionPending": "Text to be added.",
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "What data the foundation collects, how we use it, and how to ask us to delete it.",
+    "title": "Privacy Policy",
     "sections": {
-      "controller": "Personal data controller",
-      "data": "What data we collect",
-      "purpose": "Purpose of processing",
-      "storage": "Storage and transfer",
-      "rights": "Your rights"
+      "who": {
+        "title": "Who we are",
+        "body": "Charitable Foundation \"NEW LIFE!\" (EDRPOU 42792589). For anything related to personal data, write to <email>support@newlife.foundation</email>."
+      },
+      "data": {
+        "title": "What data we collect",
+        "body": "Only what you submit yourself through the forms on this site: name, email or phone, message text. We collect nothing else."
+      },
+      "cookies": {
+        "title": "Cookies and analytics",
+        "body": "We do not use cookies, trackers, or analytics services."
+      },
+      "use": {
+        "title": "How we use the data",
+        "body": "Solely to respond to your inquiry. We do not share your data with third parties and do not use it for mailings or advertising."
+      },
+      "storage": {
+        "title": "How data is transferred and stored",
+        "body": "Forms are delivered via the Web3Forms service to our email. Data is stored in the foundation's mailbox."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You can ask us to delete your data at any time — write to <email>support@newlife.foundation</email> and we will."
+      },
+      "changes": {
+        "title": "Policy changes",
+        "body": "If this policy changes, the updated version will appear on this page."
+      }
     }
   },
   "NotFoundPage": {
