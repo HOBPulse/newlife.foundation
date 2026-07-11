@@ -2,6 +2,9 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-11 — Polish transit on map — rejected after visual mock (Rzeszów collides with Lviv node at this scale; transit is an operational detail, not a destination)
+2026-07-11 — 3 internal UA hub legs (owner-confirmed) in data; v2-only quiet background layer
+2026-07-11 — Thessaloniki story marker added (owner confirmed city for story-3)
 2026-07-11 — Map v2 (Europe crop + corridor tree) behind ?map=v2; v1 stays default until owner approves
 2026-07-11 — v2 corridors hand-authored over ROUTE_GROUPS, build-validated (no invented links)
 2026-07-11 — Story marker: only Barcelona (story-1); stories 2–3 name no city

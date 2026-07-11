@@ -6,6 +6,7 @@ import {
   COUNTRIES,
   CROSS_LINKS,
   HUBS,
+  INTERNAL_LEGS,
   NETWORK_LINKS,
   ROUTE_GROUPS,
   type DestinationCity,
@@ -255,7 +256,9 @@ const CORRIDORS: Corridor[] = [
       ],
     },
   },
-  { id: "thessaloniki", hub: "odesa", root: { city: "thessaloniki" } },
+  // axis-first: the arrival comes in diagonally from the NE, keeping the
+  // Thessaloniki story heart (above the dot) clear of the line
+  { id: "thessaloniki", hub: "odesa", root: { city: "thessaloniki", bend: "axis" } },
   { id: "tel-aviv", hub: "odesa", root: { city: "tel-aviv", bow: 0.12 } },
   // Dnipro — Caucasus chain and the Baltic
   {
@@ -309,6 +312,10 @@ const hubById = new Map(HUBS.map((h) => [h.id, h]));
     if (!hubById.has(link.hub) || !cityById.has(link.to))
       throw new Error(`v2: bad cross link ${link.hub}->${link.to}`);
   }
+  for (const leg of INTERNAL_LEGS) {
+    if (!hubById.has(leg.from) || !hubById.has(leg.to))
+      throw new Error(`v2: internal leg endpoints must be hubs: ${leg.from}->${leg.to}`);
+  }
 }
 
 /* --- Edge/plane/dot views ---------------------------------------------------- */
@@ -334,9 +341,17 @@ type EdgeView = {
 
 const edgeAir = (node: TreeNode) => !!cityById.get(node.city)!.air;
 
-/* Hub ports: gather every departure (corridor trunks + cross links), space
-   them at least MIN_PORT_SEP apart around the ring, then start each line on
-   the perimeter at its angle. */
+/* Internal legs bend hand-tuned so approaches stay clear of hub labels:
+   both Dnipro legs would otherwise depart along the same horizontal. */
+const LEG_BENDS: Record<string, BendStyle> = {
+  "odesa-kyiv": "diag", // nearly vertical — renders as a straight leg
+  "dnipro-kyiv": "diag",
+  "dnipro-lviv": "axis",
+};
+
+/* Hub ports: gather every departure (corridor trunks + cross links + internal
+   legs), space them at least MIN_PORT_SEP apart around the ring, then start
+   each line on the perimeter at its angle. */
 type Departure = { angle: number };
 const portAngles = new Map<string, number>(); // `${hub}:${key}` -> angle
 
@@ -362,6 +377,15 @@ const portAngles = new Map<string, number>(); // `${hub}:${key}` -> angle
     const to = project(cityById.get(link.to)!);
     add(link.hub, `cross-${link.to}`, startAngle(hub, to, true, link.bow, "straight"));
   });
+  for (const leg of INTERNAL_LEGS) {
+    const a = project(hubById.get(leg.from)!);
+    const b = project(hubById.get(leg.to)!);
+    const bend = LEG_BENDS[`${leg.from}-${leg.to}`] ?? "diag";
+    add(leg.from, `leg-${leg.to}`, startAngle(a, b, false, 0, bend));
+    // A diag-first path arrives axis-aligned (and vice versa) — the arrival
+    // port needs the reversed path's departure direction
+    add(leg.to, `leg-in-${leg.from}`, startAngle(b, a, false, 0, bend === "diag" ? "axis" : "diag"));
+  }
   for (const [hub, list] of byHub) {
     list.sort((a, b) => a.dep.angle - b.dep.angle);
     for (let i = 1; i < list.length; i++) {
@@ -441,6 +465,21 @@ PLANES.forEach((plane, i) => {
   plane.delay = SEQUENCE_END + i * 1.7;
 });
 
+/* Internal Ukrainian hub-to-hub legs (owner-confirmed data) — the quietest
+   layer of all: thin roads under everything, no destination dots. */
+const INTERNAL_EDGES: EdgeView[] = INTERNAL_LEGS.map((leg, i) => {
+  const from = portPoint(leg.from, `leg-${leg.to}`);
+  const to = portPoint(leg.to, `leg-in-${leg.from}`);
+  return {
+    key: `leg-${leg.from}-${leg.to}`,
+    d: roadPath(from, to, LEG_BENDS[`${leg.from}-${leg.to}`] ?? "diag"),
+    width: 1,
+    air: false,
+    delay: 1.1 + i * 0.15,
+    dur: 0.5,
+  };
+});
+
 /* Rare point-to-point routes outside the tree (cross-sector + network links
    from the data) — thin, visually quieter than the corridors. */
 const QUIET_LINES: EdgeView[] = [
@@ -515,11 +554,13 @@ const HUB_LABELS: Record<string, { dx: number; dy: number; anchor: "start" | "mi
 
 /* --- Story markers -----------------------------------------------------------
    Up to three, one per published story city, only when that city exists in
-   the routes data. story-1 (Sviatoslav) names Barcelona; story-2 and story-3
-   name no city in the published text — skipped (see task report). */
+   the routes data. story-1 (Sviatoslav) names Barcelona; story-3 (Lenya) →
+   Thessaloniki, owner-confirmed (task, 2026-07-11); story-2 stays unmarked
+   (no confirmed city). */
 
 const STORY_MARKERS: Array<{ slug: string; city: string }> = [
   { slug: "story-1", city: "barcelona" },
+  { slug: "story-3", city: "thessaloniki" },
 ];
 
 for (const marker of STORY_MARKERS) {
@@ -614,6 +655,24 @@ export function RoutesMapV2() {
               />
             );
           })}
+
+          {/* Internal Ukrainian legs — owner-confirmed, background layer:
+              both ends are hubs, so no destination dots */}
+          {INTERNAL_EDGES.map((edge) => (
+            <path
+              key={edge.key}
+              d={edge.d}
+              pathLength={1}
+              className="map-line"
+              style={vars(edge.delay, { "--dur": `${edge.dur.toFixed(2)}s` } as CSSProperties)}
+              fill="none"
+              stroke="var(--color-pine)"
+              strokeOpacity="0.22"
+              strokeWidth={edge.width}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          ))}
 
           {/* Rare point-to-point routes — quieter than the corridor tree */}
           {QUIET_LINES.map((line) => (

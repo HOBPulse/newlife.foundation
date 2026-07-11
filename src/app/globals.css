@@ -483,11 +483,19 @@ body {
 }
 
 /* v2 (?map=v2) — warm cream basemap frame; shares v1's animation machinery.
-   Land a touch deeper than the water so the coastline reads on cream. */
+   Land a touch deeper than the water so the coastline reads on cream.
+   direction: rtl starts the horizontal overflow scroll at the EAST edge on
+   narrow screens (UA hubs visible first, no JS/no animated scroll); the svg
+   restores ltr so text-anchor start/end keep their meaning. */
 .routes-map-v2-frame {
   --map2-land: color-mix(in srgb, var(--color-gold) 5%, var(--color-surface-tint));
   background: color-mix(in srgb, var(--color-surface-tint) 45%, var(--color-paper));
   border-color: color-mix(in srgb, var(--color-pine) 22%, transparent);
+  direction: rtl;
+}
+
+.routes-map-v2-frame > svg {
+  direction: ltr;
 }
 
 @keyframes map-pulse-calm {

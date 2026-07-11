@@ -363,3 +363,18 @@ export const CROSS_LINKS: CrossLink[] = [
   { hub: "kyiv", to: "milan", bow: -0.14 },
   { hub: "odesa", to: "barcelona", bow: -0.12 },
 ];
+
+/** Internal Ukrainian hub-to-hub ground legs (owner-confirmed, task 2026-07-11).
+ *  Exactly these three — never add legs without owner data. Rendered on map v2
+ *  only, as a quiet background layer (both ends are hubs, no destination dots). */
+export type InternalLeg = {
+  from: string;
+  to: string;
+  source: "owner";
+};
+
+export const INTERNAL_LEGS: InternalLeg[] = [
+  { from: "odesa", to: "kyiv", source: "owner" },
+  { from: "dnipro", to: "kyiv", source: "owner" },
+  { from: "dnipro", to: "lviv", source: "owner" },
+];
