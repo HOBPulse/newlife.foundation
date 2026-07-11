@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n/routing";
 
 /* Pair-2 imagery for the About pairs: an overlapping three-photo collage
    (charity:water-style, site tokens, no decorative dots). charite-night is
-   the base at the standard pair aspect; handover + ua-plates-er sit as
+   the base at the standard pair aspect; handover + emergency-room sit as
    smaller cards overlapping its corners with a slight tilt. Shared by the
    zigzag and edge variants — change once here.
 

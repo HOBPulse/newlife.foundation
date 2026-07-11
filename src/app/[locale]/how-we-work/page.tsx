@@ -16,14 +16,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const PROCESS_STEPS = [1, 2, 3, 4] as const;
 
-/* Single-photo steps (step 3 renders its own two-photo accent inline).
-   Owner mapping: 01 консультація, 02 пошук, 04 супровід. */
+/* One photo per step (owner mapping). Step 03 keeps the wider accent column
+   below — transport is the core. `pos` nudges the 3:2 crop framing. */
 const STEP_PHOTOS: Record<
-  1 | 2 | 4,
-  { src: string; altKey: "photos.ambuPark" | "photos.lesyaBack" | "photos.clinicAbroad"; width: number; height: number }
+  (typeof PROCESS_STEPS)[number],
+  {
+    src: string;
+    altKey: `photos.${"ambuPark" | "lesyaBack" | "parkOrg" | "clinicAbroad"}`;
+    width: number;
+    height: number;
+    pos?: string;
+  }
 > = {
   1: { src: "/photos/ambu-park.jpg", altKey: "photos.ambuPark", width: 1440, height: 1080 },
   2: { src: "/photos/lesya-back.jpg", altKey: "photos.lesyaBack", width: 1440, height: 1080 },
+  // Framed high enough to keep every vehicle and the canopy, trimming floor
+  3: {
+    src: "/photos/park-org.jpg",
+    altKey: "photos.parkOrg",
+    width: 1440,
+    height: 1080,
+    pos: "object-[center_40%]",
+  },
   4: { src: "/photos/clinic-abroad.jpg", altKey: "photos.clinicAbroad", width: 1600, height: 1200 },
 };
 
@@ -42,8 +56,8 @@ export default async function HowWeWorkPage({ params }: Props) {
       </p>
 
       {/* One photo block per step (copy untouched). Desktop: text left, photo
-          right in a fixed column; step 03 (transport — the core) carries a
-          slightly larger two-photo overlap accent. Mobile: photo stacks under
+          right in a fixed column; step 03 (transport — the core) reads
+          slightly larger via its wider column. Mobile: photo stacks under
           its step text. Quieter than the About page: same tokens, no bleed. */}
       <ol className="mt-14 max-w-4xl space-y-10 md:space-y-12">
         {PROCESS_STEPS.map((n) => (
@@ -69,40 +83,16 @@ export default async function HowWeWorkPage({ params }: Props) {
               </div>
             </div>
 
-            {n === 3 ? (
-              /* Transport duo — overlap style like the About collage: night
-                 convoy as the base, the UA-plated ambulance as a tilted card
-                 overhanging into the figure's bottom padding. */
-              <figure className="relative pb-6">
-                <Image
-                  src="/photos/convoy-night.jpg"
-                  alt={t("photos.convoyNight")}
-                  width={960}
-                  height={1048}
-                  sizes="(min-width: 768px) 23rem, 100vw"
-                  className="aspect-[4/3] w-full rounded-xl object-cover object-[center_60%]"
-                />
-                <Image
-                  src="/photos/ua-plates-er.jpg"
-                  alt={t("photos.uaPlatesEr")}
-                  width={600}
-                  height={450}
-                  sizes="(min-width: 768px) 12rem, 50vw"
-                  className="absolute bottom-0 left-[4%] w-[52%] rotate-[-1.5deg] rounded-lg object-cover shadow-lg"
-                />
-              </figure>
-            ) : (
-              <figure>
-                <Image
-                  src={STEP_PHOTOS[n].src}
-                  alt={t(STEP_PHOTOS[n].altKey)}
-                  width={STEP_PHOTOS[n].width}
-                  height={STEP_PHOTOS[n].height}
-                  sizes="(min-width: 768px) 20rem, 100vw"
-                  className="aspect-[3/2] w-full rounded-xl object-cover"
-                />
-              </figure>
-            )}
+            <figure>
+              <Image
+                src={STEP_PHOTOS[n].src}
+                alt={t(STEP_PHOTOS[n].altKey)}
+                width={STEP_PHOTOS[n].width}
+                height={STEP_PHOTOS[n].height}
+                sizes={n === 3 ? "(min-width: 768px) 23rem, 100vw" : "(min-width: 768px) 20rem, 100vw"}
+                className={`aspect-[3/2] w-full rounded-xl object-cover ${STEP_PHOTOS[n].pos ?? ""}`}
+              />
+            </figure>
           </li>
         ))}
       </ol>
