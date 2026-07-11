@@ -16,10 +16,12 @@ const PROSE = "text-lg leading-relaxed text-ink-soft";
 const HEADING = "font-display text-2xl font-medium tracking-tight text-ink";
 // H1 clears the sticky 57px header when scrolled/anchored to the top.
 const H1_CLEAR = "scroll-mt-20";
-// Landscape frame — MSF 666×520 proportion, not 4:3.
+// Landscape frame — MSF 666×520 proportion (pairs 2 & 3).
 const FRAME = "aspect-[666/520] w-full rounded-xl object-cover";
-// Pair 1 (lesya-depot) is a tall portrait — keep her + open doors in view.
-const PAIR1_POS = "object-[center_38%]";
+// Pair 1 (lesya-depot) is a tall portrait — per-pair exception: render her
+// vertically at (near-)native ratio, capped height, full figure, no dead space.
+const PAIR1_IMG =
+  "h-[22rem] w-auto rounded-xl object-cover shadow-sm md:h-[30rem]";
 // Photo column wider than text (~57% / ~43%); mirror by swapping the template.
 const COLS = { text: "md:grid-cols-[1fr_1.35fr]", photo: "md:grid-cols-[1.35fr_1fr]" };
 
@@ -35,11 +37,14 @@ export async function AboutZigzag({
 
   // Tight variant packs the three pairs together; default keeps the airy MSF
   // rhythm. Only vertical spacing differs between the two.
-  const row = tight
-    ? "mt-6 grid items-center gap-6 md:mt-7 md:gap-10"
-    : "mt-12 grid items-center gap-8 md:mt-14 md:gap-12";
-  const textLeft = `${row} ${COLS.text}`;
-  const photoLeft = `${row} ${COLS.photo}`;
+  const gapY = tight ? "mt-6 md:mt-7" : "mt-12 md:mt-14";
+  const gapX = tight ? "gap-6 md:gap-10" : "gap-8 md:gap-12";
+  const landscape = `${gapY} grid items-center ${gapX}`;
+  const textLeft = `${landscape} ${COLS.text}`;
+  const photoLeft = `${landscape} ${COLS.photo}`;
+  // Pair 1 uses flex (not the fr-grid) so the vertical photo keeps its
+  // intrinsic width while the text fills the rest, capped for readability.
+  const pair1 = `${gapY} flex flex-col ${gapX} md:flex-row md:items-center md:justify-between`;
   const closeMt = tight ? "mt-7 md:mt-8" : "mt-12 md:mt-16";
 
   const t = await getTranslations("AboutPage");
@@ -68,20 +73,21 @@ export async function AboutZigzag({
         <p className={`mt-8 ${PROSE}`}>{t("p1")}</p>
       </div>
 
-      {/* Pair 1 — Olesya (p3) + emergency room. Desktop: text left, photo
-          right. Mobile: photo above heading+text (figure first in DOM). */}
-      <div className={textLeft}>
-        <figure className="md:order-2">
+      {/* Pair 1 — Olesya (p3) + lesya-depot (vertical portrait). Desktop:
+          text left, portrait right, full row height. Mobile: portrait on top
+          (figure first in DOM), text below. */}
+      <div className={pair1}>
+        <figure className="mx-auto shrink-0 md:order-2 md:mx-0">
           <Image
             src="/photos/lesya-depot.jpg"
             alt={t("photos.lesyaDepot")}
-            width={666}
-            height={520}
-            sizes="(min-width: 768px) 32rem, 100vw"
-            className={`${FRAME} ${PAIR1_POS}`}
+            width={893}
+            height={1600}
+            sizes="(min-width: 768px) 18rem, 60vw"
+            className={PAIR1_IMG}
           />
         </figure>
-        <div className="md:order-1">
+        <div className="md:order-1 md:max-w-xl">
           <h3 className={HEADING}>{t("pairHeadings.experience")}</h3>
           <p className={`mt-4 ${PROSE}`}>{t("p3")}</p>
         </div>

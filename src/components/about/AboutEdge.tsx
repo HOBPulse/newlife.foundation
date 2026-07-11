@@ -17,8 +17,9 @@ const H1_CLEAR = "scroll-mt-20";
 // Photo bleeds to the true viewport edge (matches the W full-bleed pattern).
 const BLEED = "relative left-1/2 w-screen -translate-x-1/2";
 const PHOTO = "aspect-[666/520] w-full object-cover";
-// Pair 1 (lesya-depot) is a tall portrait — keep her + open doors in view.
-const PAIR1_POS = "object-[center_38%]";
+// Pair 1 (lesya-depot): per-pair exception — a vertical portrait that bleeds
+// to the wall at (near-)native ratio, capped height, full figure, no crop.
+const PAIR1_IMG = "h-[24rem] w-auto object-cover md:h-[34rem]";
 // Text half: comfortable padding, capped reading width pulled toward center.
 const TEXT_CELL = "flex items-center px-4 py-10 sm:px-6 md:py-14";
 
@@ -51,17 +52,18 @@ export async function AboutEdge({ locale }: { locale: Locale }) {
       </div>
 
       <div className="mt-12 space-y-8 md:mt-16 md:space-y-12">
-        {/* Row 1 — photo left (bleeds left), Olesya (p3) */}
+        {/* Row 1 — vertical Lesya bleeds to the left wall, full row height;
+            text in the content column on the right. */}
         <div className={BLEED}>
           <div className="grid items-center md:grid-cols-2">
-            <figure className="md:order-1">
+            <figure className="md:order-1 md:justify-self-start">
               <Image
                 src="/photos/lesya-depot.jpg"
                 alt={t("photos.lesyaDepot")}
-                width={666}
-                height={520}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className={`${PHOTO} ${PAIR1_POS}`}
+                width={893}
+                height={1600}
+                sizes="(min-width: 768px) 20rem, 65vw"
+                className={PAIR1_IMG}
               />
             </figure>
             <div className={`${TEXT_CELL} md:order-2 md:pl-10 md:pr-6 lg:pl-16`}>
