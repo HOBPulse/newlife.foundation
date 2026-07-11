@@ -368,23 +368,27 @@
       },
       "data": {
         "title": "What data we collect",
-        "body": "Only what you submit yourself through the forms on this site: name, email or phone, message text. We collect nothing else."
+        "body": "1. Through the \"Become a volunteer\" and \"Become a partner\" forms: name, email or phone, message text.\n2. Through the request-for-help form: name, contact details, a description of the health condition and, optionally, medical documents. These requests often concern children — in that case they are submitted by parents or guardians.\nWe collect no other data and use no cookies, trackers, or analytics services."
       },
-      "cookies": {
-        "title": "Cookies and analytics",
-        "body": "We do not use cookies, trackers, or analytics services."
-      },
-      "use": {
-        "title": "How we use the data",
-        "body": "Solely to respond to your inquiry. We do not share your data with third parties and do not use it for mailings or advertising."
+      "health": {
+        "title": "Health data",
+        "body": "Information about health conditions and medical documents is sensitive data. We process it solely to help find and arrange treatment. By submitting such information, you consent to its processing for this purpose."
       },
       "storage": {
         "title": "How data is transferred and stored",
-        "body": "Forms are delivered via the Web3Forms service to our email. Data is stored in the foundation's mailbox."
+        "body": "Volunteer and partner forms are delivered via the Web3Forms service to our email. Help requests arrive at our email and in the foundation's internal Telegram channel. Only foundation staff have access to submissions."
+      },
+      "sharing": {
+        "title": "Who we share data with",
+        "body": "To arrange treatment, we may share patient information with medical institutions, including abroad — only to the extent needed to help, and with your consent. We do not share data for advertising or mailings, and we do not sell it."
+      },
+      "retention": {
+        "title": "How long we keep data",
+        "body": "Help-request data is kept as long as needed to work on your case, and for some time after it concludes, then deleted. Volunteer and partner data is kept to stay in touch with you."
       },
       "rights": {
         "title": "Your rights",
-        "body": "You can ask us to delete your data at any time — write to <email>support@newlife.foundation</email> and we will."
+        "body": "You can ask us at any time to show, correct, or delete your data — write to <email>support@newlife.foundation</email>."
       },
       "changes": {
         "title": "Policy changes",

@@ -15,9 +15,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const SECTIONS = [
   "who",
   "data",
-  "cookies",
-  "use",
+  "health",
   "storage",
+  "sharing",
+  "retention",
   "rights",
   "changes",
 ] as const;
@@ -39,7 +40,8 @@ export default async function PrivacyPage({ params }: Props) {
             <h2 className="font-display text-2xl font-medium text-ink">
               {t(`sections.${section}.title`)}
             </h2>
-            <p className="mt-2 leading-relaxed text-ink-soft">
+            {/* pre-line keeps the numbered lines in the "data" section */}
+            <p className="mt-2 whitespace-pre-line leading-relaxed text-ink-soft">
               {t.rich(`sections.${section}.body`, {
                 email: (chunks) => (
                   <a

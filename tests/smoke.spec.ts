@@ -70,7 +70,7 @@ test("volunteer message becomes required when «Інше» is selected", async (
 
 test("privacy page renders all policy sections", async ({ page }) => {
   await page.goto("/privacy");
-  await expect(page.locator("h2")).toHaveCount(7);
+  await expect(page.locator("h2")).toHaveCount(8);
 });
 
 test("partner form renders its fields", async ({ page }) => {
