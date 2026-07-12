@@ -324,7 +324,9 @@
     "mono": {
       "title": "Банка Monobank",
       "help": "Пожертвование в гривне — банка фонда в Monobank.",
-      "cta": "Поддержать через Monobank"
+      "cta": "Поддержать через Monobank",
+      "qrCaption": "Отсканируйте, чтобы поддержать через Monobank",
+      "qrAlt": "QR-код — ссылка на банку фонда в Monobank"
     },
     "methods": {
       "title": "Другие способы",

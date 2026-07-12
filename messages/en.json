@@ -324,7 +324,9 @@
     "mono": {
       "title": "Monobank jar",
       "help": "A hryvnia donation via the foundation's Monobank jar.",
-      "cta": "Support via Monobank"
+      "cta": "Support via Monobank",
+      "qrCaption": "Scan to support via Monobank",
+      "qrAlt": "QR code — link to the foundation's Monobank jar"
     },
     "methods": {
       "title": "Other methods",

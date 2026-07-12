@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import QRCode from "qrcode";
 import { DonateMethods } from "@/components/donate/DonateMethods";
 import type { Locale } from "@/i18n/routing";
-import { PAYMENT_METHODS } from "@/lib/payments";
+import { MONO_JAR_URL, PAYMENT_METHODS } from "@/lib/payments";
 import { pageMetadata } from "@/lib/seo";
 
 type Props = {
@@ -18,6 +19,15 @@ export default async function DonatePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("DonatePage");
+  // QR for the mono jar, generated at build time from MONO_JAR_URL so it can
+  // never drift from the link (SSG — no runtime cost). Ink-dark modules on
+  // white for scan contrast; the card adds the rounded white tile around it.
+  const monoQrSvg = await QRCode.toString(MONO_JAR_URL, {
+    type: "svg",
+    errorCorrectionLevel: "M",
+    margin: 2,
+    color: { dark: "#1c2b28", light: "#ffffff" },
+  });
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -29,7 +39,7 @@ export default async function DonatePage({ params }: Props) {
       </p>
 
       {/* Donate block — Monobank jar (primary) + PayPal (client island) */}
-      <DonateMethods />
+      <DonateMethods monoQrSvg={monoQrSvg} />
 
       {/* Coming-soon stubs — slim secondary block; active methods render
           above as cards, never here */}

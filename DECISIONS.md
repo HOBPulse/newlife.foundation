@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-13 — Mono jar QR on donate card: build-time svg from MONO_JAR_URL via qrcode lib (never drifts from link); ~160px desktop / ~96px mobile
+2026-07-12 — postcss Dependabot alert (CVE-2026-41305) deferred: no stable Next ships the fix; revisit at next dep update
 2026-07-12 — Mono jar LIVE as primary donate method; /donate = side-by-side cards (mono left/first, PayPal right); no-mono layout removed
 2026-07-12 — Donate terms link → dedicated /terms (noindex, "в підготовці"), not /privacy (offer ≠ privacy policy)
 2026-07-12 — PayPal donate (temp primary): one-time hosted + monthly sub SDKs, per-tab lazy + data-namespace (avoid window.paypal clash); mono/LiqPay stubbed

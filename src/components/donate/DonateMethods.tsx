@@ -10,7 +10,7 @@ import { MonoJarCard } from "./MonoJarCard";
 // (left), PayPal widget secondary (right). On mobile they collapse to one
 // column with mono first (DOM order). The shared note + terms link span both
 // columns below.
-export function DonateMethods() {
+export function DonateMethods({ monoQrSvg }: { monoQrSvg: string }) {
   const t = useTranslations("DonatePage.give");
 
   return (
@@ -18,7 +18,7 @@ export function DonateMethods() {
       id="give"
       className="mt-10 grid max-w-5xl scroll-mt-24 gap-6 sm:gap-8 lg:grid-cols-2 lg:items-start"
     >
-      <MonoJarCard />
+      <MonoJarCard qrSvg={monoQrSvg} />
       <DonateWidget />
       <div className="lg:col-span-2">
         <p className="text-xs leading-relaxed text-ink-soft">{t("note")}</p>
