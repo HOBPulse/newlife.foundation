@@ -339,10 +339,40 @@
     }
   },
   "TermsPage": {
-    "metaTitle": "Public offer and refund policy",
-    "metaDescription": "Public offer and refund policy for donations — in preparation.",
-    "title": "Public offer and refund policy",
-    "body": "This document is in preparation. The public offer and refund policy for donations will be published shortly."
+    "metaTitle": "Public Offer for Charitable Donation",
+    "metaDescription": "Public offer for charitable donation — working draft.",
+    "title": "Public Offer for Charitable Donation",
+    "draftNote": "Working draft. This document is being prepared and may change.",
+    "sections": {
+      "1": {
+        "title": "General",
+        "body": "This public offer (the \"Offer\") is the official proposal of the New Life Foundation (\"НОВЕ ЖИТТЯ!\", EDRPOU 42792589), represented by its director Olesia Oleksandrivna, acting under the Foundation's Charter (the \"Foundation\"), to enter into a charitable donation agreement on the terms below. Making a donation by any method listed on the site constitutes full and unconditional acceptance of this Offer."
+      },
+      "2": {
+        "title": "Subject",
+        "body": "The donor voluntarily and gratuitously transfers funds (a charitable donation) to the Foundation for its statutory activities — in particular the search for specialised treatment, the organisation of medical transport, and other assistance to patients in difficult situations, according to the needs of each specific case. The Foundation independently determines how donations are used within its statutory activities."
+      },
+      "3": {
+        "title": "Methods and amount",
+        "body": "The donation amount is determined by the donor, made through the methods available on the site (Monobank jar, PayPal, etc.). A donation may be one-time (a single transfer) or recurring monthly (periodic charge via PayPal until the donor cancels the subscription)."
+      },
+      "4": {
+        "title": "Recurring (monthly) donations",
+        "body": "By setting up a monthly subscription, the donor agrees to an automatic monthly charge of the chosen amount via PayPal. A recurring donation can be cancelled at any time by the donor in their PayPal account. The Foundation does not store the donor's payment details."
+      },
+      "5": {
+        "title": "Refunds",
+        "body": "A donation is generally voluntary and non-refundable. In case of an erroneous transfer (wrong amount, accidental payment, etc.), the donor may contact the Foundation within 14 days of the transfer at support@newlife.foundation. The Foundation will review the request and, where justified, refund the funds within a reasonable time."
+      },
+      "6": {
+        "title": "Personal data",
+        "body": "By making a donation, the donor consents to the processing of their personal data to the extent necessary to process the payment and for reporting, in accordance with the Foundation's <privacy>Privacy Policy</privacy>."
+      },
+      "7": {
+        "title": "Foundation details",
+        "body": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU: 42792589 · Registered address: 03142, Kyiv, Sviatoshynskyi district, Akademika Palladina Avenue, 46 · IBAN: UA17 322001 00000 2620 8355 6618 38 · Email: support@newlife.foundation · Phone: +38 (067) 638-45-55"
+      }
+    }
   },
   "ContactPage": {
     "metaTitle": "Contact",
