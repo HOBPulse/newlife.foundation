@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { DonateWidget } from "@/components/donate/DonateWidget";
+import { DonateMethods } from "@/components/donate/DonateMethods";
 import type { Locale } from "@/i18n/routing";
 import { PAYMENT_METHODS } from "@/lib/payments";
 import { pageMetadata } from "@/lib/seo";
@@ -28,47 +28,37 @@ export default async function DonatePage({ params }: Props) {
         {t("lead")}
       </p>
 
-      {/* Primary method — PayPal one-time / monthly (client island) */}
-      <DonateWidget />
+      {/* Donate block — Monobank jar (primary) + PayPal (client island) */}
+      <DonateMethods />
 
-      {/* Future methods — UAH via Monobank / LiqPay (stubs until wired) */}
-      <section className="mt-14">
-        <h2 className="font-display text-2xl font-medium text-ink">
+      {/* Coming-soon stubs — slim secondary block; active methods render
+          above as cards, never here */}
+      <section className="mt-14 max-w-xl">
+        <h2 className="font-display text-xl font-medium text-ink">
           {t("methods.title")}
         </h2>
-        <p className="mt-2 max-w-2xl text-sm text-ink-soft">
-          {t("methods.lead")}
-        </p>
-        <ul className="mt-6 max-w-2xl divide-y divide-sage rounded-xl border border-sage">
-          {PAYMENT_METHODS.map((method) => (
-            <li
-              key={method.id}
-              className="flex flex-wrap items-center justify-between gap-3 p-5"
-            >
-              <div className="flex items-center gap-3">
-                <span className="font-medium text-ink">
-                  {t(`methods.${method.labelKey}`)}
-                </span>
-                <span className="tnum rounded-full bg-sage-soft px-2.5 py-0.5 text-xs text-ink-soft">
-                  {method.currency}
-                </span>
-              </div>
-              {method.status === "active" && method.url ? (
-                <a
-                  href={method.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-pine px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-pine-deep"
-                >
-                  {t("methods.open")}
-                </a>
-              ) : (
-                <span className="rounded-full border border-sage px-4 py-2 text-sm text-ink-soft">
+        <p className="mt-1 text-sm text-ink-soft">{t("methods.lead")}</p>
+        <ul className="mt-4 divide-y divide-sage rounded-xl border border-sage">
+          {PAYMENT_METHODS.filter((method) => method.status === "todo").map(
+            (method) => (
+              <li
+                key={method.id}
+                className="flex flex-wrap items-center justify-between gap-3 px-5 py-4"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium text-ink">
+                    {t(`methods.${method.labelKey}`)}
+                  </span>
+                  <span className="tnum rounded-full bg-sage-soft px-2.5 py-0.5 text-xs text-ink-soft">
+                    {method.currency}
+                  </span>
+                </div>
+                <span className="rounded-full border border-sage px-3 py-1.5 text-xs text-ink-soft">
                   {t("methods.soon")}
                 </span>
-              )}
-            </li>
-          ))}
+              </li>
+            ),
+          )}
         </ul>
       </section>
 

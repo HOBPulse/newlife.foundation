@@ -2,15 +2,14 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { TERMS_URL } from "@/lib/payments";
 import { PaypalOneTime } from "./PaypalOneTime";
 import { PaypalSubscription } from "./PaypalSubscription";
 
 type Mode = "oneTime" | "monthly";
 
-// The "2-in-1" donate block: a segmented «Разово / Щомісяця» toggle that mounts
+// The "2-in-1" PayPal card: a segmented «Разово / Щомісяця» toggle that mounts
 // the matching PayPal button. Only the active tab's SDK loads (see usePaypalSdk).
+// Anchor, width and the shared note/terms live in DonateMethods.
 export function DonateWidget() {
   const t = useTranslations("DonatePage.give");
   const [mode, setMode] = useState<Mode>("oneTime");
@@ -21,10 +20,7 @@ export function DonateWidget() {
   ];
 
   return (
-    <section
-      id="give"
-      className="reveal mt-10 max-w-xl scroll-mt-24 rounded-2xl border border-sage bg-sage-soft p-6 sm:p-8"
-    >
+    <section className="reveal rounded-2xl border border-sage bg-sage-soft p-6 sm:p-8">
       <h2 className="font-display text-2xl font-medium text-ink">{t("title")}</h2>
 
       {/* Segmented control */}
@@ -68,16 +64,6 @@ export function DonateWidget() {
         {/* Mount only the active tab so its SDK loads on demand */}
         {mode === "oneTime" ? <PaypalOneTime /> : <PaypalSubscription />}
       </div>
-
-      <p className="mt-6 border-t border-sage pt-5 text-xs leading-relaxed text-ink-soft">
-        {t("note")}
-      </p>
-      <Link
-        href={TERMS_URL}
-        className="mt-3 inline-block text-xs text-ink-soft underline underline-offset-2 transition-colors hover:text-pine"
-      >
-        {t("terms")}
-      </Link>
     </section>
   );
 }

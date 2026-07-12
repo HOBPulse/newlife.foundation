@@ -311,7 +311,7 @@
       },
       "oneTimeHelp": "A one-time donation via PayPal (in US dollars).",
       "monthlyHelp": "A monthly subscription — you can cancel anytime in your PayPal account.",
-      "note": "Card payments (Visa/Mastercard) via PayPal. Payment in hryvnia — coming soon.",
+      "note": "You can support us in hryvnia via the Monobank jar or with Visa/Mastercard cards via PayPal. LiqPay — coming soon.",
       "terms": "Public offer and refund policy",
       "loading": "Loading…",
       "error": "The payment form failed to load. Please refresh the page.",
@@ -321,11 +321,16 @@
       "title": "Active campaigns",
       "pending": "Information about active campaigns will be published."
     },
+    "mono": {
+      "title": "Monobank jar",
+      "help": "A hryvnia donation via the foundation's Monobank jar.",
+      "cta": "Support via Monobank"
+    },
     "methods": {
-      "title": "Hryvnia methods",
-      "lead": "Payment in hryvnia via Monobank and LiqPay — coming soon.",
+      "title": "Other methods",
+      "lead": "We'll add these soon.",
       "monoJar": "Monobank jar",
-      "monoAcquiring": "Monobank — card payment",
+      "monoAcquiring": "Monobank — by card",
       "liqpay": "LiqPay",
       "open": "Open",
       "soon": "Soon"

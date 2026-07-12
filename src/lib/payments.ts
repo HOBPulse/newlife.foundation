@@ -32,6 +32,10 @@ export const PAYPAL = {
   },
 } as const;
 
+// Monobank jar — LIVE (owner-confirmed 2026-07-12, test donation passed).
+// Public link to the foundation's jar; safe in client code.
+export const MONO_JAR_URL = "https://send.monobank.ua/jar/9YuRbNPThB";
+
 // Public offer / terms-of-donation & refund page. A dedicated /terms route
 // (noindex, "in preparation") — deliberately separate from /privacy, since the
 // public offer and the privacy policy are distinct legal documents. The real
@@ -89,8 +93,10 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     id: "mono-jar",
     labelKey: "monoJar",
     currency: "UAH",
-    url: process.env.NEXT_PUBLIC_MONO_JAR_URL,
-    status: process.env.NEXT_PUBLIC_MONO_JAR_URL ? "active" : "todo",
+    // Live — rendered as the primary method card on /donate (MonoJarCard),
+    // not in the coming-soon list below it.
+    url: MONO_JAR_URL,
+    status: "active",
   },
   {
     id: "mono-acquiring",
