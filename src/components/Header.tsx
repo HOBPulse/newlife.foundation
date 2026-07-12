@@ -42,7 +42,7 @@ export function Header() {
             href="/donate"
             className="hidden items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition-colors hover:bg-gold/90 sm:flex"
           >
-            <HeartIcon className="h-4 w-4" />
+            <HeartIcon className="h-4 w-4 text-heart" />
             {t("nav.donate")}
           </Link>
           <MobileMenu />

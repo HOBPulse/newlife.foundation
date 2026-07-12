@@ -1,18 +1,20 @@
 type Props = { className?: string };
 
 /**
- * Filled house-charity heart, currentColor. Shared by the header donate
- * button and the amber-band donate CTA so both use one glyph.
+ * Plump, rounded 💗-style heart for the header «Підтримати» button — soft
+ * warm pink (--color-heart) via the text-heart utility at the call site.
+ * Header only: the amber-band donate CTA has its own inline heart and is
+ * intentionally not affected by this component.
  */
 export function HeartIcon({ className }: Props) {
   return (
     <svg
       className={className}
-      viewBox="0 0 24 24"
+      viewBox="0 0 16 16"
       fill="currentColor"
       aria-hidden="true"
     >
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
     </svg>
   );
 }

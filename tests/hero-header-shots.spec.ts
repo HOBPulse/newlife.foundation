@@ -14,7 +14,7 @@ test("header donate close-up uk", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
-  await page.locator("header").screenshot({
+  await page.locator('header a[href="/donate"]').screenshot({
     path: "screenshots/header-heart-uk.png",
   });
 });
