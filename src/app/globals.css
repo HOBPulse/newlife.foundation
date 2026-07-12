@@ -95,8 +95,9 @@ body {
 }
 
 /* --- Donate CTA (amber support band) ---------------------------------
-   Gold pill with a contrasting dark-pine border so it separates from the
-   warm amber bg. Hover lift + a slow, gentle heart pulse — dignified, not
+   Gold pill with a dark espresso-brown border (harmonizes with the heart)
+   so it separates from the warm amber bg. Hover lift + a slow, gentle heart
+   pulse — dignified, not
    flashy — both motion-safe only (reduced motion gets a static button). */
 .donate-cta {
   transition:

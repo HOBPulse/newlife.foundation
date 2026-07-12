@@ -187,7 +187,8 @@ export default async function HomePage({ params }: Props) {
       <Faq />
 
       {/* Donate band — amber. Gold CTA (donate = gold, like the header),
-          with a dark pine border so the gold reads against the warm bg. */}
+          with a dark espresso-brown border (harmonizes with the heart) so
+          the gold reads against the warm bg. */}
       <section className="bg-[#9a5b12]">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
           <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
@@ -198,7 +199,7 @@ export default async function HomePage({ params }: Props) {
           </p>
           <Link
             href="/donate"
-            className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-pine-deep bg-gold px-8 py-3 font-medium text-gold-ink"
+            className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#3d2410] bg-gold px-8 py-3 font-medium text-gold-ink"
           >
             <svg
               className="donate-heart h-5 w-5"

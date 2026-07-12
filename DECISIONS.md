@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Donate CTA border pine-deep→espresso brown #3d2410 (harmonizes with heart)
+
 2026-07-12 — Hero CTA 1 «Підтримати фонд»→«Стати поруч» → /how-to-help (header already has donate); header «Підтримати» gains shared HeartIcon
 
 2026-07-12 — Forms: Web3Forms removed, all forms use own server action (Telegram bot + SMTP); privacy no longer names Telegram/Web3
