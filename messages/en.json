@@ -274,6 +274,7 @@
     "metaDescription": "Tell us how you can help the foundation and we'll get in touch.",
     "title": "Become a volunteer",
     "lead": "We need many kinds of hands — from drivers and paramedics to developers and marketers. Tell us how you can help and we'll get in touch.",
+    "photoAlt": "The foundation's team with a Ukrainian flag by the ambulances",
     "form": {
       "name": "Name",
       "contact": "Email or phone",
@@ -291,7 +292,8 @@
       "submit": "Send",
       "sending": "Sending…",
       "success": "Thank you! We've received your message.",
-      "error": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "errorValidation": "Please check the required fields.",
+      "errorDelivery": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
       "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
@@ -347,7 +349,8 @@
       "submit": "Send",
       "sending": "Sending…",
       "success": "Thank you! We've received your message.",
-      "error": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "errorValidation": "Please check the required fields.",
+      "errorDelivery": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
       "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
@@ -370,7 +373,7 @@
       },
       "storage": {
         "title": "How data is transferred and stored",
-        "body": "All forms on the site are delivered to our email and to the foundation's internal Telegram channel. We do not use any third-party form service. Only foundation staff have access to submissions."
+        "body": "All submissions from the site go directly to the foundation. Only foundation staff have access to them. We do not pass this data to any third-party service."
       },
       "sharing": {
         "title": "Who we share data with",

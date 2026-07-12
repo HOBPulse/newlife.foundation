@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { VolunteerForm } from "@/components/VolunteerForm";
 import type { Locale } from "@/i18n/routing";
@@ -26,6 +27,17 @@ export default async function VolunteerPage({ params }: Props) {
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
         {t("lead")}
       </p>
+
+      <figure className="mt-10">
+        <Image
+          src="/photos/samu-flag.jpg"
+          alt={t("photoAlt")}
+          width={1050}
+          height={700}
+          sizes="(min-width: 1024px) 48rem, 100vw"
+          className="aspect-[3/2] w-full max-w-3xl rounded-xl object-cover"
+        />
+      </figure>
 
       <div className="mt-12">
         <VolunteerForm />

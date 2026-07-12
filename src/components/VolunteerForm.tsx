@@ -105,16 +105,18 @@ export function VolunteerForm() {
 
       {state.status === "error" && (
         <p role="alert" className="rounded-lg bg-apricot-soft px-4 py-3 text-sm text-ink">
-          {t.rich("error", {
-            email: (chunks) => (
-              <a
-                href="mailto:support@newlife.foundation"
-                className="underline hover:text-pine-deep"
-              >
-                {chunks}
-              </a>
-            ),
-          })}
+          {state.error === "validation"
+            ? t("errorValidation")
+            : t.rich("errorDelivery", {
+                email: (chunks) => (
+                  <a
+                    href="mailto:support@newlife.foundation"
+                    className="underline hover:text-pine-deep"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
         </p>
       )}
 

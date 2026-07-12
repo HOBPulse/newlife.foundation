@@ -2,6 +2,9 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — strip is the chosen how-to-help layout (twocol kept as ?help_layout fallback); team photo moved to /volunteer header
+2026-07-12 — Privacy policy stops naming the delivery channel (Telegram removed): "submissions go directly to the foundation, no third-party service"
+2026-07-12 — /volunteer + /partner errors split into validation/delivery keys like /contact (delivery keeps support@ fallback link)
 2026-07-12 — How-to-help: layout A removed; strip is default, twocol (?help_layout=twocol) gains team photo bottom-left; still flagged for owner pick
 2026-07-12 — Web3Forms dropped entirely; /volunteer + /partner now use the /contact server-action relay (own Telegram bot + SMTP, no third-party)
 2026-07-12 — Forms to dedicated /volunteer + /partner pages; how-to-help cards just link (accordions broke row alignment); old relay /partner replaced
