@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — PayPal donate (temp primary): one-time hosted + monthly sub SDKs, per-tab lazy + data-namespace (avoid window.paypal clash); mono/LiqPay stubbed
+2026-07-12 — Home donate CTA → /donate#give (jump to widget, keep approved pill)
 2026-07-12 — Footer logo h-9→h-[47px] (+30%) (stronger footer brand presence)
 
 2026-07-12 — Contact page → two-column: form left, requisites sidebar panel right (mobile: requisites first)

@@ -303,17 +303,32 @@
     "metaDescription": "Support the foundation's work: Monobank, LiqPay, PayPal.",
     "title": "Donate",
     "lead": "Donations allow the foundation to work: to search for treatment and organise transport.",
+    "give": {
+      "title": "One-time or monthly support",
+      "tabs": {
+        "oneTime": "One-time",
+        "monthly": "Monthly"
+      },
+      "oneTimeHelp": "A one-time donation via PayPal (in US dollars).",
+      "monthlyHelp": "A monthly subscription — you can cancel anytime in your PayPal account.",
+      "note": "Card payments (Visa/Mastercard) via PayPal. Payment in hryvnia — coming soon.",
+      "terms": "Public offer and refund policy",
+      "loading": "Loading…",
+      "error": "The payment form failed to load. Please refresh the page.",
+      "subscribed": "Thank you for your ongoing support!"
+    },
     "campaigns": {
       "title": "Active campaigns",
       "pending": "Information about active campaigns will be published."
     },
     "methods": {
-      "title": "Ways to donate",
-      "mono": "Monobank jar",
+      "title": "Hryvnia methods",
+      "lead": "Payment in hryvnia via Monobank and LiqPay — coming soon.",
+      "monoJar": "Monobank jar",
+      "monoAcquiring": "Monobank — card payment",
       "liqpay": "LiqPay",
-      "paypal": "PayPal",
-      "linkPending": "Link to be added",
-      "open": "Open"
+      "open": "Open",
+      "soon": "Soon"
     }
   },
   "ContactPage": {

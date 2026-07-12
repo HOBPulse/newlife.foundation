@@ -198,7 +198,7 @@ export default async function HomePage({ params }: Props) {
             {t("donate.lead")}
           </p>
           <Link
-            href="/donate"
+            href="/donate#give"
             className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#3d2410] bg-gold px-8 py-3 font-medium text-gold-ink"
           >
             <svg
