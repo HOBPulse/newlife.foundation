@@ -32,10 +32,11 @@ export const PAYPAL = {
   },
 } as const;
 
-// Placeholder for the public offer / terms-of-donation & refund page (lawyer
-// task, pending). Points at /privacy for now — the nearest existing legal page;
-// swap for a dedicated /terms route when it ships.
-export const TERMS_URL = "/privacy";
+// Public offer / terms-of-donation & refund page. A dedicated /terms route
+// (noindex, "in preparation") — deliberately separate from /privacy, since the
+// public offer and the privacy policy are distinct legal documents. The real
+// content is a lawyer task, pending.
+export const TERMS_URL = "/terms";
 
 const SDK_BASE = "https://www.paypal.com/sdk/js";
 
