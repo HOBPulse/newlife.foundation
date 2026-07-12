@@ -72,6 +72,11 @@ export default async function ContactPage({ params }: Props) {
                 <br />
                 {t("requisites.edrpou")}
                 <br />
+                {/* Label + value locale-invariant (like the email above) */}
+                <span className="tnum">
+                  IBAN: UA17 322001 00000 2620 8355 6618 38
+                </span>
+                <br />
                 {t("requisites.addressLabel")}: {t("requisites.address")}
               </address>
             </div>
