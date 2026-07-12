@@ -339,6 +339,8 @@
     "requisites": {
       "title": "Contacts & details",
       "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "phone": "+38 (067) 638-45-55",
       "detailsLabel": "Details",
       "orgName": "Благодійний фонд «НОВЕ ЖИТТЯ!»",
       "edrpou": "ЄДРПОУ 42792589",

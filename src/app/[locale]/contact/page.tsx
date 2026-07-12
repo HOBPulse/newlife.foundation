@@ -50,6 +50,17 @@ export default async function ContactPage({ params }: Props) {
           </div>
           <div>
             <p className="text-sm font-medium text-ink">
+              {t("requisites.phoneLabel")}
+            </p>
+            <a
+              href="tel:+380676384555"
+              className="mt-1 inline-block text-pine underline hover:text-pine-deep"
+            >
+              {t("requisites.phone")}
+            </a>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-ink">
               {t("requisites.detailsLabel")}
             </p>
             <address className="mt-1 not-italic leading-relaxed text-ink-soft">
