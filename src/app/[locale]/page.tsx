@@ -186,8 +186,8 @@ export default async function HomePage({ params }: Props) {
       {/* FAQ skeleton — behind showFaq (default off): ships nothing yet */}
       <Faq />
 
-      {/* Donate band — amber, distinct from the green footer; dark-green
-          (footer-green family) button with light text. */}
+      {/* Donate band — amber. Gold CTA (donate = gold, like the header),
+          with a dark pine border so the gold reads against the warm bg. */}
       <section className="bg-[#9a5b12]">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
           <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
@@ -198,8 +198,16 @@ export default async function HomePage({ params }: Props) {
           </p>
           <Link
             href="/donate"
-            className="mt-8 inline-block rounded-full bg-pine-deep px-8 py-3 font-medium text-paper transition-colors hover:bg-pine"
+            className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-pine-deep bg-gold px-8 py-3 font-medium text-gold-ink"
           >
+            <svg
+              className="donate-heart h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
             {t("donate.cta")}
           </Link>
         </div>

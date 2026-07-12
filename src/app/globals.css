@@ -94,6 +94,38 @@ body {
   }
 }
 
+/* --- Donate CTA (amber support band) ---------------------------------
+   Gold pill with a contrasting dark-pine border so it separates from the
+   warm amber bg. Hover lift + a slow, gentle heart pulse — dignified, not
+   flashy — both motion-safe only (reduced motion gets a static button). */
+.donate-cta {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .donate-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgb(28 43 40 / 0.35);
+  }
+
+  .donate-heart {
+    transform-origin: center;
+    animation: donate-heart-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes donate-heart-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
 /* --- Content reveal on scroll ------------------------------------------
    Headings/leads (.reveal) and cards (.reveal-card) fade up 16px as they
    enter the viewport, once, via a pure-CSS scroll-driven view() timeline.
