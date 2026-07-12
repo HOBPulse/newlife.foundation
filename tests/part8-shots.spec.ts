@@ -40,6 +40,7 @@ test("how-to-help uk volunteer form success state (mocked)", async ({
   await page.goto("/how-to-help", { waitUntil: "networkidle" });
   await waitForHeadingFont(page);
 
+  await page.locator('#volunteer button[aria-controls]').click();
   await page.locator("#v-name").fill("Тест");
   await page.locator("#v-contact").fill("test@example.com");
   await page.locator("#v-role").selectOption({ label: "Водій" });

@@ -40,16 +40,25 @@ test("contact form renders its fields", async ({ page }) => {
   await expect(form.locator('button[type="submit"]')).toBeVisible();
 });
 
-test("how-to-help volunteer + partnership forms render their fields", async ({
+test("how-to-help volunteer + partnership accordions expand to their forms", async ({
   page,
 }) => {
   await page.goto("/how-to-help");
+
+  // Collapsed by default
+  await expect(page.locator("#v-name")).not.toBeVisible();
+
+  const volunteerTrigger = page.locator('#volunteer button[aria-controls]');
+  await expect(volunteerTrigger).toHaveAttribute("aria-expanded", "false");
+  await volunteerTrigger.click();
+  await expect(volunteerTrigger).toHaveAttribute("aria-expanded", "true");
   const volunteer = page.locator("#volunteer form");
   for (const id of ["#v-name", "#v-contact", "#v-role", "#v-message"]) {
     await expect(volunteer.locator(id)).toBeVisible();
   }
   await expect(volunteer.locator('button[type="submit"]')).toBeVisible();
 
+  await page.locator('#partnership button[aria-controls]').click();
   const partnership = page.locator("#partnership form");
   for (const id of ["#p-org", "#p-email", "#p-message"]) {
     await expect(partnership.locator(id)).toBeVisible();
@@ -61,11 +70,23 @@ test("volunteer message becomes required when «Інше» is selected", async (
   page,
 }) => {
   await page.goto("/how-to-help");
+  await page.locator('#volunteer button[aria-controls]').click();
   const message = page.locator("#v-message");
   await expect(message).not.toHaveAttribute("required", "");
   await page.locator("#v-role").selectOption({ label: "Інше" });
   await expect(message).toHaveAttribute("required", "");
   await expect(message).toHaveAttribute("aria-required", "true");
+});
+
+test("share options are collapsed behind the share button", async ({
+  page,
+}) => {
+  await page.goto("/how-to-help");
+  const shareButton = page.locator('button[aria-controls="share-options"]');
+  await expect(page.getByRole("link", { name: "Telegram" })).not.toBeVisible();
+  await shareButton.click();
+  await expect(shareButton).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByRole("link", { name: "Telegram" })).toBeVisible();
 });
 
 test("privacy page renders all policy sections", async ({ page }) => {

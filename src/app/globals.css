@@ -59,6 +59,41 @@ body {
   outline-color: var(--color-paper);
 }
 
+/* --- Disclosure (how-to-help accordions + share) -------------------------
+   Collapsed by default; grid-rows 0fr→1fr is the CSS-only height animation
+   (padding lives one level deeper so the row can truly reach 0). visibility
+   flips after the transition so collapsed content is untabbable; reduced
+   motion gets an instant toggle. */
+.disclosure-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.disclosure-panel > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.disclosure-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .disclosure-panel {
+    transition:
+      grid-template-rows 0.25s ease,
+      visibility 0s 0.25s;
+  }
+
+  .disclosure-panel[data-open="true"] {
+    transition:
+      grid-template-rows 0.25s ease,
+      visibility 0s;
+  }
+}
+
 /* --- Content reveal on scroll ------------------------------------------
    Headings/leads (.reveal) and cards (.reveal-card) fade up 16px as they
    enter the viewport, once, via a pure-CSS scroll-driven view() timeline.

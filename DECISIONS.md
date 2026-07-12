@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — How-to-help rework: donate-first, forms/share collapse into in-card disclosures; layouts A/split behind ?help_layout (owner picks)
 2026-07-12 — How-to-help photo behind ?help_photo=mid flag, A/B for owner pick (same client-Suspense pattern as old hero flag)
 2026-07-12 — How-to-help forms: anchor-scroll to always-rendered sections, not inline expand (works without JS)
 2026-07-12 — Volunteer/partnership forms post to Web3Forms client-side (per task); /contact + /partner keep server relay

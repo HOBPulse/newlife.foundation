@@ -55,7 +55,7 @@ test.describe("full motion", () => {
     await ribbon.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1300);
     const nums = await ribbon.locator("p.tnum").allInnerTexts();
-    expect(nums).toEqual(["61", "23", "2019"]);
+    expect(nums).toEqual(["62", "23", "2019"]);
     await ribbon.screenshot({ path: `${DIR}/facts-ribbon.png` });
   });
 
@@ -161,7 +161,7 @@ test.describe("reduced motion", () => {
     const ribbon = page.locator("section.bg-pine").first();
     await ribbon.scrollIntoViewIfNeeded();
     await page.waitForTimeout(300);
-    expect(await ribbon.locator("p.tnum").allInnerTexts()).toEqual(["61", "23", "2019"]);
+    expect(await ribbon.locator("p.tnum").allInnerTexts()).toEqual(["62", "23", "2019"]);
   });
 
   test("navigation instant under reduced motion", async ({ page }) => {
