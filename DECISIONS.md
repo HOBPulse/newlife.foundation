@@ -2,6 +2,11 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Forms: Web3Forms removed, all forms use own server action (Telegram bot + SMTP); privacy no longer names Telegram/Web3
+2026-07-12 — how-to-help: strip layout default; twocol+photo kept behind ?help_layout=twocol as fallback; team photo lives on /volunteer
+2026-07-12 — PLANNED post-launch: targeted child fundraisers — foundation account + payment tag, progress bar (LiqPay API if supported, else manual), surplus over goal → other fundraisers or general fund, needs public offer, not announced at launch
+2026-07-12 — PRE-LAUNCH legal checklist: privacy (health data/children/cross-border), public offer + refund terms for LiqPay, expand /contact consent line to cover purpose + transfer to clinics incl. abroad (only to the extent needed) + guardian-acting-for-child clause
+2026-07-12 — Payments: LiqPay intended provider; general donation first, targeted fundraisers later
 2026-07-12 — strip is the chosen how-to-help layout (twocol kept as ?help_layout fallback); team photo moved to /volunteer header
 2026-07-12 — Privacy policy stops naming the delivery channel (Telegram removed): "submissions go directly to the foundation, no third-party service"
 2026-07-12 — /volunteer + /partner errors split into validation/delivery keys like /contact (delivery keeps support@ fallback link)
