@@ -15,6 +15,7 @@ const ROUTES = [
   "/how-to-help",
   "/donate",
   "/contact",
+  "/volunteer",
   "/partner",
   "/privacy",
 ];

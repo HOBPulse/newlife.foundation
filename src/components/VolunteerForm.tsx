@@ -17,9 +17,9 @@ const ROLE_KEYS = [
 const inputClass =
   "w-full rounded-lg border border-sage bg-white px-3 py-2.5 text-ink placeholder:text-ink-soft/60";
 
-/** Volunteer form (how-to-help) — posts to Web3Forms, no page reload. */
+/** Volunteer form (/volunteer) — posts to Web3Forms, no page reload. */
 export function VolunteerForm() {
-  const t = useTranslations("HowToHelpPage");
+  const t = useTranslations("VolunteerPage.form");
   const locale = useLocale();
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [sent, setSent] = useState(false);
@@ -32,7 +32,7 @@ export function VolunteerForm() {
         role="status"
         className="max-w-xl rounded-lg border border-pine bg-sage-soft px-4 py-3 text-ink"
       >
-        {t("form.success")}
+        {t("success")}
       </p>
     );
   }
@@ -65,7 +65,7 @@ export function VolunteerForm() {
 
       <div>
         <label htmlFor="v-name" className="mb-1.5 block text-sm font-medium">
-          {t("volunteerForm.name")} <span aria-hidden="true">*</span>
+          {t("name")} <span aria-hidden="true">*</span>
         </label>
         <input
           id="v-name"
@@ -79,14 +79,14 @@ export function VolunteerForm() {
 
       <div>
         <label htmlFor="v-contact" className="mb-1.5 block text-sm font-medium">
-          {t("volunteerForm.contact")} <span aria-hidden="true">*</span>
+          {t("contact")} <span aria-hidden="true">*</span>
         </label>
         <input id="v-contact" name="contact" type="text" required className={inputClass} />
       </div>
 
       <div>
         <label htmlFor="v-role" className="mb-1.5 block text-sm font-medium">
-          {t("volunteerForm.role")} <span aria-hidden="true">*</span>
+          {t("role")} <span aria-hidden="true">*</span>
         </label>
         <select
           id="v-role"
@@ -94,16 +94,16 @@ export function VolunteerForm() {
           required
           defaultValue=""
           onChange={(e) =>
-            setIsOther(e.target.value === t("volunteerForm.roles.other"))
+            setIsOther(e.target.value === t("roles.other"))
           }
           className={inputClass}
         >
           <option value="" disabled>
-            {t("volunteerForm.rolePlaceholder")}
+            {t("rolePlaceholder")}
           </option>
           {ROLE_KEYS.map((key) => (
-            <option key={key} value={t(`volunteerForm.roles.${key}`)}>
-              {t(`volunteerForm.roles.${key}`)}
+            <option key={key} value={t(`roles.${key}`)}>
+              {t(`roles.${key}`)}
             </option>
           ))}
         </select>
@@ -111,7 +111,7 @@ export function VolunteerForm() {
 
       <div>
         <label htmlFor="v-message" className="mb-1.5 block text-sm font-medium">
-          {t("volunteerForm.message")}
+          {t("message")}
           {isOther && <span aria-hidden="true"> *</span>}
         </label>
         <textarea
@@ -126,7 +126,7 @@ export function VolunteerForm() {
 
       {status === "error" && (
         <p role="alert" className="rounded-lg bg-apricot-soft px-4 py-3 text-sm text-ink">
-          {t.rich("form.error", {
+          {t.rich("error", {
             email: (chunks) => (
               <a
                 href="mailto:support@newlife.foundation"
@@ -144,11 +144,11 @@ export function VolunteerForm() {
         disabled={status === "sending"}
         className="rounded-full bg-pine px-6 py-3 font-medium text-white transition-colors hover:bg-pine-deep disabled:opacity-60"
       >
-        {status === "sending" ? t("form.sending") : t("volunteerForm.submit")}
+        {status === "sending" ? t("sending") : t("submit")}
       </button>
 
       <p className="text-xs leading-relaxed text-ink-soft">
-        {t.rich("form.consent", {
+        {t.rich("consent", {
           privacy: (chunks) => (
             <Link href="/privacy" className="underline hover:text-pine-deep">
               {chunks}

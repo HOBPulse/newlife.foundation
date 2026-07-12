@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Forms to dedicated /volunteer + /partner pages; how-to-help cards just link (accordions broke row alignment); old relay /partner replaced
+2026-07-12 — How-to-help photo + ?help_photo flag removed per owner; layouts now A/twocol/strip behind ?help_layout
 2026-07-12 — How-to-help rework: donate-first, forms/share collapse into in-card disclosures; layouts A/split behind ?help_layout (owner picks)
 2026-07-12 — How-to-help photo behind ?help_photo=mid flag, A/B for owner pick (same client-Suspense pattern as old hero flag)
 2026-07-12 — How-to-help forms: anchor-scroll to always-rendered sections, not inline expand (works without JS)

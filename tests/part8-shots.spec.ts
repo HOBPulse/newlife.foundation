@@ -25,9 +25,7 @@ for (const width of [1280, 390] as const) {
   });
 }
 
-test("how-to-help uk volunteer form success state (mocked)", async ({
-  page,
-}) => {
+test("volunteer page uk form success state (mocked)", async ({ page }) => {
   // Mock Web3Forms so no real submission leaves the machine.
   await page.route("**/api.web3forms.com/**", (route) =>
     route.fulfill({
@@ -37,19 +35,17 @@ test("how-to-help uk volunteer form success state (mocked)", async ({
     }),
   );
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/how-to-help", { waitUntil: "networkidle" });
+  await page.goto("/volunteer", { waitUntil: "networkidle" });
   await waitForHeadingFont(page);
 
-  await page.locator('#volunteer button[aria-controls]').click();
   await page.locator("#v-name").fill("Тест");
   await page.locator("#v-contact").fill("test@example.com");
   await page.locator("#v-role").selectOption({ label: "Водій" });
-  await page.locator('#volunteer button[type="submit"]').click();
-  await page.locator('#volunteer [role="status"]').waitFor();
+  await page.locator('form button[type="submit"]').click();
+  await page.locator('[role="status"]').waitFor();
 
-  await page.locator("#volunteer").scrollIntoViewIfNeeded();
   await page.screenshot({
-    path: "screenshots/part8-how-to-help-uk-success.png",
+    path: "screenshots/part8-volunteer-uk-success.png",
     fullPage: true,
   });
 });

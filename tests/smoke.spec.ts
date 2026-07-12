@@ -15,6 +15,7 @@ const pages = [
   "/stories",
   "/donate",
   "/contact",
+  "/volunteer",
   "/partner",
   "/privacy",
 ];
@@ -40,37 +41,34 @@ test("contact form renders its fields", async ({ page }) => {
   await expect(form.locator('button[type="submit"]')).toBeVisible();
 });
 
-test("how-to-help volunteer + partnership accordions expand to their forms", async ({
+test("how-to-help cards link to the form pages and /donate", async ({
   page,
 }) => {
   await page.goto("/how-to-help");
+  await expect(
+    page.getByRole("link", { name: "Заповнити форму" }),
+  ).toHaveAttribute("href", "/volunteer");
+  await expect(page.getByRole("link", { name: "Написати нам" })).toHaveAttribute(
+    "href",
+    "/partner",
+  );
+  await expect(
+    page.locator('main a[href="/donate"], a[href="/donate"]').first(),
+  ).toBeVisible();
+});
 
-  // Collapsed by default
-  await expect(page.locator("#v-name")).not.toBeVisible();
-
-  const volunteerTrigger = page.locator('#volunteer button[aria-controls]');
-  await expect(volunteerTrigger).toHaveAttribute("aria-expanded", "false");
-  await volunteerTrigger.click();
-  await expect(volunteerTrigger).toHaveAttribute("aria-expanded", "true");
-  const volunteer = page.locator("#volunteer form");
+test("volunteer page renders its form", async ({ page }) => {
+  await page.goto("/volunteer");
   for (const id of ["#v-name", "#v-contact", "#v-role", "#v-message"]) {
-    await expect(volunteer.locator(id)).toBeVisible();
+    await expect(page.locator(id)).toBeVisible();
   }
-  await expect(volunteer.locator('button[type="submit"]')).toBeVisible();
-
-  await page.locator('#partnership button[aria-controls]').click();
-  const partnership = page.locator("#partnership form");
-  for (const id of ["#p-org", "#p-email", "#p-message"]) {
-    await expect(partnership.locator(id)).toBeVisible();
-  }
-  await expect(partnership.locator('button[type="submit"]')).toBeVisible();
+  await expect(page.locator('form button[type="submit"]')).toBeVisible();
 });
 
 test("volunteer message becomes required when «Інше» is selected", async ({
   page,
 }) => {
-  await page.goto("/how-to-help");
-  await page.locator('#volunteer button[aria-controls]').click();
+  await page.goto("/volunteer");
   const message = page.locator("#v-message");
   await expect(message).not.toHaveAttribute("required", "");
   await page.locator("#v-role").selectOption({ label: "Інше" });
@@ -94,18 +92,10 @@ test("privacy page renders all policy sections", async ({ page }) => {
   await expect(page.locator("h2")).toHaveCount(8);
 });
 
-test("partner form renders its fields", async ({ page }) => {
+test("partner page renders its form", async ({ page }) => {
   await page.goto("/partner");
-  const form = page.locator("form");
-  for (const id of [
-    "#name",
-    "#phone",
-    "#telegram",
-    "#organization",
-    "#message",
-  ]) {
-    await expect(form.locator(id)).toBeVisible();
+  for (const id of ["#p-org", "#p-email", "#p-message"]) {
+    await expect(page.locator(id)).toBeVisible();
   }
-  await expect(form.locator('input[name="consent"]')).toBeVisible();
-  await expect(form.locator('button[type="submit"]')).toBeVisible();
+  await expect(page.locator('form button[type="submit"]')).toBeVisible();
 });

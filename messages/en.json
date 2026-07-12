@@ -242,7 +242,6 @@
     "metaDescription": "Ways to support the foundation's work: donating, volunteering, partnership, spreading the word.",
     "title": "How to help",
     "lead": "The foundation exists thanks to people who help — with money, time, and skills. Here's how you can join.",
-    "photoAlt": "The foundation's team with a Ukrainian flag by the ambulances",
     "cards": {
       "donate": {
         "title": "Donate",
@@ -267,8 +266,14 @@
         "copied": "Copied",
         "shareText": "New Life Foundation helps find specialized treatment and get there — even when people are told there are no options left. Sometimes one forwarded link can change someone's story."
       }
-    },
-    "volunteerForm": {
+    }
+  },
+  "VolunteerPage": {
+    "metaTitle": "Become a volunteer",
+    "metaDescription": "Tell us how you can help the foundation and we'll get in touch.",
+    "title": "Become a volunteer",
+    "lead": "We need many kinds of hands — from drivers and paramedics to developers and marketers. Tell us how you can help and we'll get in touch.",
+    "form": {
       "name": "Name",
       "contact": "Email or phone",
       "role": "How can you help",
@@ -282,15 +287,7 @@
         "other": "Other"
       },
       "message": "Message",
-      "submit": "Send"
-    },
-    "partnershipForm": {
-      "org": "Organization or name",
-      "email": "Email",
-      "message": "Message",
-      "submit": "Send"
-    },
-    "form": {
+      "submit": "Send",
       "sending": "Sending…",
       "success": "Thank you! We've received your message.",
       "error": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
@@ -339,24 +336,18 @@
   },
   "PartnerPage": {
     "metaTitle": "Become a partner",
-    "metaDescription": "A form for clinics, transport providers and organisations ready to help the foundation.",
+    "metaDescription": "If you'd like to support the foundation financially, professionally, or organizationally — write to us.",
     "title": "Become a partner",
-    "lead": "If you represent a clinic, a transport provider or an organisation ready to help, fill in the form and we will get back to you.",
+    "lead": "If you'd like to support the foundation financially, professionally, or organizationally — get in touch.",
     "form": {
-      "name": "Name",
-      "phone": "Phone",
-      "telegram": "Telegram",
-      "telegramPlaceholder": "@username",
-      "organization": "Organisation",
-      "message": "Brief description",
-      "optional": "(optional)",
-      "consent": "I consent to the processing of my personal data in accordance with the <privacy>Privacy policy</privacy>",
-      "requiredNote": "All fields are required unless marked “(optional)”.",
+      "org": "Organization or name",
+      "email": "Email",
+      "message": "Message",
       "submit": "Send",
       "sending": "Sending…",
-      "success": "Your message has been sent. We will get back to you soon.",
-      "errorValidation": "Please check the required fields.",
-      "errorDelivery": "The message could not be sent. Please try again later."
+      "success": "Thank you! We've received your message.",
+      "error": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
   "PrivacyPage": {

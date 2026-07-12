@@ -8,7 +8,6 @@ export type ContactFormState = {
 };
 
 const CONTACT_FIELDS = ["name", "phone", "location", "message"] as const;
-const PARTNER_FIELDS = ["name", "phone", "organization", "message"] as const;
 
 async function sendTelegram(text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -106,32 +105,6 @@ export async function submitContactRequest(
     ...(values.telegram ? [`Telegram: ${values.telegram}`] : []),
     `Location: ${values.location}`,
     `Situation: ${values.message}`,
-    "Consent to personal data processing: yes",
-  ].join("\n");
-
-  if (!(await relay(subject, text))) {
-    return { status: "error", error: "delivery" };
-  }
-  return { status: "success" };
-}
-
-export async function submitPartnerRequest(
-  _prev: ContactFormState,
-  formData: FormData,
-): Promise<ContactFormState> {
-  const values = readFields(formData, PARTNER_FIELDS, ["telegram"]);
-  if (!values) {
-    return { status: "error", error: "validation" };
-  }
-
-  const subject = "Partnership — website form";
-  const text = [
-    subject,
-    `Name: ${values.name}`,
-    `Phone: ${values.phone}`,
-    ...(values.telegram ? [`Telegram: ${values.telegram}`] : []),
-    `Organisation: ${values.organization}`,
-    `Description: ${values.message}`,
     "Consent to personal data processing: yes",
   ].join("\n");
 

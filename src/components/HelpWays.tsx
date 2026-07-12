@@ -1,31 +1,11 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { PartnershipForm } from "./PartnershipForm";
 import { ShareActions } from "./ShareActions";
-import { VolunteerForm } from "./VolunteerForm";
 
-type Layout = "a" | "split";
-
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-      className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m5 8 5 4.5L15 8" />
-    </svg>
-  );
-}
+type Layout = "a" | "twocol" | "strip";
 
 /** Priority action — the only filled card, with the gold CTA. */
 function DonateCard({ wide }: { wide: boolean }) {
@@ -56,40 +36,30 @@ function DonateCard({ wide }: { wide: boolean }) {
   );
 }
 
-/** Card whose CTA expands its form in place (collapsed by default). */
-function AccordionCard({
-  id,
+/** Secondary card whose CTA links to its dedicated form page. */
+function LinkCard({
   nsKey,
-  children,
+  href,
 }: {
-  id: string;
   nsKey: "volunteer" | "partnership";
-  children: ReactNode;
+  href: "/volunteer" | "/partner";
 }) {
   const t = useTranslations("HowToHelpPage.cards");
-  const [open, setOpen] = useState(false);
   return (
-    <section id={id} className="rounded-xl border border-sage p-5 sm:p-6">
+    <section className="flex h-full flex-col rounded-xl border border-sage p-5 sm:p-6">
       <h2 className="font-display text-lg font-medium text-ink">
         {t(`${nsKey}.title`)}
       </h2>
       <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
         {t(`${nsKey}.body`)}
       </p>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={`${id}-panel`}
-        onClick={() => setOpen((o) => !o)}
-        className="mt-4 inline-flex items-center gap-2 rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
-      >
-        {t(`${nsKey}.cta`)}
-        <Chevron open={open} />
-      </button>
-      <div id={`${id}-panel`} data-open={open} className="disclosure-panel">
-        <div>
-          <div className="pt-5">{children}</div>
-        </div>
+      <div className="mt-auto pt-4">
+        <Link
+          href={href}
+          className="inline-block rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
+        >
+          {t(`${nsKey}.cta`)}
+        </Link>
       </div>
     </section>
   );
@@ -98,7 +68,52 @@ function AccordionCard({
 function ShareCard({ shareUrl }: { shareUrl: string }) {
   const t = useTranslations("HowToHelpPage.cards.share");
   return (
-    <section className="rounded-xl border border-sage p-5 sm:p-6">
+    <section className="flex h-full flex-col rounded-xl border border-sage p-5 sm:p-6">
+      <h2 className="font-display text-lg font-medium text-ink">
+        {t("title")}
+      </h2>
+      <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+        {t("body")}
+      </p>
+      <div className="mt-auto">
+        <ShareActions url={shareUrl} text={t("shareText")} />
+      </div>
+    </section>
+  );
+}
+
+/** Strip item — the editorial variant: no box, a hairline like the
+ *  how-we-work steps, text-link CTA. */
+function StripItem({
+  nsKey,
+  href,
+}: {
+  nsKey: "volunteer" | "partnership";
+  href: "/volunteer" | "/partner";
+}) {
+  const t = useTranslations("HowToHelpPage.cards");
+  return (
+    <div className="border-l border-sage pl-5">
+      <h2 className="font-display text-lg font-medium text-ink">
+        {t(`${nsKey}.title`)}
+      </h2>
+      <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+        {t(`${nsKey}.body`)}
+      </p>
+      <Link
+        href={href}
+        className="mt-4 inline-block text-sm font-medium text-pine transition-colors hover:text-pine-deep"
+      >
+        {t(`${nsKey}.cta`)} →
+      </Link>
+    </div>
+  );
+}
+
+function StripShare({ shareUrl }: { shareUrl: string }) {
+  const t = useTranslations("HowToHelpPage.cards.share");
+  return (
+    <div className="border-l border-sage pl-5">
       <h2 className="font-display text-lg font-medium text-ink">
         {t("title")}
       </h2>
@@ -106,13 +121,15 @@ function ShareCard({ shareUrl }: { shareUrl: string }) {
         {t("body")}
       </p>
       <ShareActions url={shareUrl} text={t("shareText")} />
-    </section>
+    </div>
   );
 }
 
-/** The four ways to help. Layout A: donate full-width on top, the other
- *  three in a row. Layout "split" (?help_layout=split): donate large on the
- *  left, the other three stacked in a narrower right column. */
+/** The four ways to help.
+ *  A (default): donate full-width on top, 3 cards in a row.
+ *  twocol: donate large left, 3 stacked in a narrower right column.
+ *  strip: donate banner, then the 3 secondary actions as a lighter,
+ *  editorial hairline strip (how-we-work idiom) instead of boxes. */
 export function HelpWaysView({
   layout,
   shareUrl,
@@ -120,28 +137,29 @@ export function HelpWaysView({
   layout: Layout;
   shareUrl: string;
 }) {
-  const volunteer = (
-    <AccordionCard id="volunteer" nsKey="volunteer">
-      <VolunteerForm />
-    </AccordionCard>
-  );
-  const partnership = (
-    <AccordionCard id="partnership" nsKey="partnership">
-      <PartnershipForm />
-    </AccordionCard>
-  );
-  const share = <ShareCard shareUrl={shareUrl} />;
-
-  if (layout === "split") {
+  if (layout === "twocol") {
     return (
       <div className="reveal mt-12 grid items-start gap-5 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <DonateCard wide={false} />
         </div>
         <div className="space-y-5 lg:col-span-2">
-          {volunteer}
-          {partnership}
-          {share}
+          <LinkCard nsKey="volunteer" href="/volunteer" />
+          <LinkCard nsKey="partnership" href="/partner" />
+          <ShareCard shareUrl={shareUrl} />
+        </div>
+      </div>
+    );
+  }
+
+  if (layout === "strip") {
+    return (
+      <div className="reveal mt-12">
+        <DonateCard wide />
+        <div className="mt-10 grid gap-8 md:grid-cols-3">
+          <StripItem nsKey="volunteer" href="/volunteer" />
+          <StripItem nsKey="partnership" href="/partner" />
+          <StripShare shareUrl={shareUrl} />
         </div>
       </div>
     );
@@ -150,19 +168,20 @@ export function HelpWaysView({
   return (
     <div className="reveal mt-12 space-y-5">
       <DonateCard wide />
-      <div className="grid items-start gap-5 md:grid-cols-3">
-        {volunteer}
-        {partnership}
-        {share}
+      <div className="grid gap-5 md:grid-cols-3">
+        <LinkCard nsKey="volunteer" href="/volunteer" />
+        <LinkCard nsKey="partnership" href="/partner" />
+        <ShareCard shareUrl={shareUrl} />
       </div>
     </div>
   );
 }
 
 /** Temporary layout experiment: reads ?help_layout client-side (Suspense)
- *  so the page stays static — same pattern as the photo flag. */
+ *  so the page stays static. */
 export function HelpWays({ shareUrl }: { shareUrl: string }) {
+  const param = useSearchParams().get("help_layout");
   const layout: Layout =
-    useSearchParams().get("help_layout") === "split" ? "split" : "a";
+    param === "twocol" || param === "strip" ? param : "a";
   return <HelpWaysView layout={layout} shareUrl={shareUrl} />;
 }

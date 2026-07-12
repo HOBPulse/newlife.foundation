@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PartnershipForm } from "@/components/PartnershipForm";
+import { VolunteerForm } from "@/components/VolunteerForm";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -10,13 +10,13 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata(locale, "PartnerPage", "/partner");
+  return pageMetadata(locale, "VolunteerPage", "/volunteer");
 }
 
-export default async function PartnerPage({ params }: Props) {
+export default async function VolunteerPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("PartnerPage");
+  const t = await getTranslations("VolunteerPage");
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -28,7 +28,7 @@ export default async function PartnerPage({ params }: Props) {
       </p>
 
       <div className="mt-12">
-        <PartnershipForm />
+        <VolunteerForm />
       </div>
     </div>
   );

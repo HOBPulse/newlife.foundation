@@ -59,7 +59,7 @@ body {
   outline-color: var(--color-paper);
 }
 
-/* --- Disclosure (how-to-help accordions + share) -------------------------
+/* --- Disclosure (how-to-help share options) ------------------------------
    Collapsed by default; grid-rows 0fr→1fr is the CSS-only height animation
    (padding lives one level deeper so the row can truly reach 0). visibility
    flips after the transition so collapsed content is untabbable; reduced

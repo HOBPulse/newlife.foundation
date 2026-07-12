@@ -8,9 +8,9 @@ import { submitWeb3Form } from "@/lib/web3forms";
 const inputClass =
   "w-full rounded-lg border border-sage bg-white px-3 py-2.5 text-ink placeholder:text-ink-soft/60";
 
-/** Partnership form (how-to-help) — posts to Web3Forms, no page reload. */
+/** Partnership form (/partner) — posts to Web3Forms, no page reload. */
 export function PartnershipForm() {
-  const t = useTranslations("HowToHelpPage");
+  const t = useTranslations("PartnerPage.form");
   const locale = useLocale();
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [sent, setSent] = useState(false);
@@ -21,7 +21,7 @@ export function PartnershipForm() {
         role="status"
         className="max-w-xl rounded-lg border border-pine bg-sage-soft px-4 py-3 text-ink"
       >
-        {t("form.success")}
+        {t("success")}
       </p>
     );
   }
@@ -54,7 +54,7 @@ export function PartnershipForm() {
 
       <div>
         <label htmlFor="p-org" className="mb-1.5 block text-sm font-medium">
-          {t("partnershipForm.org")} <span aria-hidden="true">*</span>
+          {t("org")} <span aria-hidden="true">*</span>
         </label>
         <input
           id="p-org"
@@ -68,7 +68,7 @@ export function PartnershipForm() {
 
       <div>
         <label htmlFor="p-email" className="mb-1.5 block text-sm font-medium">
-          {t("partnershipForm.email")} <span aria-hidden="true">*</span>
+          {t("email")} <span aria-hidden="true">*</span>
         </label>
         <input
           id="p-email"
@@ -82,7 +82,7 @@ export function PartnershipForm() {
 
       <div>
         <label htmlFor="p-message" className="mb-1.5 block text-sm font-medium">
-          {t("partnershipForm.message")} <span aria-hidden="true">*</span>
+          {t("message")} <span aria-hidden="true">*</span>
         </label>
         <textarea
           id="p-message"
@@ -95,7 +95,7 @@ export function PartnershipForm() {
 
       {status === "error" && (
         <p role="alert" className="rounded-lg bg-apricot-soft px-4 py-3 text-sm text-ink">
-          {t.rich("form.error", {
+          {t.rich("error", {
             email: (chunks) => (
               <a
                 href="mailto:support@newlife.foundation"
@@ -113,11 +113,11 @@ export function PartnershipForm() {
         disabled={status === "sending"}
         className="rounded-full bg-pine px-6 py-3 font-medium text-white transition-colors hover:bg-pine-deep disabled:opacity-60"
       >
-        {status === "sending" ? t("form.sending") : t("partnershipForm.submit")}
+        {status === "sending" ? t("sending") : t("submit")}
       </button>
 
       <p className="text-xs leading-relaxed text-ink-soft">
-        {t.rich("form.consent", {
+        {t.rich("consent", {
           privacy: (chunks) => (
             <Link href="/privacy" className="underline hover:text-pine-deep">
               {chunks}
