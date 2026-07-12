@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
+import { HelpPhoto, HelpPhotoView } from "@/components/HelpPhoto";
 import { PartnershipForm } from "@/components/PartnershipForm";
 import { ShareActions } from "@/components/ShareActions";
 import { VolunteerForm } from "@/components/VolunteerForm";
@@ -34,6 +36,14 @@ export default async function HowToHelpPage({ params }: Props) {
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
         {t("lead")}
       </p>
+
+      {/* Placement A (default): photo below the intro, above the grid.
+          The fallback keeps the default placement in the static HTML. */}
+      <Suspense
+        fallback={<HelpPhotoView alt={t("photoAlt")} className="reveal mt-10" />}
+      >
+        <HelpPhoto variant="top" alt={t("photoAlt")} className="reveal mt-10" />
+      </Suspense>
 
       {/* Four ways to help. Volunteer/partnership cards anchor-scroll to
           their forms below — the forms stay in the DOM, so everything works
@@ -100,6 +110,11 @@ export default async function HowToHelpPage({ params }: Props) {
           <ShareActions url={shareUrl} text={t("cards.share.shareText")} />
         </section>
       </div>
+
+      {/* Placement B (?help_photo=mid): photo between the grid and the forms */}
+      <Suspense fallback={null}>
+        <HelpPhoto variant="mid" alt={t("photoAlt")} className="reveal mt-16" />
+      </Suspense>
 
       {/* scroll-mt clears the sticky header when anchor-jumping */}
       <section id="volunteer" className="reveal mt-20 scroll-mt-24">
