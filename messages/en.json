@@ -369,7 +369,7 @@
       },
       "storage": {
         "title": "How data is transferred and stored",
-        "body": "Volunteer and partner forms are delivered via the Web3Forms service to our email. Help requests arrive at our email and in the foundation's internal Telegram channel. Only foundation staff have access to submissions."
+        "body": "All forms on the site are delivered to our email and to the foundation's internal Telegram channel. We do not use any third-party form service. Only foundation staff have access to submissions."
       },
       "sharing": {
         "title": "Who we share data with",

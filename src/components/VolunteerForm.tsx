@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { submitWeb3Form } from "@/lib/web3forms";
+import { submitVolunteerRequest, type ContactFormState } from "@/lib/contact";
+
+const initialState: ContactFormState = { status: "idle" };
 
 const ROLE_KEYS = [
   "driver",
@@ -17,16 +19,17 @@ const ROLE_KEYS = [
 const inputClass =
   "w-full rounded-lg border border-sage bg-white px-3 py-2.5 text-ink placeholder:text-ink-soft/60";
 
-/** Volunteer form (/volunteer) — posts to Web3Forms, no page reload. */
+/** Volunteer form (/volunteer) — server action → Telegram + email relay. */
 export function VolunteerForm() {
   const t = useTranslations("VolunteerPage.form");
-  const locale = useLocale();
-  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
-  const [sent, setSent] = useState(false);
+  const [state, formAction, pending] = useActionState(
+    submitVolunteerRequest,
+    initialState,
+  );
   // «Інше» makes the message field required (the role alone says nothing).
   const [isOther, setIsOther] = useState(false);
 
-  if (sent) {
+  if (state.status === "success") {
     return (
       <p
         role="status"
@@ -37,32 +40,8 @@ export function VolunteerForm() {
     );
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("sending");
-    const delivered = await submitWeb3Form(event.currentTarget);
-    if (delivered) {
-      setSent(true);
-    } else {
-      setStatus("error");
-    }
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl space-y-5">
-      {/* Routing metadata for the support@ mailbox */}
-      <input type="hidden" name="subject" value="Волонтер — сайт" />
-      <input type="hidden" name="locale" value={locale} />
-      {/* Honeypot — hidden from people, tempting to bots */}
-      <input
-        type="checkbox"
-        name="botcheck"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        className="hidden"
-      />
-
+    <form action={formAction} className="max-w-xl space-y-5">
       <div>
         <label htmlFor="v-name" className="mb-1.5 block text-sm font-medium">
           {t("name")} <span aria-hidden="true">*</span>
@@ -124,7 +103,7 @@ export function VolunteerForm() {
         />
       </div>
 
-      {status === "error" && (
+      {state.status === "error" && (
         <p role="alert" className="rounded-lg bg-apricot-soft px-4 py-3 text-sm text-ink">
           {t.rich("error", {
             email: (chunks) => (
@@ -141,10 +120,10 @@ export function VolunteerForm() {
 
       <button
         type="submit"
-        disabled={status === "sending"}
+        disabled={pending}
         className="rounded-full bg-pine px-6 py-3 font-medium text-white transition-colors hover:bg-pine-deep disabled:opacity-60"
       >
-        {status === "sending" ? t("sending") : t("submit")}
+        {pending ? t("sending") : t("submit")}
       </button>
 
       <p className="text-xs leading-relaxed text-ink-soft">

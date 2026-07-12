@@ -8,6 +8,8 @@ export type ContactFormState = {
 };
 
 const CONTACT_FIELDS = ["name", "phone", "location", "message"] as const;
+const VOLUNTEER_FIELDS = ["name", "contact", "role"] as const;
+const PARTNER_FIELDS = ["organization", "email", "message"] as const;
 
 async function sendTelegram(text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -49,6 +51,9 @@ function readFields(
   formData: FormData,
   required: readonly string[],
   optional: readonly string[],
+  // /contact uses an explicit consent checkbox; the volunteer/partner forms
+  // instead carry a "by submitting you agree" line, so consent is implicit.
+  requireConsent = true,
 ): Record<string, string> | null {
   const values: Record<string, string> = {};
   for (const field of required) {
@@ -64,7 +69,7 @@ function readFields(
       values[field] = value.trim();
     }
   }
-  if (formData.get("consent") !== "on") {
+  if (requireConsent && formData.get("consent") !== "on") {
     return null;
   }
   return values;
@@ -105,6 +110,57 @@ export async function submitContactRequest(
     ...(values.telegram ? [`Telegram: ${values.telegram}`] : []),
     `Location: ${values.location}`,
     `Situation: ${values.message}`,
+    "Consent to personal data processing: yes",
+  ].join("\n");
+
+  if (!(await relay(subject, text))) {
+    return { status: "error", error: "delivery" };
+  }
+  return { status: "success" };
+}
+
+export async function submitVolunteerRequest(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
+  // message is optional server-side; the «Інше» case makes it required in the
+  // browser (required attribute), which gates submission before the action runs.
+  const values = readFields(formData, VOLUNTEER_FIELDS, ["message"], false);
+  if (!values) {
+    return { status: "error", error: "validation" };
+  }
+
+  const subject = "Volunteer — website form";
+  const text = [
+    subject,
+    `Name: ${values.name}`,
+    `Contact: ${values.contact}`,
+    `Role: ${values.role}`,
+    ...(values.message ? [`Message: ${values.message}`] : []),
+    "Consent to personal data processing: yes",
+  ].join("\n");
+
+  if (!(await relay(subject, text))) {
+    return { status: "error", error: "delivery" };
+  }
+  return { status: "success" };
+}
+
+export async function submitPartnerRequest(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
+  const values = readFields(formData, PARTNER_FIELDS, [], false);
+  if (!values) {
+    return { status: "error", error: "validation" };
+  }
+
+  const subject = "Partner — website form";
+  const text = [
+    subject,
+    `Organisation/Name: ${values.organization}`,
+    `Email: ${values.email}`,
+    `Message: ${values.message}`,
     "Consent to personal data processing: yes",
   ].join("\n");
 

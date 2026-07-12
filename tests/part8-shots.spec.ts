@@ -1,6 +1,6 @@
 import { test, type Page } from "@playwright/test";
 
-/* Part 8 — how-to-help (BLM-grid + Web3Forms forms) and privacy pages.
+/* Part 8 — how-to-help (BLM-grid) and privacy pages.
    The `shots` project forces reduced motion, so reveals render final-state. */
 
 async function waitForHeadingFont(page: Page) {
@@ -24,31 +24,6 @@ for (const width of [1280, 390] as const) {
     });
   });
 }
-
-test("volunteer page uk form success state (mocked)", async ({ page }) => {
-  // Mock Web3Forms so no real submission leaves the machine.
-  await page.route("**/api.web3forms.com/**", (route) =>
-    route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ success: true }),
-    }),
-  );
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/volunteer", { waitUntil: "networkidle" });
-  await waitForHeadingFont(page);
-
-  await page.locator("#v-name").fill("Тест");
-  await page.locator("#v-contact").fill("test@example.com");
-  await page.locator("#v-role").selectOption({ label: "Водій" });
-  await page.locator('form button[type="submit"]').click();
-  await page.locator('[role="status"]').waitFor();
-
-  await page.screenshot({
-    path: "screenshots/part8-volunteer-uk-success.png",
-    fullPage: true,
-  });
-});
 
 test("privacy uk (1280)", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });

@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Web3Forms dropped entirely; /volunteer + /partner now use the /contact server-action relay (own Telegram bot + SMTP, no third-party)
 2026-07-12 — Forms to dedicated /volunteer + /partner pages; how-to-help cards just link (accordions broke row alignment); old relay /partner replaced
 2026-07-12 — How-to-help photo + ?help_photo flag removed per owner; layouts now A/twocol/strip behind ?help_layout
 2026-07-12 — How-to-help rework: donate-first, forms/share collapse into in-card disclosures; layouts A/split behind ?help_layout (owner picks)
