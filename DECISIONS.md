@@ -2,6 +2,7 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — How-to-help: layout A removed; strip is default, twocol (?help_layout=twocol) gains team photo bottom-left; still flagged for owner pick
 2026-07-12 — Web3Forms dropped entirely; /volunteer + /partner now use the /contact server-action relay (own Telegram bot + SMTP, no third-party)
 2026-07-12 — Forms to dedicated /volunteer + /partner pages; how-to-help cards just link (accordions broke row alignment); old relay /partner replaced
 2026-07-12 — How-to-help photo + ?help_photo flag removed per owner; layouts now A/twocol/strip behind ?help_layout

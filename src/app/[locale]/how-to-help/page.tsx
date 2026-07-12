@@ -31,10 +31,11 @@ export default async function HowToHelpPage({ params }: Props) {
         {t("lead")}
       </p>
 
-      {/* Four ways to help — donate first; volunteer/partnership link to
-          their form pages. Layout experiment behind ?help_layout=twocol|strip;
-          default (A) stays static via the Suspense fallback. */}
-      <Suspense fallback={<HelpWaysView layout="a" shareUrl={shareUrl} />}>
+      {/* Ways to help — donate first; volunteer/partnership link to their
+          form pages. Default layout (strip) stays static via the Suspense
+          fallback; ?help_layout=twocol switches to the photo/right-column
+          variant client-side. */}
+      <Suspense fallback={<HelpWaysView layout="strip" shareUrl={shareUrl} />}>
         <HelpWays shareUrl={shareUrl} />
       </Suspense>
     </div>

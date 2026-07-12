@@ -1,10 +1,9 @@
 import { test, type Page } from "@playwright/test";
 
-/* How-to-help layout comparison: A (default — donate full-width on top,
-   3 cards in a row), twocol (donate left, 3 stacked right), strip (donate
-   banner, secondary actions as an editorial hairline strip). Share options
-   expanded in every shot. Plus the dedicated /volunteer and /partner form
-   pages. */
+/* How-to-help layout comparison: strip (default — donate banner + editorial
+   hairline strip) and twocol (?help_layout=twocol — donate + team photo left,
+   3 cards stacked right). Share options expanded in every shot. Plus the
+   dedicated /volunteer and /partner form pages. */
 
 async function waitForHeadingFont(page: Page) {
   await page.waitForFunction(() => {
@@ -17,9 +16,8 @@ async function waitForHeadingFont(page: Page) {
 }
 
 const LAYOUTS = [
-  { name: "a", path: "/how-to-help" },
+  { name: "strip", path: "/how-to-help" },
   { name: "twocol", path: "/how-to-help?help_layout=twocol" },
-  { name: "strip", path: "/how-to-help?help_layout=strip" },
 ] as const;
 
 const WIDTHS = [1280, 390] as const;

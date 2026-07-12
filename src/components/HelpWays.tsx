@@ -1,11 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ShareActions } from "./ShareActions";
 
-type Layout = "a" | "twocol" | "strip";
+type Layout = "twocol" | "strip";
 
 /** Priority action — the only filled card, with the gold CTA. */
 function DonateCard({ wide }: { wide: boolean }) {
@@ -125,11 +126,11 @@ function StripShare({ shareUrl }: { shareUrl: string }) {
   );
 }
 
-/** The four ways to help.
- *  A (default): donate full-width on top, 3 cards in a row.
- *  twocol: donate large left, 3 stacked in a narrower right column.
- *  strip: donate banner, then the 3 secondary actions as a lighter,
- *  editorial hairline strip (how-we-work idiom) instead of boxes. */
+/** The ways to help.
+ *  strip (default): donate banner, then the 3 secondary actions as a lighter,
+ *  editorial hairline strip (how-we-work idiom) instead of boxes.
+ *  twocol: donate large top-left with the team photo filling the space below
+ *  it, and the 3 cards stacked in a narrower right column. */
 export function HelpWaysView({
   layout,
   shareUrl,
@@ -137,11 +138,23 @@ export function HelpWaysView({
   layout: Layout;
   shareUrl: string;
 }) {
+  const t = useTranslations("HowToHelpPage");
+
   if (layout === "twocol") {
     return (
       <div className="reveal mt-12 grid items-start gap-5 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="space-y-5 lg:col-span-3">
           <DonateCard wide={false} />
+          <figure>
+            <Image
+              src="/photos/samu-flag.jpg"
+              alt={t("photoAlt")}
+              width={1050}
+              height={700}
+              sizes="(min-width: 1024px) 36rem, 100vw"
+              className="aspect-[3/2] w-full rounded-xl object-cover"
+            />
+          </figure>
         </div>
         <div className="space-y-5 lg:col-span-2">
           <LinkCard nsKey="volunteer" href="/volunteer" />
@@ -152,36 +165,22 @@ export function HelpWaysView({
     );
   }
 
-  if (layout === "strip") {
-    return (
-      <div className="reveal mt-12">
-        <DonateCard wide />
-        <div className="mt-10 grid gap-8 md:grid-cols-3">
-          <StripItem nsKey="volunteer" href="/volunteer" />
-          <StripItem nsKey="partnership" href="/partner" />
-          <StripShare shareUrl={shareUrl} />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="reveal mt-12 space-y-5">
+    <div className="reveal mt-12">
       <DonateCard wide />
-      <div className="grid gap-5 md:grid-cols-3">
-        <LinkCard nsKey="volunteer" href="/volunteer" />
-        <LinkCard nsKey="partnership" href="/partner" />
-        <ShareCard shareUrl={shareUrl} />
+      <div className="mt-10 grid gap-8 md:grid-cols-3">
+        <StripItem nsKey="volunteer" href="/volunteer" />
+        <StripItem nsKey="partnership" href="/partner" />
+        <StripShare shareUrl={shareUrl} />
       </div>
     </div>
   );
 }
 
 /** Temporary layout experiment: reads ?help_layout client-side (Suspense)
- *  so the page stays static. */
+ *  so the page stays static. Default is strip. */
 export function HelpWays({ shareUrl }: { shareUrl: string }) {
-  const param = useSearchParams().get("help_layout");
   const layout: Layout =
-    param === "twocol" || param === "strip" ? param : "a";
+    useSearchParams().get("help_layout") === "twocol" ? "twocol" : "strip";
   return <HelpWaysView layout={layout} shareUrl={shareUrl} />;
 }
