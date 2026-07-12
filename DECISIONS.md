@@ -2,6 +2,29 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+<!-- ═══ ACTIVE OPERATIONAL NOTE (not a historical decision) ═══
+HOW TO RE-ENABLE INDEXING BEFORE LAUNCH
+The whole site is intentionally NOINDEX while on the temporary Vercel URL.
+It is driven by ONE switch: `SEO_NOINDEX` in src/lib/seo.ts
+  (= true unless env NEXT_PUBLIC_NOINDEX === "false"; default = noindex, fail-safe).
+
+To restore full indexing + SEO for the real domain, do ONE of these, then redeploy:
+  A) In Vercel → Settings → Environment Variables: set NEXT_PUBLIC_NOINDEX=false
+     (Production; also Preview if you want previews indexable) and redeploy; OR
+  B) Edit src/lib/seo.ts and change the SEO_NOINDEX default to false, then ship.
+
+What the switch controls (no other edits needed — all read SEO_NOINDEX):
+  • Root layout robots meta (src/app/[locale]/layout.tsx) — drops noindex,nofollow → pages indexable.
+  • robots.txt route (src/app/robots.ts) — switches from `Disallow: /` to `Allow: /` + Sitemap: line.
+
+Untouched by the switch — verify/handle separately at launch:
+  • sitemap.xml (src/app/sitemap.ts) ALWAYS builds; lists all indexable routes. Nothing to change.
+  • /terms (src/app/[locale]/terms/page.tsx) stays noindex by its OWN metadata (working draft) —
+    it must REMAIN noindex until the lawyer signs off, even after site-wide indexing is on.
+  • Set NEXT_PUBLIC_SITE_URL to the real production origin so canonical/hreflang/OG use it.
+═══════════════════════════════════════════════════════ -->
+
+2026-07-13 — Site-wide NOINDEX while on temp Vercel URL; one switch SEO_NOINDEX (env NEXT_PUBLIC_NOINDEX); reversal steps documented above
 2026-07-13 — /terms filled with full public-offer text (owner-provided, 7 sections); stays noindex as working draft pending lawyer; §6 links /privacy
 2026-07-13 — Mono jar QR on donate card: build-time svg from MONO_JAR_URL via qrcode lib (never drifts from link); ~160px desktop / ~96px mobile
 2026-07-12 — postcss Dependabot alert (CVE-2026-41305) deferred: no stable Next ships the fix; revisit at next dep update
