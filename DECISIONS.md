@@ -2,6 +2,10 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Contact page → two-column: form left, requisites sidebar panel right (mobile: requisites first)
+
+2026-07-12 — Header logo 38px→44px (+15%) (stronger brand presence)
+
 2026-07-12 — Donate CTA border pine-deep→espresso brown #3d2410 (harmonizes with heart)
 
 2026-07-12 — Hero CTA 1 «Підтримати фонд»→«Стати поруч» → /how-to-help (header already has donate); header «Підтримати» gains shared HeartIcon

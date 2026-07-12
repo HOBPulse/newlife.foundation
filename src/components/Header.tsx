@@ -17,7 +17,7 @@ export function Header() {
           href="/"
           className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight text-ink"
         >
-          <Logo className="h-[38px] w-auto text-brand-green" />
+          <Logo className="h-[44px] w-auto text-brand-green" />
           <span className="hidden min-[420px]:block">{t("siteName")}</span>
         </Link>
 
