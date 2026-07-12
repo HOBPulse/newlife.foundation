@@ -328,7 +328,7 @@
       "location": "Country, city",
       "message": "Diagnosis and a brief description of the situation",
       "optional": "(optional)",
-      "consent": "I consent to the processing of my personal data in accordance with the <privacy>Privacy policy</privacy>",
+      "consent": "By submitting this form, I consent to <privacy>the processing of the data provided</privacy>, including health data, for the purpose of finding and arranging treatment — including its transfer to medical institutions, including abroad, only to the extent needed to help. If this request concerns a child, I confirm that I act as their parent or legal guardian.",
       "requiredNote": "All fields are required unless marked “(optional)”.",
       "submit": "Send request",
       "sending": "Sending…",

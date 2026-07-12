@@ -25,6 +25,16 @@ for (const width of [1280, 390] as const) {
   });
 }
 
+test("contact uk (1280)", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/contact", { waitUntil: "networkidle" });
+  await waitForHeadingFont(page);
+  await page.screenshot({
+    path: "screenshots/part8-contact-uk-1280.png",
+    fullPage: true,
+  });
+});
+
 test("privacy uk (1280)", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/privacy", { waitUntil: "networkidle" });
