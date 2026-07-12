@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Hero CTA 1 «Підтримати фонд»→«Стати поруч» → /how-to-help (header already has donate); header «Підтримати» gains shared HeartIcon
+
 2026-07-12 — Forms: Web3Forms removed, all forms use own server action (Telegram bot + SMTP); privacy no longer names Telegram/Web3
 2026-07-12 — how-to-help: strip layout default; twocol+photo kept behind ?help_layout=twocol as fallback; team photo lives on /volunteer
 2026-07-12 — PLANNED post-launch: targeted child fundraisers — foundation account + payment tag, progress bar (LiqPay API if supported, else manual), surplus over goal → other fundraisers or general fund, needs public offer, not announced at launch

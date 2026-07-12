@@ -87,10 +87,10 @@ export default async function HomePage({ params }: Props) {
         </Suspense>
         <div className="hero-ctas mt-10 flex flex-wrap gap-3">
           <Link
-            href="/donate"
+            href="/how-to-help"
             className="rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
           >
-            {t("hero.ctaDonate")}
+            {t("hero.ctaStand")}
           </Link>
           <Link
             href="/contact"

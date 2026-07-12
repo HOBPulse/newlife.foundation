@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/lib/nav";
+import { HeartIcon } from "./HeartIcon";
 import { Logo } from "./Logo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
@@ -39,8 +40,9 @@ export function Header() {
           <LocaleSwitcher className="hidden lg:flex" />
           <Link
             href="/donate"
-            className="hidden rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition-colors hover:bg-gold/90 sm:block"
+            className="hidden items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition-colors hover:bg-gold/90 sm:flex"
           >
+            <HeartIcon className="h-4 w-4" />
             {t("nav.donate")}
           </Link>
           <MobileMenu />
