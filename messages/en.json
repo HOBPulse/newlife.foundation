@@ -328,7 +328,7 @@
       "location": "Country, city",
       "message": "Diagnosis and a brief description of the situation",
       "optional": "(optional)",
-      "consent": "By submitting this form, I consent to <privacy>the processing of the data provided</privacy>, including health data, for the purpose of finding and arranging treatment — including its transfer to medical institutions, including abroad, only to the extent needed to help. If this request concerns a child, I confirm that I act as their parent or legal guardian.",
+      "consent": "I agree to the processing of my data in accordance with the <privacy>Privacy Policy</privacy>.",
       "requiredNote": "All fields are required unless marked “(optional)”.",
       "submit": "Send request",
       "sending": "Sending…",
@@ -381,6 +381,10 @@
       "health": {
         "title": "Health data",
         "body": "Information about health conditions and medical documents is sensitive data. We process it solely to help find and arrange treatment. By submitting such information, you consent to its processing for this purpose."
+      },
+      "consent": {
+        "title": "Consent to data processing",
+        "body": "By submitting this form, I consent to the processing of the data provided, including health data, for the purpose of finding and arranging treatment — including its transfer to medical institutions, including abroad, only to the extent needed to help. If this request concerns a child, I confirm that I act as their parent or legal guardian."
       },
       "storage": {
         "title": "How data is transferred and stored",

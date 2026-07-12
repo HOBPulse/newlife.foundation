@@ -89,7 +89,7 @@ test("share options are collapsed behind the share button", async ({
 
 test("privacy page renders all policy sections", async ({ page }) => {
   await page.goto("/privacy");
-  await expect(page.locator("h2")).toHaveCount(8);
+  await expect(page.locator("h2")).toHaveCount(9);
 });
 
 test("partner page renders its form", async ({ page }) => {

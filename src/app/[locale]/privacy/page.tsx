@@ -16,6 +16,7 @@ const SECTIONS = [
   "who",
   "data",
   "health",
+  "consent",
   "storage",
   "sharing",
   "retention",
