@@ -2,6 +2,8 @@
 
 <!-- Reverse-chronological. ONE line per decision: YYYY-MM-DD — decision (≤8-word why). No paragraphs. Never rewrite past entries. -->
 
+2026-07-12 — Footer logo h-9→h-[47px] (+30%) (stronger footer brand presence)
+
 2026-07-12 — Contact page → two-column: form left, requisites sidebar panel right (mobile: requisites first)
 
 2026-07-12 — Header logo 38px→44px (+15%) (stronger brand presence)

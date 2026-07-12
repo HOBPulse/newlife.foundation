@@ -14,7 +14,7 @@ export function Footer() {
           <div className="max-w-xs">
             <div className="flex items-center gap-3">
               {/* On-dark mark: green line art recolored to cream via currentColor */}
-              <Logo className="h-9 w-auto text-brand-cream" />
+              <Logo className="h-[47px] w-auto text-brand-cream" />
               {/* Editorial letter-spaced caps wordmark */}
               <p className="font-display text-xs font-medium uppercase leading-tight tracking-[0.22em] text-paper">
                 {t("siteName")}
