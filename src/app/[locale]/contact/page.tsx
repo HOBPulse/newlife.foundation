@@ -30,6 +30,38 @@ export default async function ContactPage({ params }: Props) {
       <div className="mt-12">
         <ContactForm />
       </div>
+
+      {/* Contact info + foundation requisites — calmer block below the form */}
+      <section className="mt-16 max-w-2xl border-t border-sage pt-10">
+        <h2 className="font-display text-2xl font-medium text-ink">
+          {t("requisites.title")}
+        </h2>
+        <div className="mt-6 space-y-6">
+          <div>
+            <p className="text-sm font-medium text-ink">
+              {t("requisites.emailLabel")}
+            </p>
+            <a
+              href="mailto:support@newlife.foundation"
+              className="mt-1 inline-block text-pine underline hover:text-pine-deep"
+            >
+              support@newlife.foundation
+            </a>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-ink">
+              {t("requisites.detailsLabel")}
+            </p>
+            <address className="mt-1 not-italic leading-relaxed text-ink-soft">
+              {t("requisites.orgName")}
+              <br />
+              {t("requisites.edrpou")}
+              <br />
+              {t("requisites.addressLabel")}: {t("requisites.address")}
+            </address>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

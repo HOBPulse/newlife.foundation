@@ -335,6 +335,15 @@
       "success": "Your request has been sent. We will get back to you soon.",
       "errorValidation": "Please check the required fields.",
       "errorDelivery": "The request could not be sent. Please try again later."
+    },
+    "requisites": {
+      "title": "Contacts & details",
+      "emailLabel": "Email",
+      "detailsLabel": "Details",
+      "orgName": "Благодійний фонд «НОВЕ ЖИТТЯ!»",
+      "edrpou": "ЄДРПОУ 42792589",
+      "addressLabel": "Registered address",
+      "address": "03142, м. Київ, Святошинський район, проспект Академіка Палладіна, будинок 46"
     }
   },
   "PartnerPage": {
