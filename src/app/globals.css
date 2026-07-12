@@ -17,9 +17,6 @@
      accent). Dark ink pairs on gold for WCAG-AA contrast. */
   --color-gold: #d69a2d;
   --color-gold-ink: #3a2a08;
-  /* Soft warm pink for the header «Підтримати» heart (💗-style). Header
-     only — the amber-band donate heart keeps its own dark currentColor. */
-  --color-heart: #ee7da8;
   /* Warm page-background tint for the alternating homepage bands —
      paper warmed toward apricot-soft, in the spirit of #F2EDE1 */
   --color-surface-tint: #f3eee2;

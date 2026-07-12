@@ -1,19 +1,21 @@
+import Image from "next/image";
+
 type Props = { className?: string };
 
 /**
- * Lucide "heart" glyph, filled (solid). Header «Підтримати» button only —
- * colored via the text-heart utility (--color-heart) at the call site.
- * The amber-band donate CTA has its own inline heart and is not affected.
+ * Twemoji 💗 "growing heart" (U+1F497), vendored at public/brand/heart-1f497.svg
+ * (source: github.com/twitter/twemoji, graphics CC-BY 4.0). Rendered via
+ * next/image so its built-in pink fills are preserved — deliberately NOT
+ * recolored to currentColor. Header «Підтримати» button only.
  */
 export function HeartIcon({ className }: Props) {
   return (
-    <svg
+    <Image
+      src="/brand/heart-1f497.svg"
+      alt=""
+      width={16}
+      height={16}
       className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
+    />
   );
 }
