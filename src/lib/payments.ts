@@ -73,7 +73,6 @@ export function paypalSubscriptionSrc(): string {
 // this list and renders active methods without further code changes.
 export type PaymentMethodId =
   | "mono-jar"
-  | "mono-acquiring"
   | "liqpay";
 
 export type PaymentMethodStatus = "active" | "todo";
@@ -97,13 +96,6 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     // not in the coming-soon list below it.
     url: MONO_JAR_URL,
     status: "active",
-  },
-  {
-    id: "mono-acquiring",
-    labelKey: "monoAcquiring",
-    currency: "UAH",
-    // Acquiring needs a server integration, not a link — stub until built.
-    status: "todo",
   },
   {
     id: "liqpay",
