@@ -26,5 +26,9 @@ export const STORY_PHOTOS: Record<StorySlug, string[]> = {
     "/stories/mykyta-3.jpg",
     "/stories/mykyta-4.jpg",
   ],
-  "story-3": ["/stories/lyonichka-1.jpg", "/stories/lyonichka-2.jpg"],
+  "story-3": [
+    "/stories/lyonichka-1.jpg",
+    "/stories/lyonichka-2.jpg",
+    "/stories/lyonichka-3.jpg",
+  ],
 };

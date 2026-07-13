@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -49,10 +49,48 @@ function ShareIcon() {
   );
 }
 
+/* Icon chips — lucide-style outline glyphs, currentColor, no icon library
+   (matches ShareIcon) */
+const CHIP_ICONS: Record<string, ReactNode> = {
+  Telegram: (
+    <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 2 11 13" />
+      <path d="M22 2 15 22l-4-9-9-4z" />
+    </svg>
+  ),
+  WhatsApp: (
+    <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z" />
+    </svg>
+  ),
+  Facebook: (
+    <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  ),
+};
+
+function LinkGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+    </svg>
+  );
+}
+
+function CheckGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
 /**
- * Share the site, collapsed behind a single button: on click, reveal plain
- * share-intent links (Telegram / WhatsApp / Facebook) + copy-to-clipboard.
- * No third-party SDKs or scripts by design.
+ * Share the site, collapsed behind a single button: on click, a row of
+ * icon chips (Telegram / WhatsApp / Facebook) pops in, with copy-link on
+ * its own line below. No third-party SDKs or scripts by design.
  */
 export function ShareActions({ url, text }: Props) {
   const t = useTranslations("HowToHelpPage.cards.share");
@@ -105,27 +143,35 @@ export function ShareActions({ url, text }: Props) {
       </button>
       <div id="share-options" data-open={open} className="disclosure-panel">
         <div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
-            {intents.map(({ name, href }) => (
+          {/* Icon chips pop in with a small stagger; the intent names
+              become aria-labels/tooltips */}
+          <div className="flex flex-wrap items-center gap-3 pt-4">
+            {intents.map(({ name, href }, i) => (
               <a
                 key={name}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={linkClass}
+                aria-label={name}
+                title={name}
+                className="share-chip inline-flex h-10 w-10 items-center justify-center rounded-full border border-pine/40 text-pine transition-colors hover:bg-sage-soft active:bg-sage-soft"
+                style={{ "--chip": i } as React.CSSProperties}
               >
-                {name}
+                {CHIP_ICONS[name]}
               </a>
             ))}
-            <button
-              type="button"
-              onClick={copyLink}
-              className={linkClass}
-              aria-live="polite"
-            >
-              {copied ? t("copied") : t("copyLink")}
-            </button>
           </div>
+          {/* Copy-link on its own line below the chips (owner layout) */}
+          <button
+            type="button"
+            onClick={copyLink}
+            aria-live="polite"
+            className={`share-chip mt-3 inline-flex items-center gap-2 ${linkClass}`}
+            style={{ "--chip": intents.length } as React.CSSProperties}
+          >
+            {copied ? <CheckGlyph /> : <LinkGlyph />}
+            {copied ? t("copied") : t("copyLink")}
+          </button>
         </div>
       </div>
     </>

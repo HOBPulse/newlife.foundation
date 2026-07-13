@@ -94,20 +94,25 @@ export default async function StoryPage({ params }: Props) {
                     : ""
               }`}
             >
-              {morePhotos.map((src, i) => (
-                <div
-                  key={src}
-                  className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage"
-                >
-                  <Image
-                    src={src}
-                    alt={`${title} — ${i + 2}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 384px"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+              {morePhotos.map((src, i) => {
+                // Owner-approved per-photo alt when present (photoAlts,
+                // keyed by the photo's 1-based number); generic fallback
+                const altKey = `items.${slug}.photoAlts.${i + 2}`;
+                return (
+                  <div
+                    key={src}
+                    className="relative aspect-[3/2] overflow-hidden rounded-xl bg-sage"
+                  >
+                    <Image
+                      src={src}
+                      alt={t.has(altKey) ? t(altKey) : `${title} — ${i + 2}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 384px"
+                      className="object-cover"
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </>

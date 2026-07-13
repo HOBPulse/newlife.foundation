@@ -1,18 +1,17 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { Suspense, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FactsRibbon } from "@/components/FactsRibbon";
 import { Faq } from "@/components/Faq";
-import { HeroPhoto } from "@/components/HeroPhoto";
+import { HeroMobile } from "@/components/HeroMobile";
 import { HeroPhotoView } from "@/components/HeroPhotoView";
 import { RoutesMapV2 } from "@/components/RoutesMapV2";
-import { StoryCard } from "@/components/StoryCard";
+import { StoriesCards } from "@/components/StoriesCards";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
-import { STORY_SLUGS } from "@/lib/stories";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -48,15 +47,11 @@ export default async function HomePage({ params }: Props) {
     join(process.cwd(), "public", "photos", "hero-transport.jpg"),
   );
 
-  return (
-    <div className="home-shell">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
-      />
-      {/* Hero — typographic thesis; no photography by design.
-          Static band: base paper (transparent over .home-shell) */}
-      <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
+  // Desktop hero (≥768) — typographic thesis over the full-bleed photo.
+  // Mobile renders <HeroMobile /> instead (full-frame photo, headline in
+  // the sky); the wrapper below hides this section under md.
+  const heroSection = (
+    <section className="hero-section relative isolate mx-auto w-full max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
         {/* Headline — PT Serif at 400 (see the heading rules in globals.css,
             which set the family + weight on .hero-headline) */}
         {/* Two-sentence headline: break after the first sentence so each
@@ -75,16 +70,8 @@ export default async function HomePage({ params }: Props) {
           {t("hero.lead")}
         </p>
         {/* Locked full-bleed hero photo: covers the hero with the text
-            overlaid on the left (desktop); a block on top with text below
-            (mobile). Scrim + framing fixed in globals.css; &sky=1..3 (default
-            2) is a temporary dev control for vertical position. */}
-        <Suspense
-          fallback={
-            <HeroPhotoView sky={2} photoAvailable={heroPhotoAvailable} />
-          }
-        >
-          <HeroPhoto photoAvailable={heroPhotoAvailable} />
-        </Suspense>
+            overlaid on the left. Scrim + framing fixed in globals.css. */}
+        <HeroPhotoView photoAvailable={heroPhotoAvailable} />
         <div className="hero-ctas mt-10 flex flex-wrap gap-3">
           <Link
             href="/how-to-help"
@@ -94,12 +81,24 @@ export default async function HomePage({ params }: Props) {
           </Link>
           <Link
             href="/contact"
-            className="hero-cta-secondary rounded-full border border-pine px-6 py-3 font-medium text-pine transition-colors hover:bg-sage-soft"
+            className="hero-cta-secondary rounded-full border border-pine px-6 py-3 font-medium text-pine"
           >
             {t("hero.ctaHelp")}
           </Link>
         </div>
       </section>
+  );
+
+  return (
+    <div className="home-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
+      />
+      {/* Static band: base paper (transparent over .home-shell).
+          Mobile hero + desktop hero, CSS-switched at md. */}
+      <HeroMobile photoAvailable={heroPhotoAvailable} />
+      <div className="hidden md:contents">{heroSection}</div>
 
       {/* Process preview — numbered because the content is a real sequence.
           Static band: --surface-tint, full width */}
@@ -148,11 +147,8 @@ export default async function HomePage({ params }: Props) {
           {t("stories.title")}
         </h2>
         <p className="reveal mt-3 max-w-xl text-ink-soft">{t("stories.lead")}</p>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {STORY_SLUGS.map((slug, i) => (
-            <StoryCard key={slug} slug={slug} index={i} />
-          ))}
-        </div>
+        {/* Mobile swipe carousel + desktop grid (owner-picked option B) */}
+        <StoriesCards gridClassName="mt-10" carouselClassName="mt-10" stagger />
         <Link
           href="/stories"
           className="mt-8 inline-block font-medium text-pine transition-colors hover:text-pine-deep"
@@ -201,6 +197,7 @@ export default async function HomePage({ params }: Props) {
             href="/donate#give"
             className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#3d2410] bg-gold px-8 py-3 font-medium text-gold-ink"
           >
+            {t("donate.cta")}
             <svg
               className="donate-heart h-5 w-5"
               viewBox="0 0 24 24"
@@ -209,7 +206,6 @@ export default async function HomePage({ params }: Props) {
             >
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
-            {t("donate.cta")}
           </Link>
         </div>
       </section>

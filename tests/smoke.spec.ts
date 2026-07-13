@@ -26,7 +26,9 @@ for (const { code, prefix } of locales) {
     test(`${code} ${path} returns 200 and renders h1`, async ({ page }) => {
       const response = await page.goto(url);
       expect(response?.status()).toBe(200);
-      await expect(page.locator("h1").first()).toBeVisible();
+      // :visible — the homepage has two CSS-switched h1s (mobile/desktop
+      // hero); exactly one is rendered at any viewport
+      await expect(page.locator("h1:visible").first()).toBeVisible();
     });
   }
 }

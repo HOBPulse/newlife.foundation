@@ -353,9 +353,21 @@ body {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
   height: 45vh;
-  margin-bottom: 2rem;
+  height: 45svh; /* small-viewport units: stable while the mobile URL bar moves */
+  margin-bottom: 2.5rem;
   overflow: hidden;
   background: var(--color-sage-soft);
+}
+
+/* Mobile focal crop: the photo is composed for wide screens (the ambulance
+   sits in the lower 40%), so a narrow cover crop is mostly sky. The 390px
+   container is taller than the image aspect, meaning cover already shows the
+   full image height and object-position alone has no vertical slack — zoom
+   toward the van instead, anchored to the image bottom so the ambulance
+   stays fully in frame with a strip of palms above. Reset ≥768. */
+.hero-full-img {
+  transform: scale(1.45);
+  transform-origin: 50% 100%;
 }
 
 .hero-section {
@@ -404,6 +416,7 @@ body {
   /* No crop/zoom — the image is composed for the hero. Only the vertical
      crop position is adjustable via the temporary &sky (--sky-y). */
   .hero-full-img {
+    transform: none;
     object-position: 50% var(--sky-y, 32%);
   }
 
@@ -424,9 +437,9 @@ body {
     pointer-events: none;
     background: linear-gradient(
       to right,
-      color-mix(in srgb, var(--color-pine) 80%, transparent) 0%,
-      color-mix(in srgb, var(--color-pine) 46%, transparent) 24%,
-      transparent 47%
+      color-mix(in srgb, var(--color-pine) 46%, transparent) 0%,
+      color-mix(in srgb, var(--color-pine) 24%, transparent) 24%,
+      transparent 42%
     );
   }
 
@@ -444,15 +457,166 @@ body {
     z-index: 2;
   }
 
-  /* outline CTA legible on the photo */
+  /* outline CTA legible on the photo (press/hover: dot-flood, see the
+     shared .hero-cta-secondary rules) */
   .hero-cta-secondary {
     border-color: var(--color-paper);
     color: var(--color-paper);
   }
+}
 
-  .hero-cta-secondary:hover {
-    background-color: rgb(255 255 255 / 0.14);
+/* --- Mobile hero (shipped option 4) -------------------------------------
+   Full-frame photo under the header, headline in the sky. The scrim is the
+   lightest pine wash that keeps the headline readable — gone before the
+   ambulance. */
+.hero-m-scrim {
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-pine) 30%, transparent) 0%,
+    color-mix(in srgb, var(--color-pine) 15%, transparent) 40%,
+    transparent 58%
+  );
+}
+
+/* Hero donate CTA (shipped btn 13 = gel + soft halo): polished-enamel gold
+   (vertical gloss, inner top light, darker rim) inside a soft warm halo.
+   Press flattens the gloss and settles 1px; halo brightens. The halo's slow
+   breathe plays only when motion is allowed. */
+.hero-donate-cta {
+  background: linear-gradient(to bottom, #e3ad46 0%, var(--color-gold) 52%, #c18a22 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.38),
+    inset 0 -2px 3px rgb(58 42 8 / 0.16),
+    0 2px 6px -2px rgb(58 42 8 / 0.35);
+}
+
+.hero-donate-cta:active {
+  background: linear-gradient(to bottom, #cd9930 0%, #c18a22 100%);
+  translate: 0 1px;
+  box-shadow:
+    inset 0 1px 2px rgb(58 42 8 / 0.22),
+    0 1px 2px -1px rgb(58 42 8 / 0.3);
+}
+
+.hero-donate-glow {
+  position: absolute;
+  inset: -0.55rem;
+  z-index: 0;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-gold) 55%, transparent);
+  filter: blur(16px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero-donate-cta:active .hero-donate-glow {
+  opacity: 0.85;
+}
+
+@media (hover: hover) {
+  .hero-donate-cta:hover .hero-donate-glow {
+    opacity: 0.85;
   }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-donate-cta {
+    transition:
+      translate 0.12s ease,
+      box-shadow 0.12s ease;
+  }
+
+  .hero-donate-glow {
+    animation: hero-glow-breathe 4s ease-in-out infinite;
+  }
+}
+
+@keyframes hero-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Hero secondary CTA (shipped help option 2, both heroes): a small paper
+   dot rests in the outline pill; on press it floods the pill and the label
+   flips to pine. Hover mirrors press on hover-capable devices only; the
+   state change stays instant under reduced motion. */
+.hero-cta-secondary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-left: 2.1rem;
+}
+
+.hero-cta-secondary::before {
+  content: "";
+  position: absolute;
+  left: 1.05rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: var(--color-paper);
+  translate: 0 -50%;
+  z-index: -1;
+}
+
+.hero-cta-secondary:active {
+  color: var(--color-pine-deep);
+}
+
+.hero-cta-secondary:active::before {
+  scale: 80;
+}
+
+@media (hover: hover) {
+  .hero-cta-secondary:hover {
+    color: var(--color-pine-deep);
+  }
+
+  .hero-cta-secondary:hover::before {
+    scale: 80;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta-secondary::before {
+    transition: scale 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Share chips (&share=1 preview, social-button ref): pop in with a small
+   stagger when the disclosure opens; static under reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .disclosure-panel .share-chip {
+    opacity: 0;
+    scale: 0.5;
+    transition:
+      opacity 0.2s ease,
+      scale 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.15s ease;
+    transition-delay: calc(var(--chip, 0) * 55ms);
+  }
+
+  .disclosure-panel[data-open="true"] .share-chip {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Stories mobile carousel (option B preview): hide the horizontal scrollbar,
+   swipe + dots are the affordance */
+.stories-track {
+  scrollbar-width: none;
+}
+
+.stories-track::-webkit-scrollbar {
+  display: none;
 }
 
 /* Shared path-draw keyframes (routes map entrance) */

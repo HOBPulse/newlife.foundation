@@ -51,8 +51,10 @@ export function Footer() {
             </Link>
           </nav>
         </div>
-        <p className="mt-10 text-xs text-sage">
-          © {year} {t("siteName")}. {t("footer.legalNote")}
+        {/* Single line at mobile widths (owner: keep ЄДРПОУ, shrink type);
+            nowrap + smaller size below sm, normal text-xs from sm up */}
+        <p className="mt-10 whitespace-nowrap text-[10px] leading-relaxed text-sage sm:whitespace-normal sm:text-xs">
+          © {year} {t("footer.legalNote")}
         </p>
       </div>
     </footer>

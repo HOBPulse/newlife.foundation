@@ -91,3 +91,10 @@ Untouched by the switch — verify/handle separately at launch:
 2026-07-09 — Identity: NL seal/ligature/emblem, roles in brand README (one source for marks)
 2026-07-09 — FAQ behind showFaq flag, awaiting copy (ships nothing until ready)
 2026-07-09 — Chatbot deferred post-launch (domain risk)
+2026-07-13 — Mobile hero: bottom-anchored scale zoom, not object-position (no vertical slack at 390px)
+2026-07-13 — Stories mobile options A/B/C behind temporary &st param (owner picks, default untouched)
+2026-07-13 — Option B carousel shipped: home + /stories mobile; &st lab removed
+2026-07-13 — Hero CTA lab btn9-11 from studied 21st.dev refs (gel, draw-underline, ring-chip)
+2026-07-13 — Footer legal line: real requisites replace stale placeholder (owner task)
+2026-07-13 — Final button round: btn12-16 hybrids/refs, help-CTA lab, share chips preview (all param-gated)
+2026-07-13 — Shipped: hero option4+btn13 (no icon), share chips (copy on own line), help dot-flood, hearts right

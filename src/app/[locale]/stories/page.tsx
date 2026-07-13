@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { StoryCard } from "@/components/StoryCard";
+import { StoriesCards } from "@/components/StoriesCards";
 import { StoryHoverList } from "@/components/StoryHoverList";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
-import { STORY_SLUGS } from "@/lib/stories";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -26,12 +25,12 @@ export default async function StoriesPage({ params }: Props) {
         {t("title")}
       </h1>
 
-      {/* Cards — touch and <1024px (hover-capable desktop hides these) */}
-      <div className="stories-cards mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {STORY_SLUGS.map((slug) => (
-          <StoryCard key={slug} slug={slug} />
-        ))}
-      </div>
+      {/* Cards — mobile swipe carousel (<640), grid on tablets; hover-capable
+          desktop ≥1024 hides the grid in favour of the hover list below */}
+      <StoriesCards
+        gridClassName="stories-cards mt-14"
+        carouselClassName="mt-14"
+      />
 
       {/* Hover-capable ≥1024px — editorial index with photo reveal */}
       <StoryHoverList />

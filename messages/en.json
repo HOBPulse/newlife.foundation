@@ -40,7 +40,7 @@
     },
     "footer": {
       "mission": "We help patients find specialised treatment when they are told no options remain.",
-      "legalNote": "The foundation's registration details will be published."
+      "legalNote": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU 42792589"
     }
   },
   "HomePage": {
@@ -212,6 +212,9 @@
       "story-3": {
         "title": "Lyonichka’s Story",
         "mapTeaser": "Lyonichka’s journey to Thessaloniki",
+        "photoAlts": {
+          "3": "Medical transport vehicle on a snowy road"
+        },
         "excerpt": "At 3 years old, Lyonichka’s life changed suddenly. A severe illness, later diagnosed as the rare West Nile virus, struck him without warning.",
         "sections": [
           {
