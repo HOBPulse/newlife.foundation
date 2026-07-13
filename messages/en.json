@@ -1,4 +1,29 @@
 {
+  "FAQ": {
+    "title": "What to know",
+    "items": {
+      "1": {
+        "q": "Who does the foundation help?",
+        "a": "We work with the most difficult cases — when doctors where a patient lives say there are no options left. We carefully review every request and honestly assess what can be done. If we see a way forward, we look for specialized treatment and arrange medical transport."
+      },
+      "2": {
+        "q": "What does it cost the patient?",
+        "a": "First we review your case — this costs nothing. What follows depends on the specific situation: what is needed, where, and how. We talk about the options and terms honestly and openly once we understand your case. Write to us — we'll assess it."
+      },
+      "3": {
+        "q": "How quickly can you help?",
+        "a": "It depends on the case — the patient's condition, the treatment needed, and the route. Some requests call for urgent action, others for careful preparation. We recommend reaching out as early as possible: the sooner we study the situation, the more options we can find."
+      },
+      "4": {
+        "q": "How is medical transport organized?",
+        "a": "We arrange the transport of patients, including those who need medical accompaniment during the journey. We tailor the route, method, and accompaniment to each case and to the person's condition. We discuss the details individually after assessing the request."
+      },
+      "5": {
+        "q": "How can I support the foundation?",
+        "a": "You can support our work with a donation — every contribution helps us take on new cases."
+      }
+    }
+  },
   "Common": {
     "siteName": "New Life Foundation",
     "localeSwitcher": "Site language",
@@ -11,21 +36,23 @@
       "howToHelp": "How to help",
       "donate": "Donate",
       "contact": "Contact",
-      "privacy": "Privacy policy"
+      "privacy": "Privacy Policy"
     },
     "footer": {
       "mission": "We help patients find specialised treatment when they are told no options remain.",
-      "legalNote": "The foundation's registration details will be published."
+      "legalNote": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU 42792589"
     }
   },
   "HomePage": {
     "metaTitle": "Help finding specialised treatment",
     "metaDescription": "A charitable foundation that helps patients find specialised treatment and reach it when local options have run out.",
     "hero": {
-      "title": "When they say there are no options left, we keep searching.",
+      "title": "We don't look for miracles. We look for a way",
       "lead": "The foundation helps patients and their families find specialised treatment and reach it when the options where they live have run out.",
       "ctaDonate": "Support the foundation",
-      "ctaHelp": "Request help"
+      "ctaStand": "Stand with us",
+      "ctaHelp": "Request help",
+      "photoAlt": "An ambulance parked by the seafront"
     },
     "process": {
       "eyebrow": "Process",
@@ -39,20 +66,21 @@
       "lead": "Real stories of people who turned to the foundation.",
       "all": "All stories"
     },
-    "pullquote": {
-      "mark": "“",
-      "text": "Today, Lyonichka is learning new languages and dreams of becoming a blogger to inspire and help others."
-    },
     "facts": {
       "routes": "{count, plural, one {route on the map} other {routes on the map}}",
       "countries": "{count, plural, one {country on the map} other {countries on the map}}",
-      "since": "the year we started"
+      "since": "Founded"
     },
     "map": {
       "eyebrow": "Geography",
       "title": "Routes of help",
       "lead": "Every line on this map is someone's way to treatment.",
-      "caption": "The map shows a selection of the routes we have transported patients along — from all across Ukraine."
+      "caption": "The map shows some of the routes we've used to transport patients",
+      "legendThickness": "Line weight — number of routes",
+      "legendAir": "Air",
+      "legendGround": "Ground",
+      "legendHub": "Hub in Ukraine",
+      "list": "Where we've taken patients"
     },
     "donate": {
       "title": "Support the foundation's work",
@@ -63,20 +91,25 @@
   "AboutPage": {
     "metaTitle": "About us",
     "metaDescription": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local options have run out.",
-    "title": "About us",
-    "intro": "New Life Foundation is a charitable foundation that helps patients find specialised treatment when local doctors say no options remain.",
-    "mission": {
-      "title": "Our mission",
-      "body": "\"No options left\" should never be the final answer. When treatment options in a region are exhausted, we help find specialised clinics and organise the journey to them."
+    "title": "Finding possibilities for the most difficult cases",
+    "p1": "New Life Charitable Foundation helps patients in complex medical situations — when treatment where they live is no longer possible or has been exhausted. We look for specialized treatment at appropriate clinics and arrange medical transport, so that each patient can reach the place where they can truly be helped.",
+    "p2": "The foundation was established in 2019 to bring together the experience and resources of a team that has worked in medicine since 2011. Over these years we have learned one thing: even when a situation seems hopeless, there is almost always at least one option that simply hasn't been explored yet.",
+    "p3": "The foundation is led by Olesya Oleksandrivna — an emergency and air-ambulance physician. Every day she works with the most difficult medical cases, consistently finding solutions where others don't see them. This experience is the foundation of how we work.",
+    "p4": "We approach every case the same way: we carefully study the medical situation, look for realistic treatment options, and honestly assess what is possible. We do not promise results we cannot guarantee, and we do not name timelines until we fully understand the picture.",
+    "p5": "Experience shows that options exist more often than it seems at first. Our job is to find them.",
+    "photos": {
+      "emergencyRoom": "Foundation ambulances at a hospital emergency entrance",
+      "familyCaption": "Svyatoslav and his family on the way to treatment",
+      "lesyaDepot": "Olesya Oleksandrivna by the foundation's ambulance",
+      "chariteNight": "The foundation's ambulance at Charité hospital, Berlin",
+      "handover": "The foundation's team with German medics",
+      "uaPlatesEr": "The foundation's ambulance at a hospital emergency entrance in Germany",
+      "emergencyRoomNight": "The foundation's ambulances at a hospital emergency entrance at night"
     },
-    "work": {
-      "title": "What we do",
-      "body": "The foundation supports patients in finding specialised treatment and organising medical transport. Read more on the How we work page."
-    },
-    "transparency": {
-      "title": "Transparency",
-      "body": "The foundation's registration details and reports will be published in this section.",
-      "pending": "Information to be added"
+    "pairHeadings": {
+      "experience": "Experience that finds solutions",
+      "start": "Where we start",
+      "team": "A team working since 2011"
     }
   },
   "HowWeWorkPage": {
@@ -106,6 +139,12 @@
       "title": "Need help?",
       "body": "Fill in the form on the contact page and we will get back to you.",
       "button": "Request help"
+    },
+    "photos": {
+      "ambuPark": "The foundation's ambulances among emergency vehicles at a clinic",
+      "lesyaBack": "Olesya Oleksandrivna next to a Berlin emergency service ambulance",
+      "parkOrg": "Ambulances at the hospital emergency entrance",
+      "clinicAbroad": "Ambulances at a clinic abroad"
     }
   },
   "StoriesPage": {
@@ -119,6 +158,7 @@
     "items": {
       "story-1": {
         "title": "Sviatoslav’s Story",
+        "mapTeaser": "Sviatoslav’s road to treatment in Barcelona",
         "excerpt": "At 1.5 years old, Sviatoslav was diagnosed with a brainstem tumor — a rare and complex condition causing neurological and respiratory complications.",
         "sections": [
           {
@@ -171,6 +211,10 @@
       },
       "story-3": {
         "title": "Lyonichka’s Story",
+        "mapTeaser": "Lyonichka’s journey to Thessaloniki",
+        "photoAlts": {
+          "3": "Medical transport vehicle on a snowy road"
+        },
         "excerpt": "At 3 years old, Lyonichka’s life changed suddenly. A severe illness, later diagnosed as the rare West Nile virus, struck him without warning.",
         "sections": [
           {
@@ -199,28 +243,62 @@
   },
   "HowToHelpPage": {
     "metaTitle": "How to help",
-    "metaDescription": "Ways to support the foundation's work: donating, spreading the word, partnership.",
+    "metaDescription": "Ways to support the foundation's work: donating, volunteering, partnership, spreading the word.",
     "title": "How to help",
-    "lead": "There are several ways to support the foundation's work.",
-    "ways": {
+    "lead": "The foundation exists thanks to people who help — with money, time, and skills. Here's how you can join.",
+    "photoAlt": "The foundation's team with a Ukrainian flag by the ambulances",
+    "cards": {
       "donate": {
         "title": "Donate",
-        "body": "A one-time or regular donation is the fastest way to support the foundation's work.",
-        "cta": "Go to donation"
+        "body": "A one-time donation is the fastest way to support the foundation's work. Every contribution helps us take on new cases.",
+        "cta": "Donate"
+      },
+      "volunteer": {
+        "title": "Become a volunteer",
+        "body": "We need many kinds of hands — from drivers and paramedics to developers and marketers. Tell us how you can help and we'll get in touch.",
+        "cta": "Fill out the form"
+      },
+      "partnership": {
+        "title": "Become a partner",
+        "body": "If you'd like to support the foundation financially, professionally, or organizationally — get in touch.",
+        "cta": "Write to us"
       },
       "share": {
         "title": "Spread the word",
-        "body": "Share the site with those who might need help — or with those ready to support.",
+        "body": "It's free and it truly works: the more people know about the foundation, the more patients we can find and support. Share the site on social media.",
         "cta": "Share",
         "copyLink": "Copy link",
-        "copied": "Link copied",
+        "copied": "Copied",
         "shareText": "New Life Foundation helps find specialized treatment and get there — even when people are told there are no options left. Sometimes one forwarded link can change someone's story."
-      },
-      "partner": {
-        "title": "Become a partner",
-        "body": "If you represent a clinic, a transport provider or an organisation ready to help, write to us.",
-        "cta": "Get in touch"
       }
+    }
+  },
+  "VolunteerPage": {
+    "metaTitle": "Become a volunteer",
+    "metaDescription": "Tell us how you can help the foundation and we'll get in touch.",
+    "title": "Become a volunteer",
+    "lead": "We need many kinds of hands — from drivers and paramedics to developers and marketers. Tell us how you can help and we'll get in touch.",
+    "photoAlt": "The foundation's team with a Ukrainian flag by the ambulances",
+    "form": {
+      "name": "Name",
+      "contact": "Email or phone",
+      "role": "How can you help",
+      "rolePlaceholder": "Select an option",
+      "roles": {
+        "driver": "Driver",
+        "paramedic": "Paramedic, medical escort",
+        "developer": "Developer",
+        "marketer": "Marketer",
+        "smm": "Social media",
+        "other": "Other"
+      },
+      "message": "Message",
+      "submit": "Send",
+      "sending": "Sending…",
+      "success": "Thank you! We've received your message.",
+      "errorValidation": "Please check the required fields.",
+      "errorDelivery": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
   "DonatePage": {
@@ -228,17 +306,74 @@
     "metaDescription": "Support the foundation's work: Monobank, LiqPay, PayPal.",
     "title": "Donate",
     "lead": "Donations allow the foundation to work: to search for treatment and organise transport.",
+    "give": {
+      "title": "One-time or monthly support",
+      "tabs": {
+        "oneTime": "One-time",
+        "monthly": "Monthly"
+      },
+      "oneTimeHelp": "A one-time donation via PayPal (in US dollars).",
+      "monthlyHelp": "A monthly subscription — you can cancel anytime in your PayPal account.",
+      "note": "You can support us in hryvnia via the Monobank jar or with Visa/Mastercard cards via PayPal. LiqPay — coming soon.",
+      "terms": "Public offer and refund policy",
+      "loading": "Loading…",
+      "error": "The payment form failed to load. Please refresh the page.",
+      "subscribed": "Thank you for your ongoing support!"
+    },
     "campaigns": {
       "title": "Active campaigns",
       "pending": "Information about active campaigns will be published."
     },
+    "mono": {
+      "title": "Monobank jar",
+      "help": "A hryvnia donation via the foundation's Monobank jar.",
+      "cta": "Support via Monobank",
+      "qrCaption": "Scan to support via Monobank",
+      "qrAlt": "QR code — link to the foundation's Monobank jar"
+    },
     "methods": {
-      "title": "Ways to donate",
-      "mono": "Monobank jar",
+      "title": "Other methods",
+      "lead": "We'll add these soon.",
+      "monoJar": "Monobank jar",
       "liqpay": "LiqPay",
-      "paypal": "PayPal",
-      "linkPending": "Link to be added",
-      "open": "Open"
+      "open": "Open",
+      "soon": "Soon"
+    }
+  },
+  "TermsPage": {
+    "metaTitle": "Public Offer for Charitable Donation",
+    "metaDescription": "Public offer for charitable donation — working draft.",
+    "title": "Public Offer for Charitable Donation",
+    "draftNote": "Working draft. This document is being prepared and may change.",
+    "sections": {
+      "1": {
+        "title": "General",
+        "body": "This public offer (the \"Offer\") is the official proposal of the New Life Foundation (\"НОВЕ ЖИТТЯ!\", EDRPOU 42792589), represented by its director Olesia Oleksandrivna, acting under the Foundation's Charter (the \"Foundation\"), to enter into a charitable donation agreement on the terms below. Making a donation by any method listed on the site constitutes full and unconditional acceptance of this Offer."
+      },
+      "2": {
+        "title": "Subject",
+        "body": "The donor voluntarily and gratuitously transfers funds (a charitable donation) to the Foundation for its statutory activities — in particular the search for specialised treatment, the organisation of medical transport, and other assistance to patients in difficult situations, according to the needs of each specific case. The Foundation independently determines how donations are used within its statutory activities."
+      },
+      "3": {
+        "title": "Methods and amount",
+        "body": "The donation amount is determined by the donor, made through the methods available on the site (Monobank jar, PayPal, etc.). A donation may be one-time (a single transfer) or recurring monthly (periodic charge via PayPal until the donor cancels the subscription)."
+      },
+      "4": {
+        "title": "Recurring (monthly) donations",
+        "body": "By setting up a monthly subscription, the donor agrees to an automatic monthly charge of the chosen amount via PayPal. A recurring donation can be cancelled at any time by the donor in their PayPal account. The Foundation does not store the donor's payment details."
+      },
+      "5": {
+        "title": "Refunds",
+        "body": "A donation is generally voluntary and non-refundable. In case of an erroneous transfer (wrong amount, accidental payment, etc.), the donor may contact the Foundation within 14 days of the transfer at support@newlife.foundation. The Foundation will review the request and, where justified, refund the funds within a reasonable time."
+      },
+      "6": {
+        "title": "Personal data",
+        "body": "By making a donation, the donor consents to the processing of their personal data to the extent necessary to process the payment and for reporting, in accordance with the Foundation's <privacy>Privacy Policy</privacy>."
+      },
+      "7": {
+        "title": "Foundation details",
+        "body": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU: 42792589 · Registered address: 03142, Kyiv, Sviatoshynskyi district, Akademika Palladina Avenue, 46 · IBAN: UA17 322001 00000 2620 8355 6618 38 · Email: support@newlife.foundation · Phone: +38 (067) 638-45-55"
+      }
     }
   },
   "ContactPage": {
@@ -254,50 +389,84 @@
       "location": "Country, city",
       "message": "Diagnosis and a brief description of the situation",
       "optional": "(optional)",
-      "consent": "I consent to the processing of my personal data in accordance with the <privacy>Privacy policy</privacy>",
+      "consent": "I agree to the processing of my data in accordance with the <privacy>Privacy Policy</privacy>.",
       "requiredNote": "All fields are required unless marked “(optional)”.",
       "submit": "Send request",
       "sending": "Sending…",
       "success": "Your request has been sent. We will get back to you soon.",
       "errorValidation": "Please check the required fields.",
       "errorDelivery": "The request could not be sent. Please try again later."
+    },
+    "requisites": {
+      "title": "Contacts & details",
+      "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "phone": "+38 (067) 638-45-55",
+      "detailsLabel": "Details",
+      "orgName": "Благодійний фонд «НОВЕ ЖИТТЯ!»",
+      "edrpou": "ЄДРПОУ 42792589",
+      "addressLabel": "Registered address",
+      "address": "03142, м. Київ, Святошинський район, проспект Академіка Палладіна, будинок 46"
     }
   },
   "PartnerPage": {
     "metaTitle": "Become a partner",
-    "metaDescription": "A form for clinics, transport providers and organisations ready to help the foundation.",
+    "metaDescription": "If you'd like to support the foundation financially, professionally, or organizationally — write to us.",
     "title": "Become a partner",
-    "lead": "If you represent a clinic, a transport provider or an organisation ready to help, fill in the form and we will get back to you.",
+    "lead": "If you'd like to support the foundation financially, professionally, or organizationally — get in touch.",
     "form": {
-      "name": "Name",
-      "phone": "Phone",
-      "telegram": "Telegram",
-      "telegramPlaceholder": "@username",
-      "organization": "Organisation",
-      "message": "Brief description",
-      "optional": "(optional)",
-      "consent": "I consent to the processing of my personal data in accordance with the <privacy>Privacy policy</privacy>",
-      "requiredNote": "All fields are required unless marked “(optional)”.",
+      "org": "Organization or name",
+      "email": "Email",
+      "message": "Message",
       "submit": "Send",
       "sending": "Sending…",
-      "success": "Your message has been sent. We will get back to you soon.",
+      "success": "Thank you! We've received your message.",
       "errorValidation": "Please check the required fields.",
-      "errorDelivery": "The message could not be sent. Please try again later."
+      "errorDelivery": "Something went wrong. Please try again or email <email>support@newlife.foundation</email>.",
+      "consent": "By submitting, <privacy>you agree</privacy> we'll use this data only to contact you."
     }
   },
   "PrivacyPage": {
-    "metaTitle": "Privacy policy",
-    "metaDescription": "New Life Foundation personal data processing policy.",
-    "title": "Privacy policy",
-    "intro": "The policy text is being prepared and will be published before the site launches.",
-    "pendingNotice": "This section requires legal review: the contact form collects health data — a special category of personal data.",
-    "sectionPending": "Text to be added.",
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "What data the foundation collects, how we use it, and how to ask us to delete it.",
+    "title": "Privacy Policy",
     "sections": {
-      "controller": "Personal data controller",
-      "data": "What data we collect",
-      "purpose": "Purpose of processing",
-      "storage": "Storage and transfer",
-      "rights": "Your rights"
+      "who": {
+        "title": "Who we are",
+        "body": "Charitable Foundation \"NEW LIFE!\" (EDRPOU 42792589). For anything related to personal data, write to <email>support@newlife.foundation</email>."
+      },
+      "data": {
+        "title": "What data we collect",
+        "body": "1. Through the \"Become a volunteer\" and \"Become a partner\" forms: name, email or phone, message text.\n2. Through the request-for-help form: name, contact details, a description of the health condition and, optionally, medical documents. These requests often concern children — in that case they are submitted by parents or guardians.\nWe collect no other data and use no cookies, trackers, or analytics services."
+      },
+      "health": {
+        "title": "Health data",
+        "body": "Information about health conditions and medical documents is sensitive data. We process it solely to help find and arrange treatment. By submitting such information, you consent to its processing for this purpose."
+      },
+      "consent": {
+        "title": "Consent to data processing",
+        "body": "By submitting this form, I consent to the processing of the data provided, including health data, for the purpose of finding and arranging treatment — including its transfer to medical institutions, including abroad, only to the extent needed to help. If this request concerns a child, I confirm that I act as their parent or legal guardian."
+      },
+      "storage": {
+        "title": "How data is transferred and stored",
+        "body": "All submissions from the site go directly to the foundation. Only foundation staff have access to them. We do not pass this data to any third-party service."
+      },
+      "sharing": {
+        "title": "Who we share data with",
+        "body": "To arrange treatment, we may share patient information with medical institutions, including abroad — only to the extent needed to help, and with your consent. We do not share data for advertising or mailings, and we do not sell it."
+      },
+      "retention": {
+        "title": "How long we keep data",
+        "body": "Help-request data is kept as long as needed to work on your case, and for some time after it concludes, then deleted. Volunteer and partner data is kept to stay in touch with you."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You can ask us at any time to show, correct, or delete your data — write to <email>support@newlife.foundation</email>."
+      },
+      "changes": {
+        "title": "Policy changes",
+        "body": "If this policy changes, the updated version will appear on this page."
+      }
     }
   },
   "NotFoundPage": {

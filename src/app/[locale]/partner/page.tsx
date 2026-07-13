@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PartnerForm } from "@/components/PartnerForm";
+import { PartnershipForm } from "@/components/PartnershipForm";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -28,7 +28,7 @@ export default async function PartnerPage({ params }: Props) {
       </p>
 
       <div className="mt-12">
-        <PartnerForm />
+        <PartnershipForm />
       </div>
     </div>
   );

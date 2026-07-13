@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import {
+  AIR_LINKS,
   COUNTRIES,
   CROSS_LINKS,
   NETWORK_LINKS,
@@ -9,12 +10,14 @@ import { CountUp } from "./CountUp";
 
 /* Both figures are derived from the map data at build time — the ribbon can
    never disagree with what the map actually draws. Routes = every rendered
-   line: country trunks, their branches, cross-sector links, network links. */
+   line: country trunks, their branches, cross-sector links, network links,
+   and the owner-confirmed second-origin air legs (e.g. Kyiv→Thessaloniki). */
 const ROUTE_COUNT =
   ROUTE_GROUPS.length +
   ROUTE_GROUPS.reduce((sum, group) => sum + (group.branches?.length ?? 0), 0) +
   CROSS_LINKS.length +
-  NETWORK_LINKS.length;
+  NETWORK_LINKS.length +
+  AIR_LINKS.length;
 const COUNTRY_COUNT = COUNTRIES.length;
 
 /* Owner-provided starting year (task.md, 2026-07): "працюємо з 2019". */

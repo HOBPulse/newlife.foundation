@@ -12,10 +12,11 @@
   --color-sage-soft: #eef4f0;
   --color-apricot: #dfa679;
   --color-apricot-soft: #f3e2d2;
-  /* Deep muted terracotta for the donate CTA band — the accent
-     (--color-brand-terracotta #c6724d) darkened until cream/apricot-soft
-     body text clears WCAG AA (≥4.5:1) on it */
-  --color-brand-terracotta-deep: #8a4a32;
+  /* Primary CTA accent — gold. Replaces the former terracotta/peach accent on
+     buttons/CTAs (the logo heart stays terracotta — that's the mark, not the
+     accent). Dark ink pairs on gold for WCAG-AA contrast. */
+  --color-gold: #d69a2d;
+  --color-gold-ink: #3a2a08;
   /* Warm page-background tint for the alternating homepage bands —
      paper warmed toward apricot-soft, in the spirit of #F2EDE1 */
   --color-surface-tint: #f3eee2;
@@ -40,6 +41,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Anchor links (e.g. how-to-help cards → their forms) glide instead of
+   jumping — motion-safe only */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--color-pine);
   outline-offset: 2px;
@@ -48,6 +57,74 @@ body {
 /* Pine outlines vanish on the dark footer — use paper there */
 .footer-dark :focus-visible {
   outline-color: var(--color-paper);
+}
+
+/* --- Disclosure (how-to-help share options) ------------------------------
+   Collapsed by default; grid-rows 0fr→1fr is the CSS-only height animation
+   (padding lives one level deeper so the row can truly reach 0). visibility
+   flips after the transition so collapsed content is untabbable; reduced
+   motion gets an instant toggle. */
+.disclosure-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.disclosure-panel > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.disclosure-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .disclosure-panel {
+    transition:
+      grid-template-rows 0.25s ease,
+      visibility 0s 0.25s;
+  }
+
+  .disclosure-panel[data-open="true"] {
+    transition:
+      grid-template-rows 0.25s ease,
+      visibility 0s;
+  }
+}
+
+/* --- Donate CTA (amber support band) ---------------------------------
+   Gold pill with a dark espresso-brown border (harmonizes with the heart)
+   so it separates from the warm amber bg. Hover lift + a slow, gentle heart
+   pulse — dignified, not
+   flashy — both motion-safe only (reduced motion gets a static button). */
+.donate-cta {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .donate-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgb(28 43 40 / 0.35);
+  }
+
+  .donate-heart {
+    transform-origin: center;
+    animation: donate-heart-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes donate-heart-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
 }
 
 /* --- Content reveal on scroll ------------------------------------------
@@ -108,6 +185,134 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- FAQ (editorial, native details/summary, no JS) --------------------
+   The +/− marker is pure CSS, flipped by the [open] state. */
+.faq-summary {
+  list-style: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-mark {
+  position: relative;
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.faq-mark::before,
+.faq-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.faq-mark::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.faq-mark::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  transform: translateX(-50%);
+}
+
+/* "+" collapses to "−" when the item is open */
+.faq-item[open] .faq-mark::after {
+  opacity: 0;
+}
+
+/* --- Story index hover reveal (hover-capable ≥1024px) ------------------
+   Hovering/focusing a row fades in THAT story's photo in a fixed reserved
+   slot. Pure CSS, no JS, no layout shift. Hidden by default so touch and
+   smaller screens keep the card grid untouched. */
+.story-hover {
+  display: none;
+}
+
+@media (hover: hover) and (min-width: 1024px) {
+  .stories-cards {
+    display: none;
+  }
+
+  .story-hover {
+    display: block;
+    position: relative;
+    /* reserve the photo slot on the right so nothing shifts on hover */
+    padding-right: 24rem;
+  }
+
+  .story-hover-list {
+    border-top: 1px solid var(--color-sage);
+  }
+
+  .story-hover-row {
+    border-bottom: 1px solid var(--color-sage);
+  }
+
+  .story-hover-link {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .story-hover-index {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-pine);
+  }
+
+  .story-hover-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1.1;
+    color: var(--color-ink);
+    transition: color 0.2s ease;
+  }
+
+  .story-hover-row:hover .story-hover-title,
+  .story-hover-row:focus-within .story-hover-title {
+    color: var(--color-pine);
+  }
+
+  .story-hover-photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22rem;
+    height: 16.5rem;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: var(--color-sage);
+    opacity: 0;
+    translate: 0 8px;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .story-hover-photo {
+      transition:
+        opacity 0.3s ease,
+        translate 0.3s ease;
+    }
+  }
+
+  .story-hover-row:hover .story-hover-photo,
+  .story-hover-row:focus-within .story-hover-photo {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
 /* --- View transitions (story flow) -------------------------------------
    experimental.viewTransition wraps navigations; matching <ViewTransition
    name> pairs on the story card and story page morph the photo + title,
@@ -123,9 +328,9 @@ body {
 }
 
 /* --- Homepage shell -----------------------------------------------------
-   Positioning + clip context for the route thread and the hero watermark.
-   Section backgrounds are static alternating bands (base paper vs.
-   --surface-tint), set per-section in the markup — no scroll morph. */
+   Positioning + clip context for the hero watermark / photo. Section
+   backgrounds are static alternating bands (base paper vs. --surface-tint),
+   set per-section in the markup — no scroll morph. The left margin is clean. */
 .home-shell {
   position: relative;
   /* The hero watermark bleeds past the right viewport edge; clip (not
@@ -134,107 +339,284 @@ body {
   background-color: var(--color-paper);
 }
 
-/* --- Route thread (homepage, ≥1280px) -----------------------------------
-   Thin dashed line down the left margin; a terracotta dot travels along it
-   with scroll via a CSS scroll-driven animation. Progressive enhancement:
-   without animation-timeline support (or with reduced motion) the line and
-   the dot simply render static. Absolutely positioned inside .home-shell, so
-   it spans the page content only and never extends over the footer. */
-.route-thread {
-  display: none;
+/* --- Hero (locked full-bleed) -------------------------------------------
+   The homepage hero is a permanent full-bleed photo (charity:water look).
+   Mobile (<768): the photo is a full-bleed block on top (~45vh), text stacked
+   below on paper. Desktop (≥768): the photo covers the section (~85vh, flush
+   under the sticky header, edge-to-edge), text overlaid on the calm left over
+   a pine scrim. No crop (the image is composed for the hero); only the
+   vertical position is adjustable via the temporary &sky (--sky-y). LCP image
+   is eager; fixed container heights → no CLS. */
+.hero-full {
+  position: relative;
+  order: -1;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  height: 45vh;
+  height: 45svh; /* small-viewport units: stable while the mobile URL bar moves */
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  background: var(--color-sage-soft);
 }
 
-@media (min-width: 1280px) {
-  .route-thread {
-    position: absolute;
-    inset-block: 0;
-    left: 2.5rem;
-    display: block;
-    width: 12px;
-    pointer-events: none;
-  }
-
-  .route-thread::before {
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    left: 50%;
-    margin-left: -0.75px;
-    border-left: 1.5px dashed var(--color-pine);
-    opacity: 0.6;
-  }
-
-  .route-thread-dot {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-brand-terracotta);
-  }
-
-  @supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .route-thread-dot {
-        animation: thread-travel linear both;
-        animation-timeline: scroll(root block);
-      }
-    }
-  }
+/* Mobile focal crop: the photo is composed for wide screens (the ambulance
+   sits in the lower 40%), so a narrow cover crop is mostly sky. The 390px
+   container is taller than the image aspect, meaning cover already shows the
+   full image height and object-position alone has no vertical slack — zoom
+   toward the van instead, anchored to the image bottom so the ambulance
+   stays fully in frame with a strip of palms above. Reset ≥768. */
+.hero-full-img {
+  transform: scale(1.45);
+  transform-origin: 50% 100%;
 }
 
-@keyframes thread-travel {
-  from {
-    top: 0;
-  }
-  to {
-    top: calc(100% - 12px);
-  }
+.hero-section {
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- Hero watermark (≥768px) --------------------------------------------
-   Large muted LogoMark bleeding off the right edge, painted under the hero
-   text (negative z inside the isolated hero section). One-time fade-in on
-   load; reduced motion shows it instantly at its final opacity. */
-.hero-watermark {
+.hero-full-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-soft);
+  opacity: 0.45;
+}
+
+.hero-scrim {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .hero-watermark {
+  .hero-section {
+    min-height: 85vh;
+    justify-content: center;
+    isolation: isolate;
+  }
+
+  /* True full-bleed: break out of the section's max-width + padding to span
+     100vw, flush from the section top (directly under the sticky header) to
+     its bottom. The 100vw overflow is clipped by .home-shell (overflow-x:
+     clip) so there is no horizontal scrollbar. */
+  .hero-full {
     position: absolute;
-    z-index: -1;
-    top: 50%;
-    right: -6rem;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    height: auto;
+    margin: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+    order: 0;
+  }
+
+  /* No crop/zoom — the image is composed for the hero. Only the vertical
+     crop position is adjustable via the temporary &sky (--sky-y). */
+  .hero-full-img {
+    transform: none;
+    object-position: 50% var(--sky-y, 32%);
+  }
+
+  /* Scrim is a full-bleed overlay of the whole hero (same 100vw breakout as
+     the photo), NOT the content column — otherwise its rectangle edge shows
+     as a vertical seam at the container boundary. Gradient starts strongest
+     at the left viewport edge (x=0) and fades to fully transparent before the
+     horizontal centre; light, since the photo has a baked-in dark corner. */
+  .hero-scrim {
     display: block;
-    height: 20rem;
-    translate: 0 -50%;
-    opacity: 0.14;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: 1;
     pointer-events: none;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-pine) 46%, transparent) 0%,
+      color-mix(in srgb, var(--color-pine) 24%, transparent) 24%,
+      transparent 42%
+    );
+  }
+
+  /* Text overlaid on the calm left, above the photo + scrim */
+  .hero-headline,
+  .hero-subline {
+    position: relative;
+    z-index: 2;
+    max-width: 34rem;
+    color: var(--color-paper);
+  }
+
+  .hero-ctas {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* outline CTA legible on the photo (press/hover: dot-flood, see the
+     shared .hero-cta-secondary rules) */
+  .hero-cta-secondary {
+    border-color: var(--color-paper);
+    color: var(--color-paper);
   }
 }
 
-@media (min-width: 1280px) {
-  .hero-watermark {
-    right: -8rem;
-    height: 28rem;
+/* --- Mobile hero (shipped option 4) -------------------------------------
+   Full-frame photo under the header, headline in the sky. The scrim is the
+   lightest pine wash that keeps the headline readable — gone before the
+   ambulance. */
+.hero-m-scrim {
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-pine) 30%, transparent) 0%,
+    color-mix(in srgb, var(--color-pine) 15%, transparent) 40%,
+    transparent 58%
+  );
+}
+
+/* Hero donate CTA (shipped btn 13 = gel + soft halo): polished-enamel gold
+   (vertical gloss, inner top light, darker rim) inside a soft warm halo.
+   Press flattens the gloss and settles 1px; halo brightens. The halo's slow
+   breathe plays only when motion is allowed. */
+.hero-donate-cta {
+  background: linear-gradient(to bottom, #e3ad46 0%, var(--color-gold) 52%, #c18a22 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.38),
+    inset 0 -2px 3px rgb(58 42 8 / 0.16),
+    0 2px 6px -2px rgb(58 42 8 / 0.35);
+}
+
+.hero-donate-cta:active {
+  background: linear-gradient(to bottom, #cd9930 0%, #c18a22 100%);
+  translate: 0 1px;
+  box-shadow:
+    inset 0 1px 2px rgb(58 42 8 / 0.22),
+    0 1px 2px -1px rgb(58 42 8 / 0.3);
+}
+
+.hero-donate-glow {
+  position: absolute;
+  inset: -0.55rem;
+  z-index: 0;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-gold) 55%, transparent);
+  filter: blur(16px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero-donate-cta:active .hero-donate-glow {
+  opacity: 0.85;
+}
+
+@media (hover: hover) {
+  .hero-donate-cta:hover .hero-donate-glow {
+    opacity: 0.85;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-watermark {
-    animation: watermark-in 1.2s ease-out both;
+  .hero-donate-cta {
+    transition:
+      translate 0.12s ease,
+      box-shadow 0.12s ease;
+  }
+
+  .hero-donate-glow {
+    animation: hero-glow-breathe 4s ease-in-out infinite;
   }
 }
 
-@keyframes watermark-in {
-  from {
+@keyframes hero-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Hero secondary CTA (shipped help option 2, both heroes): a small paper
+   dot rests in the outline pill; on press it floods the pill and the label
+   flips to pine. Hover mirrors press on hover-capable devices only; the
+   state change stays instant under reduced motion. */
+.hero-cta-secondary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-left: 2.1rem;
+}
+
+.hero-cta-secondary::before {
+  content: "";
+  position: absolute;
+  left: 1.05rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: var(--color-paper);
+  translate: 0 -50%;
+  z-index: -1;
+}
+
+.hero-cta-secondary:active {
+  color: var(--color-pine-deep);
+}
+
+.hero-cta-secondary:active::before {
+  scale: 80;
+}
+
+@media (hover: hover) {
+  .hero-cta-secondary:hover {
+    color: var(--color-pine-deep);
+  }
+
+  .hero-cta-secondary:hover::before {
+    scale: 80;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta-secondary::before {
+    transition: scale 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Share chips (&share=1 preview, social-button ref): pop in with a small
+   stagger when the disclosure opens; static under reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .disclosure-panel .share-chip {
     opacity: 0;
+    scale: 0.5;
+    transition:
+      opacity 0.2s ease,
+      scale 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.15s ease;
+    transition-delay: calc(var(--chip, 0) * 55ms);
   }
-  to {
-    opacity: 0.14;
+
+  .disclosure-panel[data-open="true"] .share-chip {
+    opacity: 1;
+    scale: 1;
   }
+}
+
+/* Stories mobile carousel (option B preview): hide the horizontal scrollbar,
+   swipe + dots are the affordance */
+.stories-track {
+  scrollbar-width: none;
+}
+
+.stories-track::-webkit-scrollbar {
+  display: none;
 }
 
 /* Shared path-draw keyframes (routes map entrance) */
@@ -340,6 +722,78 @@ body {
   }
 }
 
+/* Routes map (corridor tree) — warm cream basemap frame.
+   Land a touch deeper than the water so the coastline reads on cream.
+   direction: rtl starts the horizontal overflow scroll at the EAST edge on
+   narrow screens (UA hubs visible first, no JS/no animated scroll); the svg
+   restores ltr so text-anchor start/end keep their meaning. */
+.routes-map-v2-frame {
+  --map2-land: color-mix(in srgb, var(--color-gold) 5%, var(--color-surface-tint));
+  background: color-mix(in srgb, var(--color-surface-tint) 45%, var(--color-paper));
+  border-color: color-mix(in srgb, var(--color-pine) 22%, transparent);
+  direction: rtl;
+}
+
+.routes-map-v2-inner {
+  direction: ltr;
+}
+
+/* Story markers (v2): a 0×0 anchor at the city's % coordinates; the badge
+   (gold ring + heart) and the hover card hang off it, so both track the map
+   at any scale/scroll. Card shows only published story assets. Routes are
+   NEVER highlighted from a story marker — privacy rule. */
+.map-story-spot {
+  position: absolute;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.map-story-badge {
+  position: absolute;
+  left: -18px;
+  top: -26px;
+}
+
+.map-story-card {
+  position: absolute;
+  bottom: 22px;
+  left: -70px;
+  z-index: 10;
+  display: block;
+  width: 14.5rem;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Desktop only — touch devices navigate on tap without a card */
+@media (hover: hover) {
+  .map-story-spot:hover .map-story-card {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.map-story-spot:focus-visible .map-story-card {
+  visibility: visible;
+  opacity: 1;
+}
+
+@keyframes map-pulse-calm {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  60% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
   /* Hidden initial state, revealed by the one-shot entrance sequence */
   .routes-map .map-line {
@@ -369,10 +823,56 @@ body {
     animation: map-pulse 3.2s ease-out var(--d, 0s) infinite;
   }
 
+  /* v2 hubs pulse calmer: slower, softer, smaller reach */
+  .routes-map--v2.in-view .map-pulse {
+    animation: map-pulse-calm 5.4s ease-out var(--d, 0s) infinite;
+  }
+
+  /* Story badges pop in with the entrance sequence; the hover card fades
+     and rises. Reduced motion skips this block: badges are simply visible
+     and the card appears instantly (it is content, not motion). */
+  .routes-map .map-story-badge {
+    opacity: 0;
+  }
+
+  .routes-map.in-view .map-story-badge {
+    animation: map-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+  }
+
+  .map-story-card {
+    transform: translateY(4px);
+    transition:
+      opacity 0.16s ease-out,
+      transform 0.16s ease-out;
+  }
+
+  .map-story-spot:hover .map-story-card,
+  .map-story-spot:focus-visible .map-story-card {
+    transform: translateY(0);
+  }
+
   @supports (offset-path: path("M 0 0 L 1 1")) {
     .routes-map.in-view .map-plane {
       animation: map-flight 20s linear var(--d, 0s) infinite;
     }
   }
+}
+
+/* --- Headings: PT Serif -------------------------------------------------
+   All headings render in PT Serif. Kickers, tabular numerals, the wordmark
+   and footer caps stay sans — they use var(--font-display) (Fixel) on
+   non-heading elements, which these rules don't touch. Weight: 700 on paper;
+   400 for large display headings on dark/photo backgrounds (hero photo,
+   terracotta donate band). The element+class selectors outrank the
+   font-light / font-medium utilities in the markup. */
+:is(h1, h2, h3, h4).font-display,
+.story-hover-title {
+  font-family: var(--font-pt-serif), Georgia, serif;
+  font-weight: 700;
+}
+
+h1.hero-headline,
+:is(h1, h2, h3, h4).font-display.text-paper {
+  font-weight: 400;
 }
 

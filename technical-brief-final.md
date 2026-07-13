@@ -89,7 +89,7 @@
 ---
 
 ## TRANSPARENCY / FINANCIAL DISCLOSURE
-- Registration number / legal disclosure: **UNDECIDED** — weighing fraud-prevention risk before publishing publicly
+- Registration number / legal disclosure: **UNDECIDED** — weighing fraud-prevention risk before publishing publicly [DEFERRED 2026-07-10: прозорість реалізується через кейси, не через публікацію реєстру]
 - Build the "Transparency" section with a placeholder/flexible structure
 - Do not invent or guess any registration numbers, financial figures, or report data
 
@@ -116,9 +116,9 @@
 
 ## FLAGS
 - Per project instructions: flag any legal/compliance risk (medical claims, financial disclosure wording, patient data/consent) instead of silently writing around it
-- Do not build out Heart of Blockchain (HOB) integration now — brief mention only, as a future partner, if it fits naturally
+- HOB Labs: off-site entirely until the owner explicitly re-enables it post-launch — see CLAUDE.md HOB rule
 - Open items still requiring a decision:
   - Final VPS provider (Ukrainian hosting with Node.js) — not yet selected
-  - Transparency/registration disclosure wording — pending your decision
+  - Transparency/registration disclosure wording — [DEFERRED 2026-07-10: прозорість реалізується через кейси, не через публікацію реєстру]
   - Transport routes data (country/city pairs) — pending from owner
   - Logo file location — pending from owner

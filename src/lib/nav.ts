@@ -1,3 +1,4 @@
+// Footer navigation — the full site map.
 export const NAV_ITEMS = [
   { href: "/about", key: "about" },
   { href: "/how-we-work", key: "howWeWork" },

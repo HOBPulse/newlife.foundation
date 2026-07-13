@@ -6,6 +6,22 @@ import { routing, type Locale } from "@/i18n/routing";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
+// --- Site-wide search-engine visibility switch ---------------------------
+// SINGLE SOURCE OF TRUTH for keeping the whole site out of search engines
+// while it lives on the temporary Vercel URL (pre-launch). This one constant
+// drives BOTH the root-layout robots metadata (noindex,nofollow on every page)
+// AND the robots.txt route (Disallow: /). It does NOT touch sitemap.xml, which
+// keeps building.
+//
+// TO RE-ENABLE INDEXING BEFORE LAUNCH — flip this ONE value (see the
+// "HOW TO RE-ENABLE INDEXING" note in DECISIONS.md):
+//   • preferred: set NEXT_PUBLIC_NOINDEX="false" in Vercel (Production, and
+//     Preview if wanted) and redeploy — no code change; or
+//   • edit the default below to false and ship.
+// Default is noindex (fail-safe): unless the env var is explicitly "false",
+// the site stays hidden.
+export const SEO_NOINDEX = process.env.NEXT_PUBLIC_NOINDEX !== "false";
+
 /**
  * Canonical + hreflang alternates for a page (per brief: every page links
  * all three locales plus x-default). Relative paths resolve against
@@ -74,5 +90,7 @@ export async function pageMetadata(
     description: t("metaDescription"),
     alternates: pageAlternates(href, locale),
     openGraph: openGraph(t("metaTitle"), t("metaDescription"), href, locale),
+    // Twitter/X reuses the OG title/description/per-locale image via fallback.
+    twitter: { card: "summary_large_image" },
   };
 }

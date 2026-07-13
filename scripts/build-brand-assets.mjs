@@ -11,16 +11,18 @@
 //    data-brand="line|heart|cross" attribute; later runs match by that
 //    attribute, so recoloring stays repeatable after the hexes change.
 //    In the ondark variant both lines and cross take the cream token.
-// 2. Rasterizes favicon-mark.svg into favicon.ico (16/32/48),
-//    icon-192.png / icon-512.png (transparent) and apple-touch-icon.png
-//    (180px, cream background). favicon-full.ico is left untouched.
-// 3. Syncs the App Router icon files: src/app/favicon.ico, icon.svg,
-//    apple-icon.png (Next serves them via the metadata file conventions).
+// 2. Rasterizes favicon-mark.svg into the PWA icons icon-192.png /
+//    icon-512.png (transparent, referenced by app/manifest.ts).
+//
+// The browser favicons (favicon.ico + app/{favicon.ico,icon.svg,apple-icon})
+// are NOT produced here — they are the NL seal, owned by build-identity.mjs
+// ("seal = favicon"). This heart mark stays the primary "sign". Run
+// build-identity.mjs after this script so the seal favicons are authoritative.
+// favicon-full.ico is left untouched.
 
-import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import pngToIco from "png-to-ico";
 
 const ROOT = new URL("../", import.meta.url);
 const BRAND = new URL("public/brand/", ROOT);
@@ -75,7 +77,7 @@ recolor("newlife-logo-mono.svg", "default");
 recolor("newlife-logo-ondark.svg", "ondark");
 recolor("favicon-mark.svg", "default");
 
-// --- 3. Rasterize favicons from the recolored mark ------------------------
+// --- 3. Rasterize the PWA icons from the recolored mark -------------------
 
 const mark = readFileSync(new URL("favicon-mark.svg", BRAND));
 const markWidth = Number(mark.toString().match(/<svg[^>]* width="(\d+)"/)[1]);
@@ -86,46 +88,7 @@ function markPng(size) {
   return sharp(mark, { density }).resize(size, size).png();
 }
 
-const pngs = [];
-for (const size of [16, 32, 48]) {
-  pngs.push(await markPng(size).toBuffer());
-}
-writeFileSync(new URL("favicon.ico", BRAND), await pngToIco(pngs));
-console.log("favicon.ico: 16/32/48");
-
 for (const size of [192, 512]) {
   await markPng(size).toFile(fileURLToPath(new URL(`icon-${size}.png`, BRAND)));
-  console.log(`icon-${size}.png: transparent`);
-}
-
-// Apple touch icon: cream plate, mark centered with breathing room
-// (iOS shows the icon on its own tile — transparent pixels turn black).
-const APPLE = 180;
-const inset = Math.round(APPLE * 0.78);
-await sharp({
-  create: {
-    width: APPLE,
-    height: APPLE,
-    channels: 4,
-    background: CREAM,
-  },
-})
-  .composite([{ input: await markPng(inset).toBuffer(), gravity: "center" }])
-  .png()
-  .toFile(fileURLToPath(new URL("apple-touch-icon.png", BRAND)));
-console.log(`apple-touch-icon.png: ${APPLE}px on cream`);
-
-// --- 4. Sync App Router metadata icon files -------------------------------
-
-const APP = new URL("src/app/", ROOT);
-for (const [src, dest] of [
-  ["favicon.ico", "favicon.ico"],
-  ["favicon-mark.svg", "icon.svg"],
-  ["apple-touch-icon.png", "apple-icon.png"],
-]) {
-  copyFileSync(
-    fileURLToPath(new URL(src, BRAND)),
-    fileURLToPath(new URL(dest, APP)),
-  );
-  console.log(`src/app/${dest} <- brand/${src}`);
+  console.log(`icon-${size}.png: transparent (PWA / manifest)`);
 }

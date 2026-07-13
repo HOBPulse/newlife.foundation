@@ -363,3 +363,33 @@ export const CROSS_LINKS: CrossLink[] = [
   { hub: "kyiv", to: "milan", bow: -0.14 },
   { hub: "odesa", to: "barcelona", bow: -0.12 },
 ];
+
+/** Owner-confirmed air legs that add a SECOND origin to an already-routed
+ *  city (task 2026-07-11): Thessaloniki is reached by ground from Odesa and
+ *  by air from Kyiv. Kept separate from CROSS_LINKS so v1 (which renders all
+ *  cross links and feeds the facts ribbon) stays frozen for the comparison. */
+export type AirLink = {
+  hub: string;
+  to: string;
+  bow: number;
+  source: "owner";
+};
+
+export const AIR_LINKS: AirLink[] = [
+  { hub: "kyiv", to: "thessaloniki", bow: -0.14, source: "owner" },
+];
+
+/** Internal Ukrainian hub-to-hub ground legs (owner-confirmed, task 2026-07-11).
+ *  Exactly these three — never add legs without owner data. Rendered on map v2
+ *  only, as a quiet background layer (both ends are hubs, no destination dots). */
+export type InternalLeg = {
+  from: string;
+  to: string;
+  source: "owner";
+};
+
+export const INTERNAL_LEGS: InternalLeg[] = [
+  { from: "odesa", to: "kyiv", source: "owner" },
+  { from: "dnipro", to: "kyiv", source: "owner" },
+  { from: "dnipro", to: "lviv", source: "owner" },
+];

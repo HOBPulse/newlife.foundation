@@ -12,7 +12,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(locale, "PrivacyPage", "/privacy");
 }
 
-const SECTIONS = ["controller", "data", "purpose", "storage", "rights"] as const;
+const SECTIONS = [
+  "who",
+  "data",
+  "health",
+  "consent",
+  "storage",
+  "sharing",
+  "retention",
+  "rights",
+  "changes",
+] as const;
 
 export default async function PrivacyPage({ params }: Props) {
   const { locale } = await params;
@@ -24,21 +34,26 @@ export default async function PrivacyPage({ params }: Props) {
       <h1 className="font-display text-4xl font-medium tracking-tight text-ink">
         {t("title")}
       </h1>
-      <p className="mt-4 text-lg leading-relaxed text-ink-soft">{t("intro")}</p>
-
-      {/* Legal text [TO BE PROVIDED] — requires legal review (health data
-          is a special category under Ukrainian data protection law) */}
-      <p className="mt-8 rounded-xl bg-apricot-soft px-5 py-4 text-sm leading-relaxed text-ink">
-        {t("pendingNotice")}
-      </p>
 
       <div className="mt-12 space-y-10">
         {SECTIONS.map((section) => (
           <section key={section}>
             <h2 className="font-display text-2xl font-medium text-ink">
-              {t(`sections.${section}`)}
+              {t(`sections.${section}.title`)}
             </h2>
-            <p className="mt-2 text-ink-soft">{t("sectionPending")}</p>
+            {/* pre-line keeps the numbered lines in the "data" section */}
+            <p className="mt-2 whitespace-pre-line leading-relaxed text-ink-soft">
+              {t.rich(`sections.${section}.body`, {
+                email: (chunks) => (
+                  <a
+                    href="mailto:support@newlife.foundation"
+                    className="text-pine underline hover:text-pine-deep"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </p>
           </section>
         ))}
       </div>

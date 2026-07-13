@@ -4,9 +4,9 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { fixelDisplay, golos } from "@/lib/fonts";
+import { fixelDisplay, golos, ptSerif } from "@/lib/fonts";
 import { routing } from "@/i18n/routing";
-import { SITE_URL } from "@/lib/seo";
+import { SEO_NOINDEX, SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,6 +17,13 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s — ${t("siteName")}`,
       default: t("siteName"),
     },
+    // Site-wide noindex while on the temporary URL — inherited by every page
+    // (a page can still override, e.g. /terms stays noindex regardless).
+    // Driven by the single SEO_NOINDEX switch (src/lib/seo.ts). Omitting the
+    // key when indexing is on restores default indexable behaviour.
+    ...(SEO_NOINDEX
+      ? { robots: { index: false, follow: false } }
+      : {}),
   };
 }
 
@@ -41,7 +48,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${golos.variable} ${fixelDisplay.variable} h-full antialiased`}
+      className={`${golos.variable} ${fixelDisplay.variable} ${ptSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>

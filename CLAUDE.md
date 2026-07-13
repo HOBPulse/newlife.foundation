@@ -1,38 +1,52 @@
 # New Life Foundation Website
-
 ## What
 Charity foundation website. Next.js (App Router), TypeScript, Tailwind CSS, next-intl.
-Full spec: technical-brief-final.md — READ IT FULLY before starting or continuing any work.
-
+Full spec: technical-brief-final.md — read the sections relevant to the current
+task; read it fully only before structural work.
 ## Why
 The foundation helps patients find specialized treatment when regional doctors say
 no options remain. Site serves donors and patients/families (slight lean toward donors).
 Many visitors are in crisis, on phones — mobile-first, fast loading is critical.
-
 ## Hard rules
+Nothing in this file should stop you mid-task — note concerns in the end-of-run
+report instead of asking. Mandatory stops: deploy and hard-to-reverse actions.
 - Never invent patient details, diagnoses, financial figures, registration numbers,
   dates, or transport routes. Use [TO BE PROVIDED] placeholders.
-- Flag legal/compliance risks (medical claims, financial disclosure, personal data) —
-  don't silently write around them.
-- Flag any deviation from the brief's stack/architecture and wait for confirmation.
+- Note legal/compliance concerns (medical claims, financial disclosure, personal
+  data) in the end-of-run report; don't stop work for them.
+- Note deviations from the brief's stack/architecture in the report; stop only if
+  the deviation is hard to reverse.
 - Never deploy without explicit confirmation immediately before the deploy action.
-- Copy tone: calm, credible, non-sensational. No dramatized illness/death language,
-  no overpromising medical outcomes.
+- Copy may be warm, human and emotionally honest — dramatic beats are fine when a
+  story earns them. One hard line: never promise or imply medical outcomes.
 - Animations: CSS-only, minimal (scroll-reveal, hovers). No framer-motion/GSAP,
   no JS map libraries.
-- Entity distinction: the foundation and the affiliated private organization (HOB)
-  are separate entities. HOB must not appear on the site except as a possible future
-  partner mention. Never blur this line in any copy.
-
-## Transport routes map (planned feature)
-- v1: static stylized SVG map with route lines, animated on scroll via CSS
-  stroke-dashoffset only. No leaflet/mapbox/JS map libraries.
-- Route data: [TO BE PROVIDED] by owner as country/city pairs. Never invent routes.
+- HOB Labs and the foundation are separate tracks. HOB Labs has NOT launched yet
+  and must NOT appear anywhere on the site — no logo, no partner mention, no
+  section — until the owner explicitly re-enables it after launch. When re-enabled,
+  minimal presence only (small neutral logo and/or a plain partner line).
+- People in repo docs and site materials: name only the director, Olesya
+  Oleksandrivna. Never reference the co-founder anywhere.
+- Owner-approved content (nav items/order, hero copy, story texts, brand marks):
+  change it only when a task explicitly names it. If it changes as a side effect,
+  FLAG it at the top of the report — never ship it silently.
+- Text-change policy for owner-approved copy:
+  - Trivial typos (missing letter, doubled space, obviously broken punctuation):
+    fix silently, but list every fix in the report (original → fixed).
+  - Anything affecting wording, meaning, or tone: do NOT apply. Propose in the
+    report (original → proposed + reason) and wait for explicit owner approval.
+  - Structure, components, navigation, button labels: out of scope entirely
+    unless a task explicitly says so.
+## Transport routes map (v1 shipped)
+- v1 is live: static stylized SVG map — 61 routes / 23 countries, 5 Ukrainian hubs,
+  equirectangular projection on a Natural Earth basemap, CSS stroke-dashoffset draw
+  animation, plane glyphs on air routes, ground routes as static lines.
+- Route data comes from the owner incrementally (country/city pairs). Never invent
+  routes.
 - Privacy: displayed routes must be aggregated/anonymized — never linkable to a
   specific patient story (e.g. avoid showing a route that matches a published story's
   city + diagnosis). Prefer aggregate stats ("N countries, N transports") + lines.
-- v2 (future, not now): interactive map — only after v1 ships and performance allows.
-
+- Next planned: v2 full rebuild (corridor tree, Europe crop) via its own task.md.
 ## Conventions
 - Next.js 16 differs from training data (e.g. proxy.ts replaces middleware.ts).
   Before writing Next-specific code, read the relevant guide in
@@ -43,14 +57,13 @@ Many visitors are in crisis, on phones — mobile-first, fast loading is critica
 - All user-facing content written in Ukrainian first (default locale);
   ru/en are translations of it, never the other way around
 - next/image with unoptimized: true (per brief — hosting portability)
-
 ## Commands
 - npm run dev — dev server (Turbopack) at http://localhost:3000
 - npm run build — production build (also runs TypeScript checks)
 - npm run start — serve the production build
 - npm run lint — ESLint
-
 ## How
-- Before large or hard-to-reverse changes: summarize the plan, wait for go-ahead.
+- A task.md from the owner IS the go-ahead.
 - After each task: summarize what changed and what's pending.
+- After any significant decision, append ONE terse line to DECISIONS.md (format: date — decision (≤8-word why)). Keep the file lean; never rewrite past entries.
 - Languages: UK (default, no prefix), RU (/ru), EN (/en) — all indexed, hreflang required.
