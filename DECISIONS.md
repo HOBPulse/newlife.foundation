@@ -98,3 +98,4 @@ Untouched by the switch — verify/handle separately at launch:
 2026-07-13 — Footer legal line: real requisites replace stale placeholder (owner task)
 2026-07-13 — Final button round: btn12-16 hybrids/refs, help-CTA lab, share chips preview (all param-gated)
 2026-07-13 — Shipped: hero option4+btn13 (no icon), share chips (copy on own line), help dot-flood, hearts right
+2026-07-13 — Part-4 polish merged to main, prod live (noindex kept); SITE_URL env re-set BOM-free
