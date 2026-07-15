@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="footer-dark footer-reveal border-t border-paper/15 bg-pine">
       <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-xs">
+          <div className="max-w-sm">
             <div className="flex items-center gap-3">
               {/* On-dark mark: green line art recolored to cream via currentColor */}
               <Logo className="h-[47px] w-auto text-brand-cream" />
@@ -26,7 +26,7 @@ export function Footer() {
           </div>
           <nav
             aria-label={t("nav.label")}
-            className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm"
+            className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm sm:grid-cols-3"
           >
             {NAV_ITEMS.map((item) => (
               <Link

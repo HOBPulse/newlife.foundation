@@ -38,7 +38,7 @@ export function StoryCard({
 
   return (
     <article
-      className="reveal-card overflow-hidden rounded-xl border border-sage bg-paper"
+      className="reveal-card flex flex-col overflow-hidden rounded-xl border border-sage bg-paper"
       style={{ "--rc": index } as CSSProperties}
     >
       <div className="relative aspect-[4/3] bg-sage">
@@ -57,7 +57,7 @@ export function StoryCard({
           </div>
         )}
       </div>
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-5">
         {morph ? (
           <ViewTransition name={`story-title-${slug}`}>{title}</ViewTransition>
         ) : (
@@ -68,7 +68,7 @@ export function StoryCard({
         </p>
         <Link
           href={`/stories/${slug}`}
-          className="mt-4 inline-block text-sm font-medium text-pine transition-colors hover:text-pine-deep"
+          className="mt-auto inline-block pt-4 text-sm font-medium text-pine transition-colors hover:text-pine-deep"
         >
           {t("readMore")} →
         </Link>

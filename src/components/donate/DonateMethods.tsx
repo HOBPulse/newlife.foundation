@@ -16,7 +16,7 @@ export function DonateMethods({ monoQrSvg }: { monoQrSvg: string }) {
   return (
     <div
       id="give"
-      className="mt-10 grid max-w-5xl scroll-mt-24 gap-6 sm:gap-8 lg:grid-cols-2 lg:items-start"
+      className="mt-10 grid max-w-5xl scroll-mt-24 gap-6 sm:gap-8 lg:grid-cols-2 lg:items-stretch"
     >
       <MonoJarCard qrSvg={monoQrSvg} />
       <DonateWidget />

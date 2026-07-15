@@ -94,7 +94,7 @@ function StripItem({
 }) {
   const t = useTranslations("HowToHelpPage.cards");
   return (
-    <div className="border-l border-sage pl-5">
+    <div className="flex h-full flex-col border-l border-sage pl-5">
       <h2 className="font-display text-lg font-medium text-ink">
         {t(`${nsKey}.title`)}
       </h2>
@@ -103,7 +103,7 @@ function StripItem({
       </p>
       <Link
         href={href}
-        className="mt-4 inline-block text-sm font-medium text-pine transition-colors hover:text-pine-deep"
+        className="mt-auto inline-block pt-4 text-sm font-medium text-pine transition-colors hover:text-pine-deep"
       >
         {t(`${nsKey}.cta`)} →
       </Link>
@@ -114,14 +114,16 @@ function StripItem({
 function StripShare({ shareUrl }: { shareUrl: string }) {
   const t = useTranslations("HowToHelpPage.cards.share");
   return (
-    <div className="border-l border-sage pl-5">
+    <div className="flex h-full flex-col border-l border-sage pl-5">
       <h2 className="font-display text-lg font-medium text-ink">
         {t("title")}
       </h2>
       <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
         {t("body")}
       </p>
-      <ShareActions url={shareUrl} text={t("shareText")} />
+      <div className="mt-auto pt-4">
+        <ShareActions url={shareUrl} text={t("shareText")} />
+      </div>
     </div>
   );
 }
@@ -142,7 +144,7 @@ export function HelpWaysView({
 
   if (layout === "twocol") {
     return (
-      <div className="reveal mt-12 grid items-start gap-5 lg:grid-cols-5">
+      <div className="reveal mt-8 grid items-start gap-5 lg:grid-cols-5">
         <div className="space-y-5 lg:col-span-3">
           <DonateCard wide={false} />
           <figure>
@@ -166,7 +168,7 @@ export function HelpWaysView({
   }
 
   return (
-    <div className="reveal mt-12">
+    <div className="reveal mt-8">
       <DonateCard wide />
       <div className="mt-10 grid gap-8 md:grid-cols-3">
         <StripItem nsKey="volunteer" href="/volunteer" />
