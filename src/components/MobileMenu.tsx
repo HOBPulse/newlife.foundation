@@ -25,7 +25,7 @@ export function MobileMenu() {
         aria-expanded={open}
         aria-label={t("menu")}
         onClick={() => setOpen((v) => !v)}
-        className="flex h-10 w-10 items-center justify-center rounded text-ink"
+        className="tap-target flex h-10 w-10 items-center justify-center rounded text-ink"
       >
         <svg
           width="20"
@@ -67,7 +67,7 @@ export function MobileMenu() {
           ))}
           <Link
             href="/donate"
-            className="mt-1 block rounded bg-gold px-3 py-2.5 font-medium text-gold-ink"
+            className="btn-press btn-press--nav mt-1 block rounded px-3 py-2.5 font-medium text-gold-ink"
           >
             {t("nav.donate")}
           </Link>

@@ -94,23 +94,183 @@ body {
   }
 }
 
-/* --- Donate CTA (amber support band) ---------------------------------
-   Gold pill with a dark espresso-brown border (harmonizes with the heart)
-   so it separates from the warm amber bg. Hover lift + a slow, gentle heart
-   pulse — dignified, not
-   flashy — both motion-safe only (reduced motion gets a static button). */
-.donate-cta {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+/* --- Button family: letterpress («штамп») -------------------------------
+   Owner-picked direction B (2026-07-15 — see DECISIONS.md; gel Option A is
+   shelved there with a reconstruction spec). Matte fill, 1px hairline rim,
+   a hard 2px ledge shadow in the button's own pigment plus a soft ~24%
+   ambient tint. Hover lifts the button 1px off the paper; press collapses
+   the ledge and settles it in. The navbar variant is the quietest of the
+   family: its ledge sleeps until hover. Hierarchy is carried by color
+   (gold = donation, pine = calm actions), never by shape. */
+.btn-press {
+  --press-fill: var(--color-gold);
+  --press-rim: rgb(58 42 8 / 0.18);
+  --press-ledge: color-mix(in srgb, var(--color-gold) 58%, var(--color-gold-ink));
+  --press-tint: rgb(214 154 45 / 0.24);
+  position: relative;
+  background: var(--press-fill);
+  box-shadow:
+    inset 0 0 0 1px var(--press-rim),
+    0 2px 0 0 var(--press-ledge),
+    0 8px 14px -8px var(--press-tint);
+}
+
+.btn-press:active {
+  translate: 0 2px;
+  box-shadow:
+    inset 0 0 0 1px var(--press-rim),
+    inset 0 2px 3px rgb(28 43 40 / 0.22),
+    0 0 0 0 var(--press-ledge);
+}
+
+.btn-press--pine {
+  --press-fill: var(--color-pine);
+  --press-rim: rgb(28 43 40 / 0.25);
+  --press-ledge: var(--color-pine-deep);
+  --press-tint: rgb(46 110 100 / 0.24);
+}
+
+.btn-press--nav {
+  box-shadow: inset 0 0 0 1px var(--press-rim);
+}
+
+.btn-press--nav:active {
+  translate: 0 1px;
+  box-shadow:
+    inset 0 0 0 1px var(--press-rim),
+    inset 0 1px 2px rgb(28 43 40 / 0.2);
+}
+
+@media (hover: hover) {
+  .btn-press:hover:not(:active) {
+    translate: 0 -1px;
+    box-shadow:
+      inset 0 0 0 1px var(--press-rim),
+      0 3px 0 0 var(--press-ledge),
+      0 10px 16px -8px var(--press-tint);
+  }
+
+  /* nav: no lift — the ledge simply wakes */
+  .btn-press--nav:hover:not(:active) {
+    translate: 0 0;
+    box-shadow:
+      inset 0 0 0 1px var(--press-rim),
+      0 2px 0 0 var(--press-ledge),
+      0 8px 14px -8px var(--press-tint);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .donate-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgb(28 43 40 / 0.35);
+  .btn-press {
+    transition:
+      translate 0.12s ease,
+      box-shadow 0.12s ease;
+  }
+}
+
+/* Press-in for the outline secondaries (btn-press has its own settle) */
+.btn-outline-press:active {
+  translate: 0 1px;
+}
+
+/* Coarse pointers: expand every tagged control's hit area to ≥44×44px.
+   The overlay is part of the control, so clicks on it activate the
+   control itself. (::after is reserved for this — dots/spinners use
+   ::before.) */
+@media (pointer: coarse) {
+  .tap-target {
+    position: relative;
   }
 
+  .tap-target::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    translate: -50% -50%;
+  }
+}
+
+/* Slide-in arrow — hero «Звернутися по допомогу» only, per owner (dropped
+   from form submits 2026-07-15: submit is terminal, not "proceed", and the
+   arrow clashed with the loading spinner). Parent is a flex row. Touch/
+   no-hover devices: always visible, static. Hover-capable fine pointers:
+   hidden at rest, slides in from behind the label on hover. The glyph is
+   presentation, not copy. */
+.cta-arrow {
+  flex: none;
+  display: inline-block;
+  width: 1.15em;
+  margin-left: 0.35em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: right;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta-arrow {
+    width: 0;
+    margin-left: 0;
+    opacity: 0;
+    translate: -4px 0;
+  }
+
+  :is(a, button):hover .cta-arrow {
+    width: 1.15em;
+    margin-left: 0.35em;
+    opacity: 1;
+    translate: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-arrow {
+      transition:
+        width 0.2s ease,
+        margin-left 0.2s ease,
+        opacity 0.2s ease,
+        translate 0.2s ease;
+    }
+  }
+}
+
+/* Form submit loading: the label keeps its box (width preserved) but goes
+   transparent; a centered spinner takes over. The spin is an essential
+   status indicator, so it is not gated behind prefers-reduced-motion. */
+.btn-submit[data-loading] .btn-submit-label {
+  opacity: 0;
+}
+
+.btn-submit[data-loading]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  margin: -0.55em 0 0 -0.55em;
+  border-radius: 9999px;
+  border: 2px solid rgb(255 255 255 / 0.35);
+  border-top-color: var(--color-paper);
+  animation: btn-spin 0.7s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* The amber donate band: the global pine focus ring is invisible on
+   #9a5b12 — use paper there (same idea as .footer-dark) */
+.band-amber :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* Donate band heart: slow, gentle pulse — dignified, not flashy —
+   motion-safe only */
+@media (prefers-reduced-motion: no-preference) {
   .donate-heart {
     transform-origin: center;
     animation: donate-heart-pulse 1.8s ease-in-out infinite;
@@ -479,68 +639,8 @@ body {
   );
 }
 
-/* Hero donate CTA (shipped btn 13 = gel + soft halo): polished-enamel gold
-   (vertical gloss, inner top light, darker rim) inside a soft warm halo.
-   Press flattens the gloss and settles 1px; halo brightens. The halo's slow
-   breathe plays only when motion is allowed. */
-.hero-donate-cta {
-  background: linear-gradient(to bottom, #e3ad46 0%, var(--color-gold) 52%, #c18a22 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.38),
-    inset 0 -2px 3px rgb(58 42 8 / 0.16),
-    0 2px 6px -2px rgb(58 42 8 / 0.35);
-}
-
-.hero-donate-cta:active {
-  background: linear-gradient(to bottom, #cd9930 0%, #c18a22 100%);
-  translate: 0 1px;
-  box-shadow:
-    inset 0 1px 2px rgb(58 42 8 / 0.22),
-    0 1px 2px -1px rgb(58 42 8 / 0.3);
-}
-
-.hero-donate-glow {
-  position: absolute;
-  inset: -0.55rem;
-  z-index: 0;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--color-gold) 55%, transparent);
-  filter: blur(16px);
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-.hero-donate-cta:active .hero-donate-glow {
-  opacity: 0.85;
-}
-
-@media (hover: hover) {
-  .hero-donate-cta:hover .hero-donate-glow {
-    opacity: 0.85;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-donate-cta {
-    transition:
-      translate 0.12s ease,
-      box-shadow 0.12s ease;
-  }
-
-  .hero-donate-glow {
-    animation: hero-glow-breathe 4s ease-in-out infinite;
-  }
-}
-
-@keyframes hero-glow-breathe {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
+/* (Gel hero CTA btn13 retired 2026-07-15 — replaced by the letterpress
+   .btn-press family above; reconstruction spec preserved in DECISIONS.md.) */
 
 /* Hero secondary CTA (shipped help option 2, both heroes): a small paper
    dot rests in the outline pill; on press it floods the pill and the label

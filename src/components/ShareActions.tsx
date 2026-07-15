@@ -136,7 +136,7 @@ export function ShareActions({ url, text }: Props) {
         aria-expanded={open}
         aria-controls="share-options"
         onClick={() => setOpen((o) => !o)}
-        className="mt-4 inline-flex items-center gap-2 rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
+        className="btn-outline-press tap-target mt-4 inline-flex items-center gap-2 rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
       >
         {t("cta")}
         <ShareIcon />
@@ -154,7 +154,7 @@ export function ShareActions({ url, text }: Props) {
                 rel="noopener noreferrer"
                 aria-label={name}
                 title={name}
-                className="share-chip inline-flex h-10 w-10 items-center justify-center rounded-full border border-pine/40 text-pine transition-colors hover:bg-sage-soft active:bg-sage-soft"
+                className="share-chip btn-outline-press tap-target inline-flex h-10 w-10 items-center justify-center rounded-full border border-pine/40 text-pine transition-colors hover:bg-sage-soft active:bg-sage-soft"
                 style={{ "--chip": i } as React.CSSProperties}
               >
                 {CHIP_ICONS[name]}

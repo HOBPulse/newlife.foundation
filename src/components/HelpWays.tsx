@@ -28,7 +28,7 @@ function DonateCard({ wide }: { wide: boolean }) {
       <div className={wide ? "mt-5 sm:mt-0 sm:shrink-0" : "mt-6"}>
         <Link
           href="/donate"
-          className="inline-block rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
+          className="btn-press tap-target inline-block rounded-full px-6 py-3 font-medium text-gold-ink"
         >
           {t("cta")}
         </Link>
@@ -57,7 +57,7 @@ function LinkCard({
       <div className="mt-auto pt-4">
         <Link
           href={href}
-          className="inline-block rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
+          className="btn-outline-press tap-target inline-block rounded-full border border-pine px-5 py-2.5 text-sm font-medium text-pine transition-colors hover:bg-sage-soft"
         >
           {t(`${nsKey}.cta`)}
         </Link>

@@ -25,7 +25,7 @@ export function MonoJarCard({ qrSvg }: { qrSvg: string }) {
         href={MONO_JAR_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 inline-flex items-center rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
+        className="btn-press tap-target mt-6 inline-flex items-center rounded-full px-6 py-3 font-medium text-gold-ink"
       >
         {t("cta")}
       </a>

@@ -4,9 +4,10 @@ import { Link } from "@/i18n/navigation";
 
 /** Mobile hero (<768px) — owner-picked option 4: the headline lives in the
  *  photo's calm sky, the ambulance rides the bottom edge uncropped; one
- *  frame, one story. Gold gel CTA inside a soft halo (btn 13, no icon by
- *  owner decision); the secondary uses the shared dot-flood treatment
- *  (.hero-cta-secondary). Desktop renders the original hero section. */
+ *  frame, one story. Gold letterpress CTA (family direction B, 2026-07-15;
+ *  replaced gel btn13 — see DECISIONS.md); the secondary keeps the shared
+ *  dot-flood treatment (.hero-cta-secondary) with a slide-in arrow.
+ *  Desktop renders the original hero section. */
 export function HeroMobile({ photoAvailable }: { photoAvailable: boolean }) {
   const t = useTranslations("HomePage.hero");
   return (
@@ -39,16 +40,18 @@ export function HeroMobile({ photoAvailable }: { photoAvailable: boolean }) {
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Link
             href="/donate#give"
-            className="hero-donate-cta relative inline-flex items-center rounded-full bg-gold px-7 py-3 text-base font-semibold text-gold-ink"
+            className="btn-press tap-target inline-flex items-center rounded-full px-7 py-3 text-base font-semibold text-gold-ink"
           >
-            <span className="hero-donate-glow" aria-hidden="true" />
-            <span className="relative z-10">{t("ctaDonate")}</span>
+            {t("ctaDonate")}
           </Link>
           <Link
             href="/contact"
-            className="hero-cta-secondary rounded-full border border-paper/80 px-5 py-3 text-sm font-medium text-paper"
+            className="hero-cta-secondary btn-outline-press tap-target inline-flex items-center rounded-full border border-paper/80 px-5 py-3 text-sm font-medium text-paper"
           >
             {t("ctaHelp")}
+            <span className="cta-arrow" aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
       </div>
