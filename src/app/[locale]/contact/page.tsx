@@ -37,7 +37,7 @@ export default async function ContactPage({ params }: Props) {
         </div>
 
         {/* Requisites — right sidebar panel on desktop, first on mobile */}
-        <section className="order-1 rounded-xl border border-sage bg-sage-soft/40 p-6 lg:order-2 lg:w-2/5">
+        <section className="order-1 rounded-xl border border-sage bg-sage-soft/40 p-6 lg:order-2 lg:w-2/5 lg:sticky lg:top-24 lg:self-start">
           <h2 className="font-display text-2xl font-medium text-ink">
             {t("requisites.title")}
           </h2>
