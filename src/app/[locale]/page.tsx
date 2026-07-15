@@ -75,13 +75,13 @@ export default async function HomePage({ params }: Props) {
         <div className="hero-ctas mt-10 flex flex-wrap gap-3">
           <Link
             href="/how-to-help"
-            className="rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
+            className="btn-press tap-target inline-flex items-center rounded-full px-6 py-3 font-medium text-gold-ink"
           >
             {t("hero.ctaStand")}
           </Link>
           <Link
             href="/contact"
-            className="hero-cta-secondary rounded-full border border-pine px-6 py-3 font-medium text-pine"
+            className="hero-cta-secondary btn-outline-press tap-target rounded-full border border-pine px-6 py-3 font-medium text-pine"
           >
             {t("hero.ctaHelp")}
           </Link>
@@ -182,10 +182,10 @@ export default async function HomePage({ params }: Props) {
       {/* FAQ skeleton — behind showFaq (default off): ships nothing yet */}
       <Faq />
 
-      {/* Donate band — amber. Gold CTA (donate = gold, like the header),
-          with a dark espresso-brown border (harmonizes with the heart) so
-          the gold reads against the warm bg. */}
-      <section className="bg-[#9a5b12]">
+      {/* Donate band — amber. Gold letterpress CTA (donate = gold, like the
+          header); the family's hairline rim + ledge separate it from the
+          warm bg (espresso border retired with the 2026-07-15 B pick). */}
+      <section className="band-amber bg-[#9a5b12]">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 text-center sm:px-6">
           <h2 className="font-display text-3xl font-medium tracking-tight text-paper">
             {t("donate.title")}
@@ -195,7 +195,7 @@ export default async function HomePage({ params }: Props) {
           </p>
           <Link
             href="/donate#give"
-            className="donate-cta mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#3d2410] bg-gold px-8 py-3 font-medium text-gold-ink"
+            className="btn-press tap-target mt-8 inline-flex items-center gap-2 rounded-full px-8 py-3 font-medium text-gold-ink"
           >
             {t("donate.cta")}
             <svg

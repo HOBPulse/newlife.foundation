@@ -40,7 +40,7 @@ export function Header() {
           <LocaleSwitcher className="hidden lg:flex" />
           <Link
             href="/donate"
-            className="hidden items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-medium text-gold-ink transition-colors hover:bg-gold/90 sm:flex"
+            className="btn-press btn-press--nav tap-target hidden items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-gold-ink sm:flex"
           >
             {t("nav.donate")}
             <HeartIcon className="h-4 w-4" />

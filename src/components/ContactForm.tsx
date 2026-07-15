@@ -104,9 +104,16 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-pine px-6 py-3 font-medium text-white transition-colors hover:bg-pine-deep disabled:opacity-60"
+        aria-disabled={pending}
+        data-loading={pending || undefined}
+        className="btn-press btn-press--pine btn-submit tap-target inline-flex items-center rounded-full px-6 py-3 font-medium text-white"
       >
-        {pending ? t("sending") : t("submit")}
+        <span className="btn-submit-label">{t("submit")}</span>
+        {pending && (
+          <span className="sr-only" role="status">
+            {t("sending")}
+          </span>
+        )}
       </button>
     </form>
   );

@@ -40,7 +40,7 @@ export function DonateWidget() {
               aria-selected={active}
               aria-controls="donate-panel"
               onClick={() => setMode(tab.id)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              className={`tap-target rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 active
                   ? "bg-gold text-gold-ink"
                   : "text-ink-soft hover:text-ink"

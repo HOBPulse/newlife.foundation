@@ -32,7 +32,7 @@ export function Faq() {
               {n === "5" && (
                 <Link
                   href="/donate"
-                  className="mt-4 inline-block rounded-full bg-gold px-6 py-3 font-medium text-gold-ink transition-colors hover:bg-gold/90"
+                  className="btn-press tap-target mt-4 inline-block rounded-full px-6 py-3 font-medium text-gold-ink"
                 >
                   {tHero("ctaDonate")}
                 </Link>

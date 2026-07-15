@@ -100,3 +100,8 @@ Untouched by the switch — verify/handle separately at launch:
 2026-07-13 — Shipped: hero option4+btn13 (no icon), share chips (copy on own line), help dot-flood, hearts right
 2026-07-13 — Part-4 polish merged to main, prod live (noindex kept); SITE_URL env re-set BOM-free
 2026-07-14 — Disable next-intl localeDetection: "/" always uk (was negotiating ru)
+2026-07-15 — Button-family preview built: Row B = letterpress ledge (print DNA fits paper identity)
+2026-07-15 — Owner picked B (letterpress family); hero btn13 joins it (gel retired)
+2026-07-15 — Letterpress family implemented site-wide; submit arrows dropped (submit is terminal, clashed with spinner)
+2026-07-15 — Hero secondary arrow dropped after live review; site has no CTA arrows (letterpress carries hierarchy)
+2026-07-15 — SHELVED runner-up, Option A "gel family" — btn13 gloss DNA on all donate CTAs. Reconstruction spec (preview code deleted): body linear-gradient(to bottom, #e3ad46 0%, #d69a2d 52%, #c18a22 100%); shadows inset 0 1px 0 rgb(255 255 255/.38) + inset 0 -2px 3px rgb(58 42 8/.16) + 0 2px 6px -2px rgb(58 42 8/.35); active flattens to #cd9930→#c18a22, settles translate 0 1px, inset 0 1px 2px rgb(58 42 8/.22); hero keeps soft halo (inset -0.55rem, blur 16px, gold 55%, 4s breathe opacity .45–.7, motion-safe); nav variant quietest (inset light .3, bottom inset .14, drop 0 1px 3px -1px rgb(58 42 8/.3), no halo); pine form-submit gel linear-gradient(#398273, #2e6e64 52%, #1e4d45) with inset 0 1px 0 rgb(255 255 255/.2) and pine-tinted drop .45; transitions translate/box-shadow .12s motion-safe
