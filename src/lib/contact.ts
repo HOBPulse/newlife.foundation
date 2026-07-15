@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import nodemailer from "nodemailer";
 
 export type ContactFormState = {
@@ -10,6 +11,49 @@ export type ContactFormState = {
 const CONTACT_FIELDS = ["name", "phone", "location", "message"] as const;
 const VOLUNTEER_FIELDS = ["name", "contact", "role"] as const;
 const PARTNER_FIELDS = ["organization", "email", "message"] as const;
+
+// Per-field max lengths (server-side, authoritative). Client inputs carry
+// matching maxLength so users never hit a silent rejection. Anything longer is
+// treated as invalid input (spam/abuse) and rejected with the generic error.
+const FIELD_MAX: Record<string, number> = { name: 100, message: 5000 };
+const DEFAULT_MAX = 200;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Best-effort in-memory rate limit: caps how many VALID (about-to-relay)
+// submissions one client IP can make in a short window. It lives in the
+// lambda's memory, so it RESETS when the instance recycles and is NOT shared
+// across concurrent instances — a coarse first line of defense against
+// flooding, not a hard guarantee. Upgrade path if spam persists: a shared
+// store (Vercel KV / Upstash Redis). Invalid/honeypot submissions are rejected
+// earlier and cheaply (no external calls), so they don't consume this budget.
+const RATE_LIMIT = 3;
+const RATE_WINDOW_MS = 60_000;
+const submissionLog = new Map<string, number[]>();
+
+async function isRateLimited(): Promise<boolean> {
+  const h = await headers();
+  const ip =
+    h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    h.get("x-real-ip") ||
+    "unknown";
+  const now = Date.now();
+  const recent = (submissionLog.get(ip) ?? []).filter(
+    (t) => now - t < RATE_WINDOW_MS,
+  );
+  // Opportunistic cleanup so the map can't grow unbounded on a long-lived instance.
+  if (submissionLog.size > 5000) {
+    for (const [key, times] of submissionLog) {
+      if (times.every((t) => now - t >= RATE_WINDOW_MS)) submissionLog.delete(key);
+    }
+  }
+  if (recent.length >= RATE_LIMIT) {
+    submissionLog.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  submissionLog.set(ip, recent);
+  return false;
+}
 
 async function sendTelegram(text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -55,18 +99,32 @@ function readFields(
   // instead carry a "by submitting you agree" line, so consent is implicit.
   requireConsent = true,
 ): Record<string, string> | null {
+  // Honeypot: a hidden "company" field no human sees. If a bot fills it, drop
+  // the submission (returned as a generic validation error — no bot-specific
+  // signal).
+  const honeypot = formData.get("company");
+  if (typeof honeypot === "string" && honeypot.trim() !== "") {
+    return null;
+  }
+
   const values: Record<string, string> = {};
   for (const field of required) {
     const value = formData.get(field);
     if (typeof value !== "string" || value.trim() === "") {
       return null;
     }
-    values[field] = value.trim();
+    const trimmed = value.trim();
+    if (trimmed.length > (FIELD_MAX[field] ?? DEFAULT_MAX)) return null;
+    if (field === "email" && !EMAIL_RE.test(trimmed)) return null;
+    values[field] = trimmed;
   }
   for (const field of optional) {
     const value = formData.get(field);
     if (typeof value === "string" && value.trim() !== "") {
-      values[field] = value.trim();
+      const trimmed = value.trim();
+      if (trimmed.length > (FIELD_MAX[field] ?? DEFAULT_MAX)) return null;
+      if (field === "email" && !EMAIL_RE.test(trimmed)) return null;
+      values[field] = trimmed;
     }
   }
   if (requireConsent && formData.get("consent") !== "on") {
@@ -101,6 +159,10 @@ export async function submitContactRequest(
   if (!values) {
     return { status: "error", error: "validation" };
   }
+  // Rate limit reuses the "try again later" delivery message (no bespoke copy).
+  if (await isRateLimited()) {
+    return { status: "error", error: "delivery" };
+  }
 
   const subject = "Request Help — website form";
   const text = [
@@ -129,6 +191,9 @@ export async function submitVolunteerRequest(
   if (!values) {
     return { status: "error", error: "validation" };
   }
+  if (await isRateLimited()) {
+    return { status: "error", error: "delivery" };
+  }
 
   const subject = "Volunteer — website form";
   const text = [
@@ -153,6 +218,9 @@ export async function submitPartnerRequest(
   const values = readFields(formData, PARTNER_FIELDS, [], false);
   if (!values) {
     return { status: "error", error: "validation" };
+  }
+  if (await isRateLimited()) {
+    return { status: "error", error: "delivery" };
   }
 
   const subject = "Partner — website form";

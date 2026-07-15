@@ -42,6 +42,16 @@ export function VolunteerForm() {
 
   return (
     <form action={formAction} className="max-w-xl space-y-5">
+      {/* Honeypot — hidden from humans; a filled "company" is dropped
+          server-side (see readFields). Off-screen + aria-hidden + untabbable. */}
+      <div
+        className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="v-company">Company</label>
+        <input id="v-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div>
         <label htmlFor="v-name" className="mb-1.5 block text-sm font-medium">
           {t("name")} <span aria-hidden="true">*</span>
@@ -51,6 +61,7 @@ export function VolunteerForm() {
           name="name"
           type="text"
           required
+          maxLength={100}
           autoComplete="name"
           className={inputClass}
         />
@@ -60,7 +71,7 @@ export function VolunteerForm() {
         <label htmlFor="v-contact" className="mb-1.5 block text-sm font-medium">
           {t("contact")} <span aria-hidden="true">*</span>
         </label>
-        <input id="v-contact" name="contact" type="text" required className={inputClass} />
+        <input id="v-contact" name="contact" type="text" required maxLength={200} className={inputClass} />
       </div>
 
       <div>
@@ -99,6 +110,7 @@ export function VolunteerForm() {
           rows={5}
           required={isOther}
           aria-required={isOther}
+          maxLength={5000}
           className={inputClass}
         />
       </div>
