@@ -193,48 +193,6 @@ body {
   }
 }
 
-/* Slide-in arrow — hero «Звернутися по допомогу» only, per owner (dropped
-   from form submits 2026-07-15: submit is terminal, not "proceed", and the
-   arrow clashed with the loading spinner). Parent is a flex row. Touch/
-   no-hover devices: always visible, static. Hover-capable fine pointers:
-   hidden at rest, slides in from behind the label on hover. The glyph is
-   presentation, not copy. */
-.cta-arrow {
-  flex: none;
-  display: inline-block;
-  width: 1.15em;
-  margin-left: 0.35em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-align: right;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cta-arrow {
-    width: 0;
-    margin-left: 0;
-    opacity: 0;
-    translate: -4px 0;
-  }
-
-  :is(a, button):hover .cta-arrow {
-    width: 1.15em;
-    margin-left: 0.35em;
-    opacity: 1;
-    translate: 0;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .cta-arrow {
-      transition:
-        width 0.2s ease,
-        margin-left 0.2s ease,
-        opacity 0.2s ease,
-        translate 0.2s ease;
-    }
-  }
-}
-
 /* Form submit loading: the label keeps its box (width preserved) but goes
    transparent; a centered spinner takes over. The spin is an essential
    status indicator, so it is not gated behind prefers-reduced-motion. */

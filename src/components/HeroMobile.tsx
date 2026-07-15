@@ -46,12 +46,9 @@ export function HeroMobile({ photoAvailable }: { photoAvailable: boolean }) {
           </Link>
           <Link
             href="/contact"
-            className="hero-cta-secondary btn-outline-press tap-target inline-flex items-center rounded-full border border-paper/80 px-5 py-3 text-sm font-medium text-paper"
+            className="hero-cta-secondary btn-outline-press tap-target rounded-full border border-paper/80 px-5 py-3 text-sm font-medium text-paper"
           >
             {t("ctaHelp")}
-            <span className="cta-arrow" aria-hidden="true">
-              →
-            </span>
           </Link>
         </div>
       </div>

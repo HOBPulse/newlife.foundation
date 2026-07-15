@@ -81,12 +81,9 @@ export default async function HomePage({ params }: Props) {
           </Link>
           <Link
             href="/contact"
-            className="hero-cta-secondary btn-outline-press tap-target inline-flex items-center rounded-full border border-pine px-6 py-3 font-medium text-pine"
+            className="hero-cta-secondary btn-outline-press tap-target rounded-full border border-pine px-6 py-3 font-medium text-pine"
           >
             {t("hero.ctaHelp")}
-            <span className="cta-arrow" aria-hidden="true">
-              →
-            </span>
           </Link>
         </div>
       </section>
