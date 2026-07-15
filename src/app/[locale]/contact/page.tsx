@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactForm } from "@/components/ContactForm";
+import { ObfuscatedPhone } from "@/components/ObfuscatedPhone";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
 
@@ -56,12 +57,9 @@ export default async function ContactPage({ params }: Props) {
               <p className="text-sm font-medium text-ink">
                 {t("requisites.phoneLabel")}
               </p>
-              <a
-                href="tel:+380676384555"
-                className="mt-1 inline-block text-pine underline hover:text-pine-deep"
-              >
-                {t("requisites.phone")}
-              </a>
+              {/* Plain text on purpose (no tel:), assembled client-side —
+                  see ObfuscatedPhone */}
+              <ObfuscatedPhone className="tnum mt-1 inline-block text-ink-soft" />
             </div>
             <div>
               <p className="text-sm font-medium text-ink">

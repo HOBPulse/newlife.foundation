@@ -26,10 +26,10 @@ export function HeroMobile({ photoAvailable }: { photoAvailable: boolean }) {
       <div className="absolute inset-x-0 top-0 px-4 pt-9">
         <h1 className="max-w-sm text-balance font-display text-[2.5rem] font-normal leading-[1.08] tracking-tight text-paper">
           {t("title")
-            .split(". ")
-            .map((sentence, i, arr) => (
+            .split("\n")
+            .map((line, i, arr) => (
               <span key={i}>
-                {i < arr.length - 1 ? `${sentence}.` : sentence}
+                {line}
                 {i < arr.length - 1 && <br />}
               </span>
             ))}
