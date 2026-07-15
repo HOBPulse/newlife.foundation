@@ -47,7 +47,7 @@
     "metaTitle": "Help finding specialised treatment",
     "metaDescription": "A charitable foundation that helps patients find specialised treatment and reach it when local options have run out.",
     "hero": {
-      "title": "We don't look for miracles. We look for a way",
+      "title": "We don't look for miracles\nWe look for a way",
       "lead": "The foundation helps patients and their families find specialised treatment and reach it when the options where they live have run out.",
       "ctaDonate": "Support the foundation",
       "ctaStand": "Stand with us",
@@ -372,7 +372,7 @@
       },
       "7": {
         "title": "Foundation details",
-        "body": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU: 42792589 · Registered address: 03142, Kyiv, Sviatoshynskyi district, Akademika Palladina Avenue, 46 · IBAN: UA17 322001 00000 2620 8355 6618 38 · Email: support@newlife.foundation · Phone: +38 (067) 638-45-55"
+        "body": "New Life Foundation \"НОВЕ ЖИТТЯ!\" · EDRPOU: 42792589 · Registered address: 03142, Kyiv, Sviatoshynskyi district, Akademika Palladina Avenue, 46 · IBAN: UA17 322001 00000 2620 8355 6618 38 · Email: support@newlife.foundation"
       }
     }
   },
@@ -401,7 +401,6 @@
       "title": "Contacts & details",
       "emailLabel": "Email",
       "phoneLabel": "Phone",
-      "phone": "+38 (067) 638-45-55",
       "detailsLabel": "Details",
       "orgName": "Благодійний фонд «НОВЕ ЖИТТЯ!»",
       "edrpou": "ЄДРПОУ 42792589",
