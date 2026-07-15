@@ -44,25 +44,45 @@ export const TERMS_URL = "/terms";
 
 const SDK_BASE = "https://www.paypal.com/sdk/js";
 
+// Map the site's next-intl locale to a PayPal SDK locale. Without this the SDK
+// auto-detects the buyer's language (browser/IP/PayPal account), which surfaced
+// RUSSIAN checkout text on the Ukrainian site.
+// NOTE: uk_UA is NOT supported by the hosted-buttons component — passing it
+// makes the one-time button fail to load entirely (verified 2026-07-15). So UA
+// visitors get en_US: English is an acceptable, trustworthy fallback and far
+// better than the Russian PayPal was auto-selecting. ru_RU and en_US both work.
+const PAYPAL_LOCALE: Record<string, string> = {
+  uk: "en_US",
+  ru: "ru_RU",
+  en: "en_US",
+};
+
+function paypalLocale(locale: string): string {
+  return PAYPAL_LOCALE[locale] ?? "en_US";
+}
+
 // Build the SDK <script> src for each mode. Kept here (not inline) so the params
 // that MUST differ between the two loads live next to the config they read.
-export function paypalOneTimeSrc(): string {
+// `locale` is the active site locale (passed from the client via useLocale).
+export function paypalOneTimeSrc(locale: string): string {
   const p = PAYPAL.oneTime;
   const qs = new URLSearchParams({
     "client-id": p.clientId,
     components: p.components,
     "disable-funding": p.disableFunding,
     currency: p.currency,
+    locale: paypalLocale(locale),
   });
   return `${SDK_BASE}?${qs.toString()}`;
 }
 
-export function paypalSubscriptionSrc(): string {
+export function paypalSubscriptionSrc(locale: string): string {
   const p = PAYPAL.subscription;
   const qs = new URLSearchParams({
     "client-id": p.clientId,
     vault: String(p.vault),
     intent: p.intent,
+    locale: paypalLocale(locale),
   });
   return `${SDK_BASE}?${qs.toString()}`;
 }
