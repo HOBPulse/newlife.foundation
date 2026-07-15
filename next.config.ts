@@ -16,6 +16,28 @@ const nextConfig: NextConfig = {
     // navigate instantly. App Router already ships the required React canary.
     viewTransition: true,
   },
+  // Baseline security headers (HSTS is already added by Vercel). CSP is
+  // deliberately deferred — it needs a PayPal allowlist and report-only tuning.
+  // X-Frame-Options: DENY protects THIS site from being framed (clickjacking);
+  // it does not affect our own embedding of PayPal's iframes. Permissions-Policy
+  // disables only features the site never uses (kept minimal so PayPal's
+  // payment flows aren't affected).
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

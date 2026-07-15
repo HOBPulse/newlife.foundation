@@ -33,20 +33,30 @@ export function ContactForm() {
 
   return (
     <form action={formAction} className="max-w-xl space-y-5">
+      {/* Honeypot — hidden from humans; a filled "company" is dropped
+          server-side (see readFields). Off-screen + aria-hidden + untabbable. */}
+      <div
+        className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="c-company">Company</label>
+        <input id="c-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <p className="text-sm text-ink-soft">{t("requiredNote")}</p>
 
       <div>
         <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
           {t("name")}
         </label>
-        <input id="name" name="name" type="text" required autoComplete="name" className={inputClass} />
+        <input id="name" name="name" type="text" required maxLength={100} autoComplete="name" className={inputClass} />
       </div>
 
       <div>
         <label htmlFor="phone" className="mb-1.5 block text-sm font-medium">
           {t("phone")}
         </label>
-        <input id="phone" name="phone" type="tel" required autoComplete="tel" className={inputClass} />
+        <input id="phone" name="phone" type="tel" required maxLength={200} autoComplete="tel" className={inputClass} />
       </div>
 
       <div>
@@ -58,6 +68,7 @@ export function ContactForm() {
           id="telegram"
           name="telegram"
           type="text"
+          maxLength={200}
           placeholder={t("telegramPlaceholder")}
           className={inputClass}
         />
@@ -67,14 +78,14 @@ export function ContactForm() {
         <label htmlFor="location" className="mb-1.5 block text-sm font-medium">
           {t("location")}
         </label>
-        <input id="location" name="location" type="text" required className={inputClass} />
+        <input id="location" name="location" type="text" required maxLength={200} className={inputClass} />
       </div>
 
       <div>
         <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
           {t("message")}
         </label>
-        <textarea id="message" name="message" rows={5} required className={inputClass} />
+        <textarea id="message" name="message" rows={5} required maxLength={5000} className={inputClass} />
       </div>
 
       <label className="flex items-start gap-2.5 text-sm text-ink-soft">

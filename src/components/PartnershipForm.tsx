@@ -31,6 +31,16 @@ export function PartnershipForm() {
 
   return (
     <form action={formAction} className="max-w-xl space-y-5">
+      {/* Honeypot — hidden from humans; a filled "company" is dropped
+          server-side (see readFields). Off-screen + aria-hidden + untabbable. */}
+      <div
+        className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="p-company">Company</label>
+        <input id="p-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div>
         <label htmlFor="p-org" className="mb-1.5 block text-sm font-medium">
           {t("org")} <span aria-hidden="true">*</span>
@@ -40,6 +50,7 @@ export function PartnershipForm() {
           name="organization"
           type="text"
           required
+          maxLength={200}
           autoComplete="organization"
           className={inputClass}
         />
@@ -54,6 +65,7 @@ export function PartnershipForm() {
           name="email"
           type="email"
           required
+          maxLength={200}
           autoComplete="email"
           className={inputClass}
         />
@@ -68,6 +80,7 @@ export function PartnershipForm() {
           name="message"
           rows={5}
           required
+          maxLength={5000}
           className={inputClass}
         />
       </div>
