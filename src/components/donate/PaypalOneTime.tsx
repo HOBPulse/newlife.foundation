@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PAYPAL, paypalOneTimeSrc } from "@/lib/payments";
 import { usePaypalSdk } from "./usePaypalSdk";
 
@@ -11,7 +11,8 @@ const CONTAINER_ID = "paypal-hosted-container";
 
 export function PaypalOneTime() {
   const t = useTranslations("DonatePage.give");
-  const state = usePaypalSdk(paypalOneTimeSrc(), PAYPAL.oneTime.namespace);
+  const locale = useLocale();
+  const state = usePaypalSdk(paypalOneTimeSrc(locale), PAYPAL.oneTime.namespace);
   const rendered = useRef(false);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PAYPAL, paypalSubscriptionSrc } from "@/lib/payments";
 import { usePaypalSdk } from "./usePaypalSdk";
 
@@ -11,7 +11,8 @@ const CONTAINER_ID = "paypal-subscription-container";
 
 export function PaypalSubscription() {
   const t = useTranslations("DonatePage.give");
-  const state = usePaypalSdk(paypalSubscriptionSrc(), PAYPAL.subscription.namespace);
+  const locale = useLocale();
+  const state = usePaypalSdk(paypalSubscriptionSrc(locale), PAYPAL.subscription.namespace);
   const rendered = useRef(false);
   const [approved, setApproved] = useState(false);
 
