@@ -100,3 +100,4 @@ Untouched by the switch — verify/handle separately at launch:
 2026-07-13 — Shipped: hero option4+btn13 (no icon), share chips (copy on own line), help dot-flood, hearts right
 2026-07-13 — Part-4 polish merged to main, prod live (noindex kept); SITE_URL env re-set BOM-free
 2026-07-14 — Disable next-intl localeDetection: "/" always uk (was negotiating ru)
+2026-07-15 — Button-family preview built: Row B = letterpress ledge (print DNA fits paper identity)
